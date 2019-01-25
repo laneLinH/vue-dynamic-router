@@ -1,0 +1,69 @@
+@import "minxin";
+@import "variables";
+*,*::before,*::after{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+ul,li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  color: $linkColor;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover{
+    color: $lowColor;
+  }
+}
+html,body{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body{
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: $baseFontSize;
+  line-height: $baseFontLt;
+  color: $mainFontColor;
+  background-color: $bgColor;
+}
+
+.auditAppForm{
+  width: 800px;
+  margin: 0 auto;
+  label{
+    color: #7b7b7b;
+    font-weight: 700;
+  }
+  .el-form-item__content{
+    color: #8e9094;
+  }
+}
+
+
+::-webkit-scrollbar
+{
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(64, 158, 255, 0.45098039215686275);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(64, 158, 255, 0.72);
+}
+
+
+@import "cuselement";
+
