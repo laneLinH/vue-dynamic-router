@@ -186,7 +186,7 @@
                   type: 'success'
                 })
                 this.$emit('closeModal',true)
-                this.$dynamicBus.$emit('reloadTable',true)
+                this.$dynamicBus.$emit('reloadTable',{pageNameFlg:this.pageNameFlg})
               }else{
                 this.$message({
                   message: res.msg,

@@ -136,4 +136,18 @@ export function contactObj(newObj,oldObj){
   return oldObj
 }
 
+export function print(printStyle,printDom){
+  let printStr = '<html><head><style>'+printStyle+'</style></head><body>';
+  let content = "";
+  let str = printDom.innerHTML;
+  content = content + str;
+  printStr = printStr+content+"</body></html>";
+  let newWindow=window.open("打印窗口","_blank");
+  newWindow.document.write(printStr);
+  newWindow.document.close();
+  newWindow.print();
+  newWindow.close();
+}
+
+
 

@@ -168,38 +168,38 @@
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  this.scopefixparams=this.$deepCopy(btnObj.fixParams)
-                  if(this.rowData && this.rowData.length===1){
-                    for(let k in this.scopefixparams){
-                      if(this.scopefixparams[k]){
-                        let newk=this.scopefixparams[k]
-                        this.scopefixparams[k]=this.rowData[0][newk]
-                      }else{
-                        this.scopefixparams[k]=this.rowData[0][k]
-                      }
+
+                this.scopefixparams=this.$deepCopy(btnObj.fixParams)
+                if(this.rowData && this.rowData.length===1){
+                  for(let k in this.scopefixparams){
+                    if(this.scopefixparams[k]){
+                      let newk=this.scopefixparams[k]
+                      this.scopefixparams[k]=this.rowData[0][newk]
+                    }else{
+                      this.scopefixparams[k]=this.rowData[0][k]
                     }
                   }
-                  this.formData=Object.assign(this.formData,this.scopefixparams)
-                  this.$http[btnObj.methods](btnObj.httpUrl,this.formData).then((res)=>{
-                    if(res.code===200){
-                      this.$message({
-                        type: 'success',
-                        message: res.msg
-                      });
-                      this.loadTableData()
-                    }else{
-                      this.$message({
-                        type: 'error',
-                        message: res.msg
-                      });
-                    }
-                  },(error)=>{
+                }
+                this.formData=Object.assign(this.formData,this.scopefixparams)
+                this.$http[btnObj.methods](btnObj.httpUrl,this.formData).then((res)=>{
+                  if(res.code===200){
+                    this.$message({
+                      type: 'success',
+                      message: res.msg
+                    });
+                    this.loadTableData()
+                  }else{
+                    this.$message({
+                      type: 'error',
+                      message: res.msg
+                    });
+                  }
+                },(error)=>{
                     this.$message({
                       type: 'error',
                       message: error
                     });
                   })
-
                 }).catch(() => {
 
                 })
@@ -281,10 +281,7 @@
            this.$refs.dynamicTable.setCurrentRow(row)
         },
         selectionChange(selection){
-          console.log(selection)
-          console.log(this.pageNameFlg)
           this.setOptData({data:{rowData:selection},pageNameFlg:this.pageNameFlg})
-          // this.$emit('tableSelection',selection)
         },
         dealTableRowStyle({row,index}){
           if(this.tableBaseConfig.tableType==='treeTable'){

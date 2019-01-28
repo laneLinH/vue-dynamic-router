@@ -247,7 +247,7 @@
     <el-form-item    label="奖惩情况"
                      prop="rewardsPunishments"
                      :rules="rules.rewardsPunishments">
-      <el-input type="textarea" v-model="formData.rewardsPunishments" max-length="552" rows="8"></el-input>
+      <el-input type="textarea" v-model="formData.rewardsPunishments" max-length="310" rows="8"></el-input>
       <el-tooltip  effect="light" :content="noticeTip.rewardsPunishments"  placement="right">
         <i class="fa fa-question-circle notice-tip"></i>
       </el-tooltip>
@@ -255,7 +255,7 @@
     <el-form-item    label="考核结果"
                      prop="assessmentResult"
                      :rules="rules.assessmentResult">
-      <el-input type="textarea" v-model="formData.assessmentResult" max-length="414" rows="8"></el-input>
+      <el-input type="textarea" v-model="formData.assessmentResult" max-length="310" rows="8"></el-input>
       <el-tooltip  effect="light" :content="noticeTip.assessmentResult"  placement="right">
         <i class="fa fa-question-circle notice-tip"></i>
       </el-tooltip>
@@ -263,7 +263,7 @@
     <el-form-item    label="任免理由"
                       prop="appointmentRemovalReason"
                      :rules="rules.appointmentRemovalReason">
-      <el-input type="textarea" v-model="formData.appointmentRemovalReason" max-length="552" rows="8"></el-input>
+      <el-input type="textarea" v-model="formData.appointmentRemovalReason" max-length="310" rows="8"></el-input>
       <el-tooltip  effect="light" :content="noticeTip.appointmentRemovalReason"  placement="right">
         <i class="fa fa-question-circle notice-tip"></i>
       </el-tooltip>
@@ -373,11 +373,11 @@
           rules:{
             cadreName:[{ required: true, message: '请输入姓名', trigger: 'blur'}],
             cadreSex:[{required: true, message: '请选择性别', trigger: 'blur' }],
-            cadreBirthday:[{required: true, message: '请输入出生年月', trigger: 'blur'}],
+            cadreBirthday:[{required: true, message: '请输入出生年月', trigger: 'change'}],
             cadreNation:[{required: true, message: '请输入民族', trigger: 'blur' }],
             nativePlace:[{required: true, message: '请输入籍贯', trigger: 'blur'}],
             birthPlace:[{required: true, message: '请输入出生地', trigger: 'blur' }],
-            joinWorkDate:[{required: true, message: '请输入参加工作时间', trigger: 'blur' }],
+            joinWorkDate:[{required: true, message: '请输入参加工作时间', trigger: 'change' }],
             healthCondition:[{required: true, message: '请输入健康情况', trigger: 'blur' }],
             highestProfessional:[{required: true, message: '请输入专业技术职务', trigger: 'blur' }],
             specialitySkill:[{required: true, message: '请输入熟悉专业有何专长', trigger: 'blur' }],
@@ -391,7 +391,7 @@
             rewardsPunishments:[{required: true, message: '请输入奖惩情况', trigger: 'blur' }],
             assessmentResult:[{required: true, message: '请输入考核结果', trigger: 'blur' }],
             appointmentRemovalReason:[{required: true, message: '请输入任免理由', trigger: 'blur' }],
-            resumesDate:[{required: true, message: '请选择时间', trigger: 'blur' }],
+            resumesDate:[{required: true, message: '请选择时间', trigger: 'change' }],
             resumeDescribe:[{required: true, message: '请输入描述', trigger: 'blur' }],
             relation:[{required: true, message: '请输入称谓', trigger: 'blur' }],
             familyName:[{required: true, message: '请输入姓名', trigger: 'blur' }],
@@ -399,7 +399,7 @@
             politicalStatus:[{required: true, message: '请输入政治面貌', trigger: 'blur' }],
             departmentJob:[{required: true, message: '请输入工作单位及职务', trigger: 'blur' }],
             partyTypeList:[{ required: true, message: '请选择党派', trigger: 'change'}],
-            joinPartyDate:[{required: true, message: '请输入入党时间', trigger: 'blur' }],
+            joinPartyDate:[{required: true, message: '请输入入党时间', trigger: 'change' }],
             partyType:[{required: true, message: '请输入非共产党派内容', trigger: 'blur' }]
           },
           noticeTip:{
@@ -425,11 +425,11 @@
               "    （8）获得学历但没有学位的或以同等学力攻读并获得学位的，按获得的学历或学位如实填写。如果一个人同时有这两种情况，且分别为其最高学历、学位，则这两种情况均填写。如，通过在职学习，先获得研究生学历（没有学位），后又以同等学力攻读学位，获得了经济学硕士，则【在职教育】填写“研究生 经济学硕士”（在一栏中分两行填写），【毕业院校系及专业】相对应地要将两个毕业院校、系及专业填入。\n" +
               "    （9）以上学历、学位中，涉及国民教育学历、学位，需有国家教育行政部门承认的学历证书、国务院授权的高校或科研机构颁发的学位证书以及按规定应进入个人档案的相关材料；涉及国外学习取得的学历、学位，按其培养规格、学习年限、学业成绩或学分，比照我国高等教育相应层次的培养要求，由国家教育行政部门认证；涉及党校学历需简历若无结束时间，结束段的日期可用7个空格代替，与时间段后的两空格共连续输入9个空格，例如“1991.01--         ”，在输入9个空格后输入汉字部分。",
             curentDuties:"填写干部现工作单位及担任的主要职务（含拟免职务），一律使用全称或规范的简称。按照干部管理权限，具体填写要求由干部管理部门确定。最多可输入324个汉字。",
-            proposedDuties:"应填写拟任职的工作单位及职务，一律使用全称或规范的简称。按照干部管理权限，具体填写要求由干部管理部门确定。最多可输入324个汉字。",
-            fireDuties:"应填写拟免职的工作单位及职务，一律使用全称或规范的简称。按照干部管理权限，具体填写要求由干部管理部门确定。最多可输入324个汉字。",
-            rewardsPunishments:"填写重要的奖励或记功，受处分的，要填写何年何月因何问题经何单位批准受何种处分，何年何月经何单位批准撤销何种处分。没有受过奖励和处分的，应填写“无” 允许栏内回车换行，最多可输入552个汉字。",
-            assessmentResult:"填写近两年的年度考核情况，没有年度考核结果的，应采取写实的办法注明。最多可输入414个汉字。",
-            appointmentRemovalReason:"填写此次任免的具体理由，如工作需要、任职年龄到限、任届期满、不胜任本职工作需作调整、因身体健康原因本人请求辞去××职务等等。允许栏内回车换行，最多可输入552个汉字。",
+            proposedDuties:"应填写拟任职的工作单位及职务，一律使用全称或规范的简称。按照干部管理权限，具体填写要求由干部管理部门确定。最多可输入310个汉字。",
+            fireDuties:"应填写拟免职的工作单位及职务，一律使用全称或规范的简称。按照干部管理权限，具体填写要求由干部管理部门确定。最多可输入310个汉字。",
+            rewardsPunishments:"填写重要的奖励或记功，受处分的，要填写何年何月因何问题经何单位批准受何种处分，何年何月经何单位批准撤销何种处分。没有受过奖励和处分的，应填写“无” 允许栏内回车换行，最多可输入310个汉字。",
+            assessmentResult:"填写近两年的年度考核情况，没有年度考核结果的，应采取写实的办法注明。最多可输入310个汉字。",
+            appointmentRemovalReason:"填写此次任免的具体理由，如工作需要、任职年龄到限、任届期满、不胜任本职工作需作调整、因身体健康原因本人请求辞去××职务等等。允许栏内回车换行，最多可输入310个汉字。",
             resumes:"从参加工作时填起，大、中专院校学习毕业后参加工作的，从大、中专院校学习时填起，“文化大革命”期间毕业留校待分配的，待分配时间应另段填写“留校待分配”。简历的起止时间填到月（年份用4位数字表示，月份用2位数字表示），前后要衔接，不得空断（因病休学、休养、待分配等都要如实填写）。党内职务以中央和各级党委批准任免的时间为准；行政职务（人大、政协及人民团体的领导职务）以行政任免或有关会议通过或选举的时间为准；党内职务和行政职务一并任免的，可按党内批准的时间合并填写。在大、中专院校学习的经历，要填某年某月至某年某月在某院校某系某专业学习，院校、系及专业要填写毕业时的名称。工作简历要按照干部在不同时期所担任的职务和工作单位的变动情况分段填写。县（市）前面均应冠以省（区、市）名，地名或行政区划发生变化的，填写当时的地名或行政区划名称。参加过党校或行政学院学习三个月以上的，在职攻读学历、学位的，临时离开工作单位连续半年以上及到基层挂职锻炼的，均应在本简历段后注明；上述情况跨两个及两个以上简历段的，应在该经历结束所在简历段后另起一行注明。\n" +
               "    工作单位和职务一律使用规范的简称。\n" +
               "    对比现任职务级别，凡担任上一级（及以上）的党委委员、候补委员，纪委委员，人大常委会委员，政协常务委员、委员的，需在简历的最后隔行另段填写，写明届次。\n" +
@@ -444,12 +444,15 @@
           }
         }),
      mounted(){
+        this.resetForm()
       this.addResume()
       this.addFamily()
       this.getOrgTree()
       if(this.optType==='edit'){
+        this.formData.cadreId=this.rowData[0].cadreId
         setTimeout(()=>{
           this.getcadreByorgNo()
+          // this.getPhoto()
         })
       }
       },
@@ -476,20 +479,22 @@
       },
       methods:{
           getcadreByorgNo(){
-            this.formData.cadreId=this.rowData[0].cadreId
-            this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.formData.cadreId}}).then((res)=>{
+              this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.formData.cadreId}}).then((res)=>{
               if(res.success){
                 let data=res.data
                 this.isEdit=true
-                for(let k in this.formData){
-                  if(data.hasOwnProperty(k)){
-                    if(k==='joinWorkDate'||k==='cadreBirthday'){
-                      this.formData[k]=parseInt(data[k])||null
-                    }else{
-                      this.formData[k]=data[k]||null
+                if(data){
+                  for(let k in this.formData){
+                    if(data.hasOwnProperty(k)){
+                      if(k==='joinWorkDate'||k==='cadreBirthday'||k==='joinPartyDate'){
+                        this.formData[k]=parseInt(data[k])||null
+                      }else{
+                        this.formData[k]=data[k]||null
+                      }
                     }
                   }
-               }
+                }
+
                 this.treeValue=this.formData.orgNo
                 this.getOrgType( this.orgTreeData,this.formData.orgNo)
                 if(data.fileAddress){
@@ -506,10 +511,15 @@
                   }
                 }
               }
-            },error=>{
-
-            })
+            },error=>{})
           },
+          // getPhoto(){
+          //   this.$http.post('/sysUploadFileInfo/findphoto',{cadreId:this.formData.cadreId}).then((res)=>{
+          //     if(res.success){
+          //         console.log(res)
+          //     }
+          //   },error=>{})
+          // },
         getOrgType(obj,orgCode){
           if(this.$typeOf(obj)==='object'){
             if(obj.orgCode===orgCode){
@@ -530,7 +540,6 @@
           if(!val.length){
             for(let sk of this.partyInfo.options){
               sk.disabled=false
-
             }
             this.partyInfo.isShowDate=false
             this.partyInfo.isShowPartytext=false
@@ -563,59 +572,63 @@
           }
          }
         },
-          chooseTree(node, instanceId){
-            this.formData.orgNo=node.orgCode
-            this.formData.orgType=node.orgType
-          },
-          orgCheckValid(rule, val, callback){
-            if(val){
-              if(val!='2'){
-                callback(new Error('只有部门才能新增干部!'))
-              }else{
-                callback()
-              }
+        chooseTree(node, instanceId){
+          this.formData.orgNo=node.orgCode
+          this.formData.orgType=node.orgType
+        },
+        orgCheckValid(rule, val, callback){
+          if(val){
+            if(val!='2'){
+              callback(new Error('只有部门才能新增干部!'))
             }else{
-              callback(new Error('请选择需要新增干部的部门!'))
+              callback()
             }
-          },
-          dealTreeData(obj,parentId=0,id=0){
-            if(this.$typeOf(obj)==='object'){
-              this.$set(obj,'id',obj.orgCode)
-              this.$set(obj,'label',obj.orgName)
-              if(obj.hasOwnProperty('children')){
-                if(!obj.children){
-                  obj.children=[]
-                }else{
-                  this.dealTreeData(obj.children,parentId+'_'+id,id)
-                }
+          }else{
+            callback(new Error('请选择需要新增干部的部门!'))
+          }
+        },
+        dealTreeData(obj,parentId=0,id=0){
+          if(this.$typeOf(obj)==='object'){
+            this.$set(obj,'id',obj.orgCode)
+            this.$set(obj,'label',obj.orgName)
+            if(obj.hasOwnProperty('children')){
+              if(!obj.children){
+                obj.children=[]
+              }else{
+                this.dealTreeData(obj.children,parentId+'_'+id,id)
               }
-            }else if(this.$typeOf(obj)==='array'){
-              obj.forEach((m,n)=>{
-               this.dealTreeData( m,parentId,n)
-              })
             }
-          },
-          getOrgTree(){
-            this.$http.get('/sysOrganization/orginfos').then((res)=>{
-              if(res.success){
-                this.orgTreeData=[res.data]
-                this.dealTreeData(this.orgTreeData,0)
-              }
-            },error=>{
-
+          }else if(this.$typeOf(obj)==='array'){
+            obj.forEach((m,n)=>{
+             this.dealTreeData( m,parentId,n)
             })
-          },
+          }
+        },
+        getOrgTree(){
+          this.$http.get('/sysOrganization/orginfos').then((res)=>{
+            if(res.success){
+              this.orgTreeData=[res.data]
+              this.dealTreeData(this.orgTreeData,0)
+            }
+          },error=>{
+
+          })
+        },
         resetForm(){
           this.$refs.infoform.resetFields()
         },
         addResume(){
-          this.formData.resumes.push({resumesDate:[],resumeDescribe:''})
+            if(this.formData.resumes.length<20){
+              this.formData.resumes.push({resumesDate:[],resumeDescribe:''})
+            }
         },
         removeResume(index){
           this.formData.resumes.splice(index,1)
         },
         addFamily(){
-          this.formData.familys.push({familyName:'',relation:'',familyBirthday:'',politicalStatus:'',departmentJob:''})
+            if(this.formData.familys.length<10){
+              this.formData.familys.push({familyName:'',relation:'',familyBirthday:'',politicalStatus:'',departmentJob:''})
+            }
         },
         removeFamily(id){
           this.formData.familys.splice(id,1)

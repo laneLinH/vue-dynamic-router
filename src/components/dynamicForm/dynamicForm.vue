@@ -100,11 +100,11 @@
         pageNameFlg:{
               default:''
         },
-        fixParams:{
-        }
+        fixParams:{}
       },
       data:()=>({
-          scopefixparams:{}
+          scopefixparams:{},
+        formData:{}
       }),
       computed:{
         ...mapState(['dynamicVx']),
@@ -117,9 +117,6 @@
           return null
         }
       },
-      data:()=>({
-           formData:{}
-      }),
       mounted(){
         console.log('form--',this.fixParams)
         this.initData()
@@ -197,7 +194,7 @@
           })
         },
         validateForm(suc,fal){
-            this.scopefixparams=this.$deepCopy(this.fixparams||null)
+            this.scopefixparams=this.$deepCopy(this.fixParams)
           if(this.scopefixparams){
             if(Object.keys(this.scopefixparams).length>0&&this.rowData && this.rowData.length===1){
               for(let k in this.scopefixparams){
@@ -211,6 +208,7 @@
             }
             this.formData=Object.assign(this.formData,this.scopefixparams)
           }
+
           for(let key in this.formData){
             if (this.formData[key] instanceof Date) {
               this.formData[key] = new Date(this.formData[key]).getTime()||null

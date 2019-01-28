@@ -196,6 +196,8 @@
                     custForm:detail,
                   }
                 },
+                {type:'danger',isShow:false,dealBtnStatus:{key:'state',status:[7,3]},text:'删除',optType:'confirm',methods:'post',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},confirmText:'确定要删除这条数据？',confirmTitle:'删除',
+                },
                 // {type:'danger',isShow:false,text:'查看', dealBtnStatus:{key:'state',status:[2]},icon:'fa fa-delete',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
               ]
             }

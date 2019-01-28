@@ -49,12 +49,22 @@
       mounted(){
 
       },
+      // watch:{
+      //   'isShowModal'(val){
+      //     if(!val){
+      //       setTimeout(()=> {
+      //         if(!this.form.custForm){
+      //           this.$refs.modalForm.resetForm()
+      //         }
+      //       })
+      //     }
+      //   }
+      // },
       methods:{
         showModal(btnObj){
           this.btnObj=btnObj
           console.log('showModal--',btnObj.fixParams)
           this.fixParams=btnObj.fixParams
-
           this.isShowModal=true
         },
         cancel(){

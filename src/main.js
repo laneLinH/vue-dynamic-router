@@ -7,7 +7,7 @@ import store from './store'
 import 'normalize.css/normalize.css'
 import ElementUI from 'element-ui'
 import http from '@/utils/HttpUtils'
-import {$dealTableDate,$typeOf,$deepClone,$formatDate ,contactObj} from '@/utils/tools'
+import {$dealTableDate,$typeOf,$deepClone,$formatDate ,contactObj,print} from '@/utils/tools'
 import 'element-ui/lib/theme-chalk/index.css'
 // import dynamicTable from '@/components/dynamicTable'
 // import dynamicModal from '@/components/dynamicModal'
@@ -34,6 +34,8 @@ Vue.prototype.$typeOf = $typeOf
 Vue.prototype.$deepCopy = $deepClone
 Vue.prototype.$formatDate = $formatDate
 Vue.prototype.$dealTableDate = $dealTableDate
+Vue.prototype.$print=print
+
 
 /* eslint-disable no-new */
 new Vue({

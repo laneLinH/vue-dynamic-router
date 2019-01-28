@@ -1,134 +1,155 @@
 <template>
+  <el-row  class="auditAppForm" >
+    <el-row ref="printchunck1">
+        <div class="cus-print">
+          <h1 class="text-label tb-titles">干部任免审批表</h1>
+          <table   class="cus-table " width="100%">
+            <tr>
+              <td class="text-label" width="10%" height="0">姓名</td>
+              <td  width="10%">{{formData.cadreName}}</td>
+              <td  class="text-label" width="10%">性别</td>
+              <td  width="15%">{{formData.cadreSex}}</td>
+              <td  width="10%">
+                <div class="text-label">出生年月</div>
+                <div style="text-align: center;">（岁）</div>
+              </td>
+              <td  width="15%">
+                <el-row>{{formatDate(formData.cadreBirthday)}}</el-row>
+                <el-row>({{age(formData.cadreBirthday)}})</el-row>
+              </td>
+              <td rowspan="4" width="20%" colspan="4">
+                <img class="photo-chunck" :src="formData.fileAddress">
+                <!--<img class="photo-chunck" src="blob:http://localhost:8081/37d8f1e4-20a4-4bdf-8d4b-2c6b3943146c"/>-->
+              </td>
+            </tr>
+            <tr>
+              <td class="text-label" width="10%">民族</td>
+              <td >{{formData.cadreNation}}</td>
+              <td class="text-label" width="10%">籍贯</td>
+              <td >{{formData.nativePlace}}</td>
+              <td class="text-label" width="10%">出生地</td>
+              <td >{{formData.birthPlace}}</td>
+            </tr>
+            <tr >
+              <td class="text-label" width="10%"  height="0">入党时间</td>
+              <td><span v-if="formData.joinPartyDate">{{formatDate(formData.joinPartyDate)}}</span><span v-if="formData.partyType">;{{formData.partyType}}</span></td>
+              <td class="text-label" width="10%">参加工作时间</td>
+              <td >{{formData.joinWorkDate}}</td>
+              <td class="text-label" width="10%">健康状况</td>
+              <td >{{formData.healthCondition}}</td>
+            </tr>
+            <tr >
+              <td class="text-label" width="10%">专业技术职务</td>
+              <td colspan="2">{{formData.highestProfessional}}</td>
+              <td class="text-label" width="10%">熟悉专业有何专长</td>
+              <td colspan="2">{{formData.specialitySkill}}</td>
+            </tr>
+            <tr >
 
-  <el-form class="auditAppForm" label-width="80">
+              <td class="text-label" width="10%" rowspan="2">学历学位</td>
+              <td class="text-label" width="10%">全日制教育</td>
+              <td colspan="2">{{formData.fulltimeEducation}}</td>
+              <td class="text-label" width="10%">毕业院校系及专业</td>
+              <td colspan="2">{{formData.fulltimeEducationSchool}}</td>
+            </tr>
+            <tr >
+              <td class="text-label" width="10%">在职教育</td>
+              <td colspan="2">{{formData.inserviceEducation}}</td>
+              <td class="text-label" width="10%">毕业院校系及专业</td>
+              <td colspan="2">{{formData.inserviceEducationSchool}}</td>
+            </tr>
+            <tr>
+              <td class="text-label" colspan="2" style="height: 90px">现任职务</td>
+              <td  colspan="5"><div class="scale-ft">{{formData.curentDuties}}</div></td>
+            </tr>
+            <tr>
+              <td class="text-label" colspan="2" style="height: 90px">拟任职务</td>
+              <td  colspan="5"><div class="scale-ft">{{formData.proposedDuties}}</div></td>
+            </tr>
+            <tr>
+              <td  class="text-label" colspan="2" style="height: 90px">拟免职务</td>
+              <td  colspan="5"><div class="scale-ft">{{formData.fireDuties}}</div></td>
+            </tr>
+          </table>
+          <table class="cus-table " width="100%" style="margin-top: -1px;">
+            <tr>
+              <td  class="text-label t-wd jl-ht"><div class="text-vat">简历</div></td>
+              <td colspan="6" style="height: 380px">
+                  <div class="jl-ft" :key="inde" v-if="inde < 20" v-for="(item,inde) in formData.resumes">
+                    <span>{{formatDate(item.startTime)}}-{{formatDate(item.endTime)}} {{item.resumeDescribe}}</span>
+                  </div>
+              </td>
+            </tr>
+          </table>
+        </div>
 
-    <el-table>
-      <el-table-column>
 
-      </el-table-column>
-    </el-table>
-
-
-
-
-    <img class="photo-chunck" :src="formData.fileAddress">
-    <el-row :gutter="10">
-      <el-form-item class="el-col-12" label="姓名：">
-        <span>{{formData.cadreName}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="出生年月(岁)：">
-        <span>{{formatDate(formData.cadreBirthday)}}({{age(formData.cadreBirthday)}})</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="性别：">
-        <span>{{formData.cadreSex}}</span>
-      </el-form-item>
-
-      <el-form-item class="el-col-12" label="所属组织部门：">
-        <span>{{formData.cadreName}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="民族：">
-        <span>{{formData.cadreNation}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="籍贯：">
-        <span>{{formData.nativePlace}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="出生地：">
-        <span>{{formData.birthPlace}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="入党时间："  v-if="formData.joinPartyDate!=='null'&&formData.joinPartyDate&&formData.partyType!=='null'&&formData.partyType">
-        {{formData.joinPartyDate}};{{formData.partyType}}
-      </el-form-item>
-      <template v-else>
-        <el-form-item class="el-col-12" label="入党时间：" v-if="formData.joinPartyDate!=='null'&&formData.joinPartyDate">
-          <span>{{formData.joinPartyDate}}</span>
-        </el-form-item>
-        <el-form-item class="el-col-12" label="党派：" v-if="formData.partyType!=='null'&&formData.partyType">
-          <span>{{formData.partyType}}</span>
-        </el-form-item>
-      </template>
-      <el-form-item class="el-col-12" label="参加工作时间：">
-        <span>{{formData.joinWorkDate}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="健康状况：">
-        <span>{{formData.healthCondition}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="专业技术职务：">
-        <span>{{formData.highestProfessional}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="熟悉专业有何专长：">
-        <span>{{formData.specialitySkill}}</span>
-      </el-form-item>
-
-      <el-form-item class="el-col-12" label="现任职务：">
-        <span>{{formData.curentDuties}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="拟任职务：">
-        <span>{{formData.proposedDuties}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="拟免职务：">
-        <span>{{formData.fireDuties}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-24" label="学历学位">
-      </el-form-item>
-      <el-form-item class="el-col-12" label="全日制教育：">
-        <span>{{formData.fulltimeEducation}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="毕业院校及专业：">
-        <span>{{formData.fulltimeEducationSchool}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="在职教育：">
-        <span>{{formData.inserviceEducation}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="毕业院校及专业：">
-        <span>{{formData.inserviceEducationSchool}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="奖惩情况：">
-        <span>{{formData.rewardsPunishments}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="考核结果：">
-        <span>{{formData.assessmentResult}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-12" label="任免理由：">
-        <span>{{formData.appointmentRemovalReason}}</span>
-      </el-form-item>
-      <el-form-item class="el-col-24" >
-        <el-form-item label="简历："></el-form-item>
-        <el-table :data="formData.resumes">
-          <el-table-column prop="startTime" width="100" label="开始时间">
-          </el-table-column>
-          <el-table-column prop="endTime" width="100" label="结束时间">
-          </el-table-column>
-          <el-table-column prop="resumeDescribe"  label="描述">
-          </el-table-column>
-        </el-table>
-      </el-form-item>
-      <el-form-item class="el-col-24">
-        <el-form-item  label="家庭主要成员及重要社会关系："></el-form-item>
-        <el-table :data="formData.familys">
-          <el-table-column prop="familyName" width="100" label="称谓">
-          </el-table-column>
-          <el-table-column prop="relation" width="100" label="姓名">
-          </el-table-column>
-          <el-table-column prop="familyBirthday"  width="100" label="出生日期">
-          </el-table-column>
-          <el-table-column prop="politicalStatus" label="政治面貌">
-          </el-table-column>
-          <el-table-column prop="departmentJob"  label="工作单位及职务">
-          </el-table-column>
-        </el-table>
-      </el-form-item>
+        <div class="cus-print">
+          <table  class="cus-table" width="100%" style="margin-top: -1px;">
+            <tr>
+              <td   class="text-label t-wd" ><div class="text-vat">奖惩情况</div></td>
+              <td colspan="6">
+                <div style="height: 100px;">
+                  {{formData.rewardsPunishments}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td   class="text-label t-wd" ><div class="text-vat">年底考核结果</div></td>
+              <td colspan="6">
+                <div style="height: 100px;">
+                {{formData.assessmentResult}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td   class="text-label t-wd" ><div class="text-vat">任免理由</div></td>
+              <td colspan="6">
+                <div style="height: 100px;">
+                {{formData.appointmentRemovalReason}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td  class="text-label t-wd" :rowspan="familysLnth"><div class="text-vat">家庭主要成员及重要社会关系</div></td>
+              <td class="text-label" width="15%">称谓</td>
+              <td class="text-label" width="15%">姓名</td>
+              <td class="text-label">出生日期</td>
+              <td class="text-label"  width="15%">政治面貌</td>
+              <td class="text-label" colspan="2">工作单位及职务</td>
+            </tr>
+            <tr v-for="(item,index) in formData.familys">
+              <td><div class="tabl-ht">{{item.relation}}</div></td>
+              <td><div class="tabl-ht">{{item.familyName}}</div></td>
+              <td><div class="tabl-ht">{{formatDate(item.familyBirthday)}}</div></td>
+              <td><div class="tabl-ht">{{item.politicalStatus}}</div></td>
+              <td colspan="2"><div class="tabl-ht">{{item.departmentJob}}</div></td>
+            </tr>
+            <tr>
+              <td class="text-label" ><div class="text-vat">呈报单位</div></td>
+              <td colspan="6"></td>
+            </tr>
+          </table>
+          <table  class="cus-table" width="100%" style="margin-top: -1px;">
+            <tr>
+              <td class="text-label" width="1%">审批机关意见</td>
+              <td colspan="2" class="gz-qu">
+                <div class="tb-gz">(盖章)</div>
+                <div class="tb-nyr"><span>年</span><span>月</span><span>日</span></div>
+              </td>
+              <td class="text-label" width="1%">行政机关任免意见</td>
+              <td colspan="2" class="gz-qu">
+                <div class="tb-gz">(盖章)</div>
+                <div class="tb-nyr"><span>年</span><span>月</span><span>日</span></div>
+              </td>
+              <!--<td class="text-label" width="15%"></td>-->
+              <!--<td colspan="2"></td>-->
+            </tr>
+          </table>
+        </div>
     </el-row>
-    <!--<el-row :gutter="10" :span="20" >-->
-      <!--<el-col >-->
-        <!--<dynamicForm ref="auditForm" :form="auditForm" :fixParams="fixParams">-->
-        <!--</dynamicForm>-->
-      <!--</el-col>-->
-      <!--<el-col :offset="10" :span="6">-->
-        <!--<el-button type="primary" @click="audit('pass')">通过</el-button>-->
-        <!--<el-button type="danger" @click="audit('reject')">驳回</el-button>-->
-      <!--</el-col>-->
-    <!--</el-row>-->
-  </el-form>
+    <el-button @click="doPrint"  type="primary"  class="print-btn">打印</el-button>
+  </el-row>
 
 </template>
 
@@ -143,7 +164,9 @@
     },
     data:()=>({
       formData:{},
-      auditInfo:[]
+      auditInfo:[],
+      familysTableRow:0,
+      familysLnth:0
     }),
     computed: {
       ...mapState(['dynamicVx']),
@@ -164,6 +187,7 @@
     mounted(){
       this.getcadreByorgNo()
       this.getAudithistory()
+
     },
     methods:{
       age(val){
@@ -184,14 +208,38 @@
         this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
           if(res.success){
             this.formData=res.data
-            this.formData.fileAddress=window.location.origin+'/'+ this.formData.fileAddress.replace("\\","/")
-            for(let k of this.formData.familys){
-              k.familyBirthday=this.formatDate(k.familyBirthday)
+            if(this.formData.fileAddress){
+              this.formData.fileAddress=window.location.origin+'/'+ this.formData.fileAddress.replace("\\","/")
             }
+            if(this.formData.familys){
+              this.familysTableRow =10-this.formData.familys.length
+              if(this.familysTableRow){
+                for(let i=0;i<this.familysTableRow;i++){
+                  this.formData.familys.push({relation:null,familyName:null,familyBirthday:null,politicalStatus:null,departmentJob:null})
+                }
+              }
+              for(let k of this.formData.familys){
+                k.familyBirthday=this.formatDate(k.familyBirthday)
+              }
+              this.familysLnth=this.formData.familys.length+1
+            }
+
             for(let k of this.formData.resumes){
               k.startTime=this.formatDate(k.startTime)
               k.endTime=this.formatDate(k.endTime)
             }
+
+            // let scfts=document.querySelectorAll('.scale-ft')
+            // let adjustay=[[206,1],[40,0.9],[20,0.9]]
+            // for(let im of scfts){
+            //   if(im.textContent.length>20){
+            //     // width: 112%;
+            //     // transform: scale(0.9);
+            //     // transform-origin: top left;
+            //     im.style.webkitTransform='scale(0.3)';
+            //     im.style.webkitTransformOrigin='0 0';
+            //   }
+            // }
           }
         },error=>{
 
@@ -205,16 +253,177 @@
         },error=>{
 
         })
+      },
+      doPrint(){
+         let  prinDom1=this.$refs.printchunck1.$el
+         let prin=prinDom1.querySelectorAll('.cus-print')
+        console.log(prin)
+        if(prin){
+          for(let im of prin){
+            console.log(im.offsetHeight)
+            if(im.offsetHeight>900){
+
+            }
+          }
+        }
+         let strx=`body{font-size: 14px}
+                .cus-print{ page-break-before: always;page-break-inside: avoid;}
+                .photo-chunck{
+                  width: 150px;
+                  height: 150px;
+                  margin: 40px auto;
+                  display: block;
+                }
+                .cus-table{
+                  font-size: 13px;
+                  border-collapse: collapse;
+                }
+                tr,td{
+                  border: 1px solid #ccc;
+                }
+                td{
+                  padding: 5px 10px;
+                }
+                .tabl-ht{
+                  min-height: 20px;
+                  line-height: 20px;
+                }
+                .text-vat{
+                }
+                .text-label{
+                  text-align: justify;
+                  font-weight: 500;
+                }
+                .text-label:after, .text-label:before{
+                  display: inline-block;
+                  width: 100%;
+                  content: '';
+                }
+                .t-wd{
+                text-align: center!important;
+                width: 1%;
+                }
+               .jl-ht{
+                line-height: 95px;
+              }
+              .tb-titles{
+              font-size: 20px;width: 200px;margin: 10px auto;
+              }
+              .tb-gz{
+                position: absolute;
+                bottom: 33px;
+                right: 16px;
+                letter-spacing: 4px;
+                text-align: justify;
+              }
+              .tb-nyr{
+                position: absolute;
+                bottom: 8px;
+                right: 0;
+                text-align: justify;
+              }
+              .tb-nyr span{
+                margin: 0 10px;
+              }
+              .gz-qu{
+                position: relative;
+                height: 110px;
+              }
+              .ft-adjust{
+                font-size:10px;
+              }
+              .jl-ft{
+                font-size:12px;
+              }
+              .scale-ft{
+                font-size:12px;
+                width: 112%;
+                transform: scale(0.9);
+                transform-origin: top left;
+              }`
+
+        this.$print(strx,prinDom1)
+        //
+        // let printStr = '<html><head><style>'+strx+'</style></head><body>';
+        // let content = "";
+        // let str = prinDom1.innerHTML;
+        // content = content + str;
+        // printStr = printStr+content+"</body></html>";
+        // let newWindow=window.open("打印窗口","_blank");
+        // newWindow.document.write(printStr);
+        // newWindow.document.close();
+        // newWindow.print();
+        // newWindow.close();
       }
     }
   }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+  /*-webkit-transform: scale(0.3);*/
+  /*-webkit-transform-origin: 0 0;*/
   .photo-chunck{
     width: 150px;
     height: 150px;
     margin: 40px auto;
     display: block;
+  }
+  .cus-table{
+    font-size: 14px;
+    border-collapse: collapse;
+  }
+  tr,td{
+    border: 1px solid #ccc;
+  }
+  td{
+    padding: 0 10px;
+  }
+  .tabl-ht{
+    min-height: 20px;
+    line-height: 20px;
+  }
+  .text-vat{
+  }
+  .text-label{
+    text-align: justify;
+    font-weight: 700;
+  }
+  .text-label:after, .text-label:before{
+    display: inline-block;
+    width: 100%;
+    content: '';
+  }
+  .t-wd{
+    width: 30px;
+    text-align: center;
+  }
+  .jl-ht{
+    line-height: 160px;
+  }
+  .tb-titles{
+    font-size: 20px;width: 200px;margin: 0 auto;
+  }
+  .tb-gz{
+    position: absolute;
+    bottom: 33px;
+    right: 16px;
+    letter-spacing: 4px;
+    text-align: justify;
+  }
+  .tb-nyr{
+    position: absolute;
+    bottom: 8px;
+    right: 0;
+    text-align: justify;
+  }
+  .tb-nyr span{
+    margin: 0 10px;
+  }
+  .gz-qu{
+    position: relative;
+    height: 110px;
+  }
+  .print-btn{
+    display: block;width: 200px;margin: 20px auto;
   }
 </style>
