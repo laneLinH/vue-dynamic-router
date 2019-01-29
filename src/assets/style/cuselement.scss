@@ -1,3 +1,5 @@
+@import "variables";
+
 
 .module-chunk{
   .el-menu--inline{
@@ -76,8 +78,7 @@
     transition: all linear 0.3s;
   }
   .el-button--primary:focus, .el-button--primary:hover{
-
-  background-color:  rgba(2, 91, 183, 0.73);
+    background-color:  rgba(2, 91, 183, 0.73);
     color: #ffffff;
     border: 1px solid  rgba(2, 91, 183, 0.73);
   }
@@ -140,3 +141,5 @@
   display: block;
 }
 
+@include setColorForButton($btnStrs,$btnFtColor)
+@include h1-6($hFtsz)

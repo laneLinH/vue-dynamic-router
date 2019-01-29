@@ -40,6 +40,15 @@
       computed:{
         ...mapState(['menu'])
       },
+      mounted(){
+        let _th=this
+        document.onkeydown=function(event) {
+          var et = event || window.event || arguments.callee.caller.arguments[0];
+          if(et.keyCode===13){
+            _th.onSubmit('loginForm')
+          }
+        }
+      },
       methods:{
         ...mapActions(['loginIn','getMenuList','configRoute']),
         onSubmit(loginForm){

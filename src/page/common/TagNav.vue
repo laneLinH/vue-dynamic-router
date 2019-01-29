@@ -73,6 +73,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/style/variables";
   .tag-nav{
     position: absolute;
     width: calc(100% - 230px);
@@ -89,7 +90,7 @@
         margin: 5px;
         padding: 5px;
         border-radius: 5px;
-        background: #b3dbff;
+        background: $tagDefBkColor;
         transition: all .3s ease-in;
         a{
           color: white;
@@ -98,7 +99,7 @@
       li.active{
         margin: 5px;
         padding: 5px;
-        background: #1890ff;
+        background: $tagAcBkColor;
         border-radius: 5px;
 
       }

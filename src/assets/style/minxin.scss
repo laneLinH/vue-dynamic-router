@@ -1,6 +1,71 @@
-@mixin clearfix(){
+@function list-slice($list, $start: 1, $end: length($list), $sep: 'comma') {
+  $output: ();
+  @for $i from $start through $end {
+    $output: append($output, nth($list, $i), $sep); }
+  @return $output;
+}
+@function list-set-nth($list, $index, $value, $sep: 'comma') {
+  $length: length($list);
+  $output: ();
+  @if $index > $length or $index <= 0 {
+    @return $list;
+  }
+  @if $index > 1 {
+    @for $i from 1 through $index - 1 {
+      $output: append($output, nth($list, $i), $sep);
+    }
+  }
+  $output: append($output, $value, $sep);
+  @if $length > 1 {
+    @for $i from $index + 1 through $length {
+      $output: append($output, nth($list, $i), $sep);
+    }
+  }
+  @return $output;
+}
+
+@mixin clearfix{
   &:before,&:after{
     display: table;
     clear: both;
   }
 }
+@mixin hover($btHvcr){
+   &:hover{
+     background: $btHvcr;
+   }
+}
+
+@mixin setColorForButton($btnStr,$ftColor){
+  @each $key,$val in $btnStr{
+    .el-button-#{$key}{
+      color: $ftColor;
+      background-color: $val;
+      border-color: $val;
+      @include hover(darken($val,10%))
+    }
+  }
+}
+@mixin h1-6($hFtsz){
+  @each $ky,$val in $hFtsz{
+     #{$ky}{
+      font-size: $val;
+    }
+  }
+}
+
+@mixin textDr(){
+  $dir:(left,right,center,top,bottom);
+  @each $vr in $dir{
+    .text-#{$vr}{
+      @if ($vr==left or $vr==right or $vr==center){
+        text-align: $vr;
+      }@else if($vr==top or $vr==bottom){
+          vertical-align: $vr;
+      }
+    }
+  }
+}
+
+
+

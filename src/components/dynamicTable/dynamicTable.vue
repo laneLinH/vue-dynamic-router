@@ -206,6 +206,7 @@
             }
           })
         },
+        //列表状态处理
         dealBtn(btns,data){
               if(btns.dealBtnStatus){
                 let st=btns.dealBtnStatus

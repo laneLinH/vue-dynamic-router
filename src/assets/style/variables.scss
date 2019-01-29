@@ -1,3 +1,5 @@
+
+
 /**
   颜色配置区域
  */
@@ -7,14 +9,16 @@ $highColor:#0050b3;
 $mainFontColor:#262626;
 $bgColor:#ececec;
 $whiteFontColor:#ffffff;
-//功能信息配色
-$errorColor:#f5222d;
-$warningColor:#faad14;
-$successColor:#52c41a;
-$primaryColor:#1890ff;
-
 $linkColor:#0050b3;
-
+//功能信息配色
+$btnFtColor:#fff;
+$btnStrs:(
+  primary:#409eff,
+  warning:#e6a23c,
+  success:#67c23a,
+  danger:#f56c6c,
+  info:#909399
+);
 
 /****
   字体
@@ -23,3 +27,18 @@ $baseFontSize:14px;
 $meddumFontSize:18px;
 $logoFontSize:20px;
 $baseFontLt:1.5;
+
+
+$hFtsz:(
+  h1: $baseFontSize * 2.5 ,
+  h2: $baseFontSize * 2,
+  h3: $baseFontSize * 1.75,
+  h4: $baseFontSize * 1.5,
+  h5: $baseFontSize * 1.25,
+  h6: $baseFontSize
+);
+
+//tag
+$tagDefBkColor:#b3dbff;
+$tagAcBkColor:$mainColor
+
