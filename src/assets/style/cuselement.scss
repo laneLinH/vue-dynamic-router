@@ -1,4 +1,4 @@
-@import "variables";
+//@import "variables";
 
 
 .module-chunk{
@@ -35,15 +35,7 @@
     }
   }
 }
-.el-main{
-  padding: 61px 20px 0 20px;
-  height: calc(100vh - 50px);
-  overflow-y: auto;
-  .main-inner{
-    padding: 15px;
-    background: white;
-  }
-}
+
 
 .menu-wrapper{
   .el-menu-item{
@@ -99,15 +91,24 @@
   }
 
 }
-.el-select,.el-date-editor.el-input, .el-date-editor.el-input__inner{
-  width: 100%;
+.el-form-item{
+  .el-select,  .el-input,.el-date-editor.el-input__inner,.el-date-editor.el-input{
+    width:100%;
+  }
 }
 .el-dialog__wrapper{
   .el-dialog__header{
     background: #409eff;
   }
-  .el-dialog__title,.el-dialog__close{
+  .el-dialog__title,i.el-dialog__close{
     color: white;
+  }
+  .el-dialog__headerbtn{
+      &:focus,&:hover{
+        .el-dialog__close{
+          color: #d2cdcd;
+      }
+    }
   }
   .el-dialog__body{
     max-height:600px;
@@ -127,7 +128,7 @@
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
-.avatar-uploader-icon {
+.avatar-uploader .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
   width: 178px;

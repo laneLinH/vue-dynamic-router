@@ -23,7 +23,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "../../assets/style/variables";
+  /*@import "../../assets/style/variables";*/
   .logo{
     width: 230px;
     line-height: 60px;

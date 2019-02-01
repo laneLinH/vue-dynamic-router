@@ -115,8 +115,8 @@
               </dynamicForm>
             </el-col>
             <el-col :offset="10" :span="6">
-            <el-button type="primary" @click="audit('pass')">通过</el-button>
-            <el-button type="danger" @click="audit('reject')">驳回</el-button>
+              <el-button type="primary" @click="audit('pass')">通过</el-button>
+              <el-button type="danger" @click="audit('reject')">驳回</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -124,43 +124,38 @@
 </template>
 
 <script>
-  import {checkInterNum} from '@/utils/tools'
-  import {mapState} from 'vuex'
+  import {mapState,mapActions} from 'vuex'
     export default {
         name: "auditApp",
        props:{
          pageNameFlg:{
            default:''
          }
-       } ,
+       },
       data:()=>({
-        checkInterNum,
         formData:{},
         auditFormData:{
-          auditResult:'',
-          auditDesc:''
+          auditResult:null,
+          auditDesc:null
         },
         fixParams:{
-          cadreId:null
+          cadreId:null,
+          auditResult:null
         },
         auditForm:{
           labelWidth:'150px',
           httpUrl:'',
           formItem:[
-            {type:'radio',initValue:1,maxlength:1,classStr:'el-col-24',key:'auditResult',label:'审核意见',options:[{value:1,label:'通过'},{value:2,label:'驳回'}]},
+            // {type:'radio',initValue:1,maxlength:1,classStr:'el-col-24',key:'auditResult',label:'审核意见',options:[{value:1,label:'通过'},{value:2,label:'驳回'}]},
             {type:'input',initValue:null,inputType:'textarea',classStr:'el-col-24',key:'auditDesc',label:'审核评语',placeholder:'请输入审核评语',rules:[{ required: true, message: '请输入审核评语', trigger: 'blur'}]},
           ]
         }
       }),
       computed: {
-        ...mapState(['dynamicVx']),
+        ...mapState(['singleRowData']),
         rowData(){
-          for(let k of this.dynamicVx.optData){
-            if(k.name===this.pageNameFlg){
-              return k.data['rowData']||null
-            }
-          }
-          return null
+          this.getRowData(this.pageNameFlg)
+          return this.singleRowData
         }
       },
       filters:{
@@ -172,11 +167,14 @@
           this.getcadreByorgNo()
       },
       methods:{
+        ...mapActions(['getRowData']),
         audit(str){
           if(str==='pass'){
-            this.auditForm.httpUrl='/cadreBase/agreedit'
+            this.auditForm.httpUrl='/cad/cadreBase/agreedit'
+            this.fixParams.auditResult=1
           }else{
-            this.auditForm.httpUrl='/cadreBase/reject'
+            this.auditForm.httpUrl='/cad/cadreBase/reject'
+            this.fixParams.auditResult=2
           }
           this.$refs.auditForm.validateForm((params)=>{
             this.$http.post(this.auditForm.httpUrl,params).then((res)=>{
@@ -211,7 +209,7 @@
           return this.$formatDate(parseInt(string),'YYYYMM')
         },
         getcadreByorgNo(){
-          this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
+          this.$http.get('/cad/cadreBase/curentinfo',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
             if(res.success){
               this.formData=res.data
               if(this.formData.fileAddress){

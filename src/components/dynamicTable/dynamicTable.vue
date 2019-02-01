@@ -75,7 +75,7 @@
             @size-change="sizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryPage.page"
-            :page-sizes="[10,30,50,70,100]"
+            :page-sizes="paginationConfig.pageSizes"
             :page-size="queryPage.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="queryPage.total">
@@ -225,11 +225,14 @@
             this.$refs.tableModal.showModal(item)
           })
         },
+        getQueryData(){
+          return this.queryData
+        },
         loadTableData(formData){
           this.queryData=formData||{}
           this.loading=true
           if(this.tableBaseConfig.tableType==='treeTable'){
-            this.$http.get(this.httpUrl,{params:this.queryData}).then((res)=>{
+            this.$http.get(this.httpUrl,this.queryData).then((res)=>{
               this.loading=false
               if (!res.success) {
                 this.$http.handleError(res)
@@ -242,7 +245,7 @@
           }else {
             this.$set(this.queryData,'pageNo',this.queryPage.pageNo)
             this.$set(this.queryData,'pageSize',this.queryPage.pageSize)
-            this.$http.get(this.httpUrl,{params:this.queryData}).then((res)=>{
+            this.$http.get(this.httpUrl,this.queryData).then((res)=>{
               this.loading=false
               if (!res.success) {
                 this.$http.handleError(res)

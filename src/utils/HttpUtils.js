@@ -54,7 +54,7 @@ function handleSession(res) {
 const http ={
   get(url, data) {
     return new Promise((resolve, reject) => {
-      axios.get(url, data).then((response) => {
+      axios.get(url,{params:data}).then((response) => {
         handleSession(response)
         resolve(response.data)
       }, (response) => {
@@ -137,7 +137,7 @@ const appendHeaders = (headers) => {
 }
 
 HttpUtils.install = function (Vue, options) {
-  axios.defaults.baseURL = process.env.BASE_API
+  // axios.defaults.baseURL = process.env.BASE_API
   axios.defaults.timeout = 1000 * 10
   axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
   axios.defaults.withCredentials = true

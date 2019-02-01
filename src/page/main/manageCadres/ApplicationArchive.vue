@@ -16,14 +16,14 @@
                     :tableColumn="tableConfig.tableColumn"
                     :paginationConfig="tableConfig.paginationConfig"
                     :httpUrl="tableConfig.httpUrl"
-                    @dealTableData="dealTableData"
-                    @tableSelection="tableSelection">
+                    @dealTableData="dealTableData">
       </dynamicTable>
     </el-row>
   </template>
 
   <script>
       import  auditApp from '@/page/main/manageCadres/auditApp'
+      import {mapActions,mapState} from 'vuex'
       export default {
         name: "ApplicationArchive",
         data(){
@@ -33,11 +33,15 @@
                  formItem:[
                    {type:'input',initValue:null,inputType:'text',key:'cadreName',label:'',placeholder:'请输入干部姓名'},
                    {type:'input',initValue:null,inputType:'text',key:'fulltimeEducation',label:'',placeholder:'请输入干部学历'},
+                   // {type:'select',hidden:false,initValue:null,key:'select1',label:'',placeholder:'请选择xxx',changeVal:null,options:[{label:'选项1',id:1,value:'1'},{label:'选项2',id:2,value:'2'},
+                   //     {label:'选项3',id:3,value:'3'}],changefuc:this.selectChage},
+                   // {type:'select',hidden:true,initValue:null,key:'select2',label:'',placeholder:'请选择xxx',options:[{label:'1-2',id:1,value:'1'},{label:'1-3',id:2,value:'2'},
+                   //     {label:'1-4',id:3,value:'3'}]},
                  ]
                },
               pageNameFlg:'ApplicationArchive',
               tableConfig:{
-                httpUrl:'/cadreBase/pageauditlist',
+                httpUrl:'/cad/cadreBase/pageauditlist',
                 tableBaseConfig:{
                   tableType:'table',
                   height:500,
@@ -84,21 +88,23 @@
                   //             custForm:cadresFormComponents,
                   //           }
                   // },
-                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'审核',optType:'edit',httpUrl:'/cadreBase/curentinfo',fixParams:{cadreId:null},
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'审核',optType:'edit',httpUrl:'/cad/cadreBase/curentinfo',fixParams:{cadreId:null},
                     modalOption:{
                       modalType:'editPop',
                       isShowModal:false,
                       btnLoading:true,
                       modalTitle:"审核",
+                      btns:[
+                        {type:'default',isShow:true,text:'关闭',icon:'fa fa-delete'}
+                      ],
                       btnCenter:true,
                       modalWidth:'50%',
-                      cancelText:'关闭'
                     },
                     form:{
                       custForm:auditApp,
                     }
                   },
-                  {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[]},icon:'fa fa-delete',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
+                  {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[]},icon:'fa fa-delete',httpUrl:'/cad/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
                     ]
                   }
                 ]
@@ -106,14 +112,10 @@
             }
         },
         computed:{
+          ...mapState(['singleRowData']),
           rowData(){
-            for(let k of this.dynamicVx.optData){
-              debugger
-              if(k.name===this.pageNameFlg){
-                return k.data['rowData']||null
-              }
-            }
-            return null
+            this.getRowData(this.pageNameFlg)
+            return  this.singleRowData
           }
         },
         mounted(){
@@ -123,13 +125,30 @@
             }
           })
         },
+        watch:{
+          // 'searchForm.formItem[2].changeVal'(val){
+          //   console.log('changev=='+val)
+          // }
+
+        },
         methods:{
+          ...mapActions(['getRowData']),
+          // selectChage(selv,item){
+          //   console.log(item)
+          //   console.log(selv)
+          //   this.searchForm.formItem[3].hidden=false
+          //   this.searchForm.formItem[3].options=[{label:'1222',id:1,value:'1'},{label:'133',id:2,value:'2'},
+          //     {label:'1444',id:3,value:'3'}]
+          // },
           reset(){
             this.$refs.appArchForm.resetForm()
             this.$refs.appArchTable.loadTableData()
           },
           reload(){
-            this.$refs.appArchTable.loadTableData()
+            let _th=this
+            setTimeout(()=> {
+              _th.$refs.appArchTable.loadTableData()
+            })
           },
           queryForm(){
             this.$refs.appArchForm.queryForm((formData)=>{
@@ -144,12 +163,12 @@
             }
             this.$refs.appArchTable.loadTable(tableData)
           },
-          tableClickHandler(val){
-            console.log(val)
-          },
-          tableSelection(val){
-            this.rowData=val
-          }
+          // tableClickHandler(val){
+          //   console.log(val)
+          // },
+          // tableSelection(val){
+          //   this.rowData=val
+          // }
         },
          components:{
            auditApp

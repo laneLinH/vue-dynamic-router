@@ -20,7 +20,7 @@
           rowData:null,
           pageNameFlg:'manageOrg',
           tableConfig:{
-            httpUrl:'/sysOrganization/orginfos',
+            httpUrl:'/cad/sysOrganization/orginfos',
             tableBaseConfig:{
               tableType:'treeTable',
               maxHeight:500,
@@ -50,16 +50,17 @@
               {prop:'updateDate',label:'更新时间'},
               {label:'操作',fixed:'right',width:'300',optBtns:[
                   {type:'primary',isShow:false,
-                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加公司',optType:'new',httpUrl:'/sysOrganization/insertcop',fixParams:{parentId:'orgCode',},methods:'post',
+                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加公司',optType:'new',fixParams:{parentId:'orgCode',},methods:'post',
                     modalOption:{
                       modalType:'editPop',
                       isShowModal:false,
-                      btnLoading:true,
                       modalTitle:"添加公司",
                       btnCenter:false,
                       modalWidth:'50%',
-                      okText:'保存',
-                      cancelText:'取消'
+                      btns:[
+                        {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysOrganization/insertcop',methods:'post',func:'ok'},
+                        {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
+                      ],
                     },
                     form:{
                       inline:false,
@@ -73,16 +74,17 @@
                     }
                   },
                   {type:'primary',isShow:false,
-                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加部门',optType:'new',httpUrl:'/sysOrganization/insertdep',fixParams:{parentId:'orgCode'},methods:'post',
+                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加部门',optType:'new',fixParams:{parentId:'orgCode'},
                     modalOption:{
                       modalType:'editPop',
                       isShowModal:false,
-                      btnLoading:true,
                       modalTitle:"添加部门",
                       btnCenter:false,
                       modalWidth:'50%',
-                      okText:'保存',
-                      cancelText:'取消'
+                      btns:[
+                        {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysOrganization/insertdep',methods:'post',func:'ok'},
+                        {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
+                      ],
                     },
                     form:{
                       inline:false,
@@ -96,7 +98,7 @@
                     }
                   },
                   {type:'danger',isShow:false,
-                    dealBtnStatus:{key:'ishasChilren',status:[0]},text:'删除',icon:'fa fa-delete',confirmText:'确定要删除这条数据？',confirmTitle:'删除',optType:'confirm',httpUrl:'/sysOrganization/delcop',fixParams:{orgNo:'orgCode'},methods:'post',
+                    dealBtnStatus:{key:'ishasChilren',status:[0]},text:'删除',icon:'fa fa-delete',confirmText:'确定要删除这条数据？',confirmTitle:'删除',optType:'confirm',httpUrl:'/cad/sysOrganization/delcop',fixParams:{orgNo:'orgCode'},methods:'post',
                   },
                 ]
               }
@@ -112,8 +114,9 @@
       },
       methods:{
         reload(){
-          setTimeout(()=>{
-            this.$refs.manageOrgtable.loadTableData()
+          let _th=this
+          setTimeout(()=> {
+            _th.$refs.manageOrgtable.loadTableData()
           })
         },
         dealTableData(tableData){

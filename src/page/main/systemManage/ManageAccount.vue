@@ -40,16 +40,17 @@
           ]
         },
         toolBtns:[
-          {type:'primary',isShow:'true',text:'创建帐号',icon:'fa fa-plus',optType:'new',httpUrl:'/sysAccount/create',methods:'post',
+          {type:'primary',isShow:'true',text:'创建帐号',icon:'fa fa-plus',optType:'new',
             modalOption: {
               modalType:'newPop',
               isShowModal:false,
-              btnLoading:false,
               modalTitle:"创建帐号",
               btnCenter:false,
               modalWidth:'50%',
-              okText:'保存',
-              cancelText:'取消'
+              btns:[
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysAccount/create',methods:'post',func:'ok'},
+                {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
+              ],
             },
             form:{
               inline:false,
@@ -68,16 +69,17 @@
               ],
             }
           },
-          {type:'primary',isShow:'true',text:'修改密码',optType:'edit',httpUrl:'/sysAccount/changepwd',methods:'post',
+          {type:'primary',isShow:'true',text:'修改密码',optType:'edit',
             modalOption:{
               modalType:'editPop',
               isShowModal:false,
-              btnLoading:true,
               modalTitle:"修改密码",
               btnCenter:false,
               modalWidth:'400px',
-              okText:'保存',
-              cancelText:'取消'
+              btns:[
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysAccount/changepwd',methods:'post',func:'ok'},
+                {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
+              ],
             },
             form:{
               inline:false,
@@ -91,10 +93,10 @@
               ],
             }
           },
-          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:'/sysAccount/delete',methods:'post',confirmText:'确定要删除这条数据？',confirmTitle:'删除',fixParams:{accountId:null}}
+          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:'/cad/sysAccount/delete',methods:'post',confirmText:'确定要删除这条数据？',confirmTitle:'删除',fixParams:{accountId:null}}
         ],
         tableConfig:{
-          httpUrl:'/sysAccount/pagelist',
+          httpUrl:'/cad/sysAccount/pagelist',
           tableBaseConfig:{
             tableColumnType:'selection',
             maxHeight:600,
@@ -123,7 +125,8 @@
             {prop:'sorgNo',label:'组织编号'},
             {prop:'valid',label:'帐号状态',ftLabel:[
                 {tTitle:'可用',state:1,type:'primary'},
-                {tTitle:'禁用',state:0,type:'primary'}]},
+                {tTitle:'禁用',state:0,type:'primary'}]
+            },
             // {label:'操作',fixed:'right',width:'300',optBtns:[
             //     {type:'primary',isShow:'true',text:'编辑',optType:'edit',httpUrl:'',},
             //     {type:'danger',isShow:'true',text:'删除',icon:'fa fa-delete',httpUrl:'/system/account/list',optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
@@ -152,7 +155,10 @@
         })
       },
       reload(){
-          this.$refs.manageAccTable.loadTableData()
+        let _th=this
+        setTimeout(()=> {
+          _th.$refs.manageAccTable.loadTableData()
+        })
       },
       dealTableData(tableData){
         // this.getAccount(queryData)

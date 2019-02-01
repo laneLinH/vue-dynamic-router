@@ -8,6 +8,7 @@
            :inline="form.inline"
            :disabled="form.disabled"
            :hide-required-asterisk="form.hideRequiredAsterisk">
+
     <el-form-item  v-for="(item,id) in form.formItem"
                   :key="id"
                   :label="item.label"
@@ -16,6 +17,7 @@
                   :rules="item.rules"
                   v-show="!item.hidden"
                   :label-width="item.labelWidth">
+
       <el-select v-if="item.type==='select'"
         v-model="formData[item.key]"
         :clearable="item.clearable"
@@ -23,6 +25,7 @@
         :collapse-tags="item.collapseTags"
         :size="item.size"
         :name="item.selectName"
+        @change="selectChange($event,item)"
         :multiple-limit="item.multipleLimit"
         :autocomplete="item.autocomplete"
         :placeholder="item.placeholder">
@@ -41,7 +44,7 @@
         :start-placeholder="item.startPlaceholder"
         :end-placeholder="item.endPlaceholder"
         :placeholder="item.placeholder"
-        @change="dateChange">
+        @change="selectChange($event,item)">
       </el-date-picker>
       <el-input
         v-else-if="item.type==='input'"
@@ -140,8 +143,6 @@
         getFormData(){
           return this.formData
         },
-        dateChange(val){
-        },
         loadFormData(){
           for(let k in this.form.fixParams){
             this.form.fixParams[k]=this.rowData[0][k]
@@ -194,7 +195,7 @@
           })
         },
         validateForm(suc,fal){
-            this.scopefixparams=this.$deepCopy(this.fixParams)
+          this.scopefixparams=this.$deepCopy(this.fixParams)
           if(this.scopefixparams){
             if(Object.keys(this.scopefixparams).length>0&&this.rowData && this.rowData.length===1){
               for(let k in this.scopefixparams){
@@ -208,7 +209,6 @@
             }
             this.formData=Object.assign(this.formData,this.scopefixparams)
           }
-
           for(let key in this.formData){
             if (this.formData[key] instanceof Date) {
               this.formData[key] = new Date(this.formData[key]).getTime()||null
@@ -223,6 +223,11 @@
              }
            }
           });
+        },
+        selectChange(val,item){
+          if(item.changefuc){
+            item.changefuc(val,item)
+          }
         }
       }
     }

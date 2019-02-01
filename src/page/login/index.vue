@@ -55,7 +55,7 @@
           this.$refs[loginForm].validate((valid,callback) => {
             if (valid) {
               this.loginIn(this.loginForm).then((res)=>{
-                if(res.code===200){
+                if(res.success){
                   if(this.menu.routes){
                     this.getMenuList()
                     this.configRoute()
@@ -83,7 +83,7 @@
         width: 100%;
         height: 100%;
         position: relative;
-        background: url("/static/img/login_bg.png") no-repeat;
+        background: url("/img/login_bg.png") no-repeat;
         .login-form{
           display: inline-block;
           background: rgba(0, 0, 0, 0.52);

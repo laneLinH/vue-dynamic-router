@@ -148,7 +148,7 @@
           </table>
         </div>
     </el-row>
-    <el-button @click="doPrint"  type="primary"  class="print-btn">打印</el-button>
+    <!--<el-button @click="doPrint"  type="primary"  class="print-btn">打印</el-button>-->
   </el-row>
 
 </template>
@@ -205,11 +205,11 @@
         return this.$formatDate(parseInt(string),'YYYYMM')
       },
       getcadreByorgNo(){
-        this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
+        this.$http.get('/cad/cadreBase/curentinfo',{cadreId:this.rowData[0].cadreId}).then((res)=>{
           if(res.success){
             this.formData=res.data
             if(this.formData.fileAddress){
-              this.formData.fileAddress=window.location.origin+'/'+ this.formData.fileAddress.replace("\\","/")
+              this.formData.fileAddress=this.$src+'/cad/'+ this.formData.fileAddress.replace("\\","/")
             }
             if(this.formData.familys){
               this.familysTableRow =10-this.formData.familys.length
@@ -228,25 +228,13 @@
               k.startTime=this.formatDate(k.startTime)
               k.endTime=this.formatDate(k.endTime)
             }
-
-            // let scfts=document.querySelectorAll('.scale-ft')
-            // let adjustay=[[206,1],[40,0.9],[20,0.9]]
-            // for(let im of scfts){
-            //   if(im.textContent.length>20){
-            //     // width: 112%;
-            //     // transform: scale(0.9);
-            //     // transform-origin: top left;
-            //     im.style.webkitTransform='scale(0.3)';
-            //     im.style.webkitTransformOrigin='0 0';
-            //   }
-            // }
           }
         },error=>{
 
         })
       },
       getAudithistory(){
-        this.$http.get('/cadreAudit/audithistory',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
+        this.$http.get('/cad/cadreAudit/audithistory',{cadreId:this.rowData[0].cadreId}).then((res)=>{
           if(res.success){
             this.auditInfo=res.data
           }
@@ -257,7 +245,6 @@
       doPrint(){
          let  prinDom1=this.$refs.printchunck1.$el
          let prin=prinDom1.querySelectorAll('.cus-print')
-        console.log(prin)
         if(prin){
           for(let im of prin){
             console.log(im.offsetHeight)
@@ -343,17 +330,9 @@
               }`
 
         this.$print(strx,prinDom1)
-        //
-        // let printStr = '<html><head><style>'+strx+'</style></head><body>';
-        // let content = "";
-        // let str = prinDom1.innerHTML;
-        // content = content + str;
-        // printStr = printStr+content+"</body></html>";
-        // let newWindow=window.open("打印窗口","_blank");
-        // newWindow.document.write(printStr);
-        // newWindow.document.close();
-        // newWindow.print();
-        // newWindow.close();
+      },
+      exportExcel(){
+
       }
     }
   }

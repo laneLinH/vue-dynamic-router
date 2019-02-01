@@ -18,13 +18,9 @@
 </template>
 
 <script>
-  // import {dynamicModal} from '../index'
   import {mapState,mapActions} from 'vuex'
   export default {
     name: "dynamicButton",
-    components:{
-      // dynamicModal
-    },
     props:{
       btns:{
         default: []
@@ -117,10 +113,9 @@
             } else {
               this.$message.error('请选择要操作的数据!')
             }
+          }else if(item.optType==='cust'){
+            item.func(item)
           }
-          // else if(item.optType==='cust'){
-          //     this.$emit('btn')
-          // }
         })
       },
       showSelfModal(item){

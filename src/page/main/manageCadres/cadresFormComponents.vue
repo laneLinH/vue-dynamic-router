@@ -1,7 +1,7 @@
 <template>
   <el-form  class="resum-form"
             ref="infoform"
-           label-width="200px"
+           label-width="150px"
            :model="formData">
         <el-form-item
                     label="姓名"
@@ -60,7 +60,7 @@
           v-model="formData.cadreBirthday"
           type="date"
           placeholder="选择日期"
-          format="yyyyMM" style="width: 75%;">
+          format="yyyyMM" >
         </el-date-picker>
         <span>{{age}}</span>
         <el-tooltip  effect="light" :content="noticeTip.cadreBirthday"  placement="right">
@@ -460,7 +460,8 @@
         'formData.cadreBirthday'(val){
               let birth=new Date(val).getTime()
               let nowDate=new Date().getTime()
-              this.age=new Date(nowDate-birth).getFullYear()-1970+'岁'
+                birth ? this.age=new Date(nowDate-birth).getFullYear()-1970+'岁':this.age=null
+
         },
         'partyInfo.partyTypes'(val){
            this.validPartyType(val)
@@ -479,7 +480,7 @@
       },
       methods:{
           getcadreByorgNo(){
-              this.$http.get('/cadreBase/curentinfo',{params:{cadreId:this.formData.cadreId}}).then((res)=>{
+              this.$http.get('/cad/cadreBase/curentinfo',{cadreId:this.formData.cadreId}).then((res)=>{
               if(res.success){
                 let data=res.data
                 this.isEdit=true
@@ -498,7 +499,7 @@
                 this.treeValue=this.formData.orgNo
                 this.getOrgType( this.orgTreeData,this.formData.orgNo)
                 if(data.fileAddress){
-                  this.formData.fileAddress=window.location.origin+'/'+data.fileAddress.replace("\\","/")
+                  this.formData.fileAddress=this.$src+'/cad/'+data.fileAddress.replace("\\","/")
                 }
                 if(data.joinPartyDate&&data.joinPartyDate!=='null'){
                   this.partyInfo.partyTypes.push('共产党')
@@ -605,7 +606,7 @@
           }
         },
         getOrgTree(){
-          this.$http.get('/sysOrganization/orginfos').then((res)=>{
+          this.$http.get('/cad/sysOrganization/orginfos').then((res)=>{
             if(res.success){
               this.orgTreeData=[res.data]
               this.dealTreeData(this.orgTreeData,0)
@@ -703,13 +704,14 @@
           }
           suc(forms)
         },
-        submit(suc,fal){
+        validateForm(suc,fal){
+          let forms=new FormData()
           this.$refs.infoform.validate((valid) => {
             if(valid){
               this.formateResumesDate()
               this.formatDate(this.formData)
               let submtData=this.$deepCopy(this.formData)
-              let forms=new FormData()
+
               for(let k in submtData){
                 if(k==='file'&& submtData[k]){
                   forms.append('file',submtData[k].raw)
@@ -723,10 +725,6 @@
                   }
                 }
               }
-
-
-
-
               suc(forms)
             }else{
               if(fal != null){
@@ -742,9 +740,8 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .resum-form{
-    display: inline-block;
-    width: 650px;
-    display: block;
+    width:500px;
+    margin: 0 auto;
   }
   .notice-tip{
     position: absolute;

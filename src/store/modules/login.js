@@ -26,7 +26,7 @@ const logins={
   actions:{
     loginIn ({ state, commit }, data) {
          return new Promise((resolve, reject)=>{
-           service.http.post('/sysAccount/cadrelogin',data).then((res)=>{
+           service.http.post('/cad/sysAccount/cadrelogin',data).then((res)=>{
                  if(res.code===200){
                    commit('setAccount',{accountName:data.accountName,orgname:res.data.orgname,role:res.data.role})
                    resolve(res)

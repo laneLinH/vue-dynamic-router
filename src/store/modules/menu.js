@@ -36,6 +36,13 @@ const menus={
               {name: '账户管理', path: 'ManageAccount'},
               {name: '组织管理', path: 'ManageOrganization'}
             ]
+          },
+          {
+            name: 'testpage',
+            path:'test',
+            children: [
+              {name: '账户管理', path: 'test'},
+            ]
           }
         ]
         let dealMenuList=(list)=>{
@@ -65,7 +72,6 @@ const menus={
                     component:() => import('@/page/main'+m.pathUrl),
                     children:[]
                   }
-                  console.log(route)
                   childroutes.push(route)
                 })
                 accountRoutes[id].children=childroutes

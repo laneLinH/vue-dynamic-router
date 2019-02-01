@@ -7,41 +7,17 @@ import store from './store'
 import 'normalize.css/normalize.css'
 import ElementUI from 'element-ui'
 import http from '@/utils/HttpUtils'
-import {$dealTableDate,$typeOf,$deepClone,$formatDate ,contactObj,print} from '@/utils/tools'
 import 'element-ui/lib/theme-chalk/index.css'
-// import dynamicTable from '@/components/dynamicTable'
-// import dynamicModal from '@/components/dynamicModal'
-// import dynamicForm from '@/components/dynamicForm'
-// import dynamicButton from '@/components/dynamicButton'
-import {
-  dynamicTable,
-  dynamicModal,
-  dynamicForm,
-  dynamicButton
-} from '@/components'
-// console.log(dynamicTable)
 
-Vue.use(dynamicButton)
-Vue.use(dynamicModal)
-Vue.use(dynamicForm)
-Vue.use(dynamicTable)
-
-Vue.prototype.$dynamicBus=new Vue()
-Vue.use(ElementUI);
+import '../packages/dynamicPackge.umd'
+import '../packages/dynamicPackge.css'
+Vue.use(dynamicPackge.default.install)
+Vue.use(ElementUI,{size: 'small'});
 Vue.use(http)
-
-Vue.prototype.$typeOf = $typeOf
-Vue.prototype.$deepCopy = $deepClone
-Vue.prototype.$formatDate = $formatDate
-Vue.prototype.$dealTableDate = $dealTableDate
-Vue.prototype.$print=print
-
-
-/* eslint-disable no-new */
+Vue.config.productionTip = false;
+Vue.prototype.$src=process.env.VUE_APP_SRC
 new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
-})
+    router,
+    store,
+    render: h => h(App)
+}).$mount("#app");

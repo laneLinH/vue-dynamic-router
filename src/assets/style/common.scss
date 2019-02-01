@@ -1,5 +1,4 @@
-@import "minxin";
-@import "variables";
+
 *,*::before,*::after{
   box-sizing: border-box;
   padding: 0;
@@ -64,6 +63,16 @@ body{
   -webkit-box-shadow: inset 0 0 6px rgba(64, 158, 255, 0.72);
 }
 
-@include textDr
+.main__body.el-main{
+  padding: 61px 20px 0 20px;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+.main__inner{
+  padding: 15px;
+  background: white;
+}
 @import "cuselement";
+@include textDr
+
 

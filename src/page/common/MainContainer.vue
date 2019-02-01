@@ -1,6 +1,6 @@
 <template>
-  <el-main>
-    <div class="main-inner">
+  <el-main class="main__body">
+    <div class="main__inner">
     <router-view></router-view>
     </div>
   </el-main>
