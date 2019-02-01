@@ -205,11 +205,11 @@
         return this.$formatDate(parseInt(string),'YYYYMM')
       },
       getcadreByorgNo(){
-        this.$http.get('/cad/cadreBase/curentinfo',{cadreId:this.rowData[0].cadreId}).then((res)=>{
+        this.$http.get(this.$api.cadreBase_curentinfo,{cadreId:this.rowData[0].cadreId}).then((res)=>{
           if(res.success){
             this.formData=res.data
             if(this.formData.fileAddress){
-              this.formData.fileAddress=this.$src+'/cad/'+ this.formData.fileAddress.replace("\\","/")
+              this.formData.fileAddress=this.$src+ this.formData.fileAddress.replace("\\","/")
             }
             if(this.formData.familys){
               this.familysTableRow =10-this.formData.familys.length
@@ -234,7 +234,7 @@
         })
       },
       getAudithistory(){
-        this.$http.get('/cad/cadreAudit/audithistory',{cadreId:this.rowData[0].cadreId}).then((res)=>{
+        this.$http.get(this.$api.cadreAudit_audithisthory,{cadreId:this.rowData[0].cadreId}).then((res)=>{
           if(res.success){
             this.auditInfo=res.data
           }

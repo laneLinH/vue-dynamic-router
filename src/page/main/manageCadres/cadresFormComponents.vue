@@ -322,7 +322,6 @@
         },
         data:()=>({
           cadreNationOptions,
-          // imageUploadUrl:'/cad/sysUploadFileInfo/upload',
           sexOption:[
             {value:'男',label:'男'},
             {value:'女',label:'女'},
@@ -480,7 +479,7 @@
       },
       methods:{
           getcadreByorgNo(){
-              this.$http.get('/cad/cadreBase/curentinfo',{cadreId:this.formData.cadreId}).then((res)=>{
+              this.$http.get(this.$api.cadreBase_curentinfo,{cadreId:this.formData.cadreId}).then((res)=>{
               if(res.success){
                 let data=res.data
                 this.isEdit=true
@@ -499,7 +498,7 @@
                 this.treeValue=this.formData.orgNo
                 this.getOrgType( this.orgTreeData,this.formData.orgNo)
                 if(data.fileAddress){
-                  this.formData.fileAddress=this.$src+'/cad/'+data.fileAddress.replace("\\","/")
+                  this.formData.fileAddress=this.$src+data.fileAddress.replace("\\","/")
                 }
                 if(data.joinPartyDate&&data.joinPartyDate!=='null'){
                   this.partyInfo.partyTypes.push('共产党')
@@ -606,7 +605,7 @@
           }
         },
         getOrgTree(){
-          this.$http.get('/cad/sysOrganization/orginfos').then((res)=>{
+          this.$http.get(this.$api.sysOrganization_orginfos).then((res)=>{
             if(res.success){
               this.orgTreeData=[res.data]
               this.dealTreeData(this.orgTreeData,0)

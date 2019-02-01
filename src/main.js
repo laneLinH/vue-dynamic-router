@@ -8,14 +8,18 @@ import 'normalize.css/normalize.css'
 import ElementUI from 'element-ui'
 import http from '@/utils/HttpUtils'
 import 'element-ui/lib/theme-chalk/index.css'
+import api from './api'
+// import '../packages/dynamicPackge.umd'
+// import '../packages/dynamicPackge.css'
+// Vue.use(dynamicPackge.default.install)
+import {install} from '@/components'
+Vue.use(install);
 
-import '../packages/dynamicPackge.umd'
-import '../packages/dynamicPackge.css'
-Vue.use(dynamicPackge.default.install)
-Vue.use(ElementUI,{size: 'small'});
+Vue.use(ElementUI);
 Vue.use(http)
 Vue.config.productionTip = false;
-Vue.prototype.$src=process.env.VUE_APP_SRC
+Vue.prototype.$src=process.env.VUE_APP_IMG_SRC
+Vue.prototype.$api=api
 new Vue({
     router,
     store,

@@ -41,7 +41,7 @@
                },
               pageNameFlg:'ApplicationArchive',
               tableConfig:{
-                httpUrl:'/cad/cadreBase/pageauditlist',
+                httpUrl:this.$api.cadreBase_pageauditlist,
                 tableBaseConfig:{
                   tableType:'table',
                   height:500,
@@ -88,7 +88,7 @@
                   //             custForm:cadresFormComponents,
                   //           }
                   // },
-                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'审核',optType:'edit',httpUrl:'/cad/cadreBase/curentinfo',fixParams:{cadreId:null},
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'审核',optType:'edit',httpUrl:this.$api.cadreBase_curentinfo,fixParams:{cadreId:null},
                     modalOption:{
                       modalType:'editPop',
                       isShowModal:false,
@@ -104,7 +104,7 @@
                       custForm:auditApp,
                     }
                   },
-                  {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[]},icon:'fa fa-delete',httpUrl:'/cad/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
+                  {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[]},icon:'fa fa-delete',httpUrl:this.$api.cadreBase_delete,fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
                     ]
                   }
                 ]
@@ -129,7 +129,6 @@
           // 'searchForm.formItem[2].changeVal'(val){
           //   console.log('changev=='+val)
           // }
-
         },
         methods:{
           ...mapActions(['getRowData']),

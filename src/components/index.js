@@ -34,6 +34,7 @@ export default {
 }
 
 export {
+    install,
     dynamicTable,
     dynamicModal,
     dynamicForm,

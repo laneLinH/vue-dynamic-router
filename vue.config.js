@@ -13,11 +13,11 @@ const proxy={
 }
 module.exports = {
     // publicPath: '/', // 默认'/'，部署应用包时的基本 URL
-    outputDir: process.env.outputDir || 'dist', // 'dist', 生产环境构建文件的目录
+    outputDir: process.env.outputDir || 'dist',
     assetsDir: '', // 相对于outputDir的静态资源(js、css、img、fonts)目录
     lintOnSave: false,
-    runtimeCompiler: true, // 是否使用包含运行时编译器的 Vue 构建版本
-    productionSourceMap: false, // 生产环境的 source map
+    runtimeCompiler: true,
+    productionSourceMap: false,
 
     configureWebpack: config => {
         // config.resolve = {
@@ -45,7 +45,7 @@ module.exports = {
                             warnings: false,
                             drop_console: true,
                             drop_debugger: false,
-                            pure_funcs: ['console.log']//移除console
+                            pure_funcs: ['console.log']
                         }
                     },
                     sourceMap: false,
@@ -75,8 +75,7 @@ module.exports = {
         // }
     },
     chainWebpack: config => {
-        // 修复HMR
-        config.resolve.symlinks(true);
+        config.resolve.symlinks(true);// 修复HMR
         if (process.env.IS_ANALYZ) {
             config.plugin('webpack-report')
                 .use(BundleAnalyzerPlugin, [{
@@ -85,25 +84,20 @@ module.exports = {
         }
     },
     devServer: {
-        // 设置主机地址
         host: '0.0.0.0',
-        // 设置默认端口
         port: 8082,
         proxy:proxy,
     },
     productionSourceMap: false,
         css: {
-        // 是否使用css分离插件 ExtractTextPlugin
-        extract: IS_PROD,
-        // 开启 CSS source maps?
-        sourceMap: false,
+        extract: IS_PROD, // 是否使用css分离插件 ExtractTextPlugin
+        sourceMap: false, // 开启 CSS source maps
         // css预设器配置项
         loaderOptions: {
             sass:{
-                data:`@import "@/assets/style/variables.scss";@import "@/assets/style/minxin.scss";$src: "${process.env.VUE_APP_SRC}";`,
+                data:`@import "@/assets/style/variables.scss";@import "@/assets/style/minxin.scss";$src: "${process.env.VUE_APP_SRC}";`,//将sass变量设置为全局
             }
         },
-        // 启用 CSS modules for all css / pre-processor files.
         modules: false
 
     },

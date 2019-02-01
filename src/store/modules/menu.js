@@ -1,4 +1,4 @@
-import {getMenuList} from '@/service/menu'
+// import {getMenuList} from '@/service/menu'
 import {Message} from 'element-ui'
 import comp from '@/router/components'
 const menus={
@@ -41,7 +41,7 @@ const menus={
             name: 'testpage',
             path:'test',
             children: [
-              {name: '账户管理', path: 'test'},
+              {name: 'test', path: 'test'},
             ]
           }
         ]

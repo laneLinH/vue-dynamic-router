@@ -48,7 +48,7 @@
               btnCenter:false,
               modalWidth:'50%',
               btns:[
-                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysAccount/create',methods:'post',func:'ok'},
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.sysAccount_create,methods:'post',func:'ok'},
                 {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
               ],
             },
@@ -77,7 +77,7 @@
               btnCenter:false,
               modalWidth:'400px',
               btns:[
-                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/sysAccount/changepwd',methods:'post',func:'ok'},
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.sysAccount_changepwd,methods:'post',func:'ok'},
                 {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
               ],
             },
@@ -93,10 +93,10 @@
               ],
             }
           },
-          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:'/cad/sysAccount/delete',methods:'post',confirmText:'确定要删除这条数据？',confirmTitle:'删除',fixParams:{accountId:null}}
+          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除这条数据？',confirmTitle:'删除',fixParams:{accountId:null}}
         ],
         tableConfig:{
-          httpUrl:'/cad/sysAccount/pagelist',
+          httpUrl:this.$api.sysAccount_pagelist,
           tableBaseConfig:{
             tableColumnType:'selection',
             maxHeight:600,

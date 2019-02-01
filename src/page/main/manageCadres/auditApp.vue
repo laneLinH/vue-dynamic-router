@@ -170,10 +170,10 @@
         ...mapActions(['getRowData']),
         audit(str){
           if(str==='pass'){
-            this.auditForm.httpUrl='/cad/cadreBase/agreedit'
+            this.auditForm.httpUrl=this.$api.cadreBase_agreeedit
             this.fixParams.auditResult=1
           }else{
-            this.auditForm.httpUrl='/cad/cadreBase/reject'
+            this.auditForm.httpUrl=this.$api.cadreBase_reject
             this.fixParams.auditResult=2
           }
           this.$refs.auditForm.validateForm((params)=>{
@@ -209,11 +209,11 @@
           return this.$formatDate(parseInt(string),'YYYYMM')
         },
         getcadreByorgNo(){
-          this.$http.get('/cad/cadreBase/curentinfo',{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
+          this.$http.get(this.$api.cadreBase_curentinfo,{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
             if(res.success){
               this.formData=res.data
               if(this.formData.fileAddress){
-                this.formData.fileAddress=window.location.origin+'/'+ this.formData.fileAddress.replace("\\","/")
+                this.formData.fileAddress=this.$src+ this.formData.fileAddress.replace("\\","/")
               }
               this.formData.familys=this.formData.familys||[]
               for(let k of this.formData.familys){

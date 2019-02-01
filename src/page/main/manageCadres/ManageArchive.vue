@@ -1,13 +1,13 @@
 <template>
   <el-row class="">
-    <dynamic-form
+    <dynamicForm
       ref="appArchForm"
       :form="searchForm">
       <el-form-item>
         <el-button type="primary" size="mini"@click="queryForm">查询</el-button>
         <el-button type="primary" size="mini" @click="reset">重置</el-button>
       </el-form-item>
-    </dynamic-form>
+    </dynamicForm>
     <dynamicButton
       toolType="tool"
       :pageNameFlg="pageNameFlg"
@@ -53,7 +53,7 @@
           ]
         },
         toolbtns:[
-          {type:'primary',isShow:'true',text:'导出excel',optType:'cust',httpUrl:'/cad/cadreBase/exportexcel',methods:'post',func:this.exportExcel},
+          {type:'primary',isShow:'true',text:'导出excel',optType:'cust',httpUrl:this.$api.cadreBase_exportexcel,methods:'post',func:this.exportExcel},
           {type:'primary',isShow:'true',text:'新增',icon:'fa fa-plus',optType:'new',
             modalOption: {
               isShowModal:false,
@@ -61,8 +61,8 @@
               btnCenter:false,
               modalWidth:'50%',
               btns:[
-                {type:'primary',isShow:true,loading:false,text:'暂存',httpUrl:'/cad/cadreBase/savetemp',methods:'postFormData',func:this.zancun},
-                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:'/cad/cadreBase/insert',methods:'postFormData',func:'ok'},
+                {type:'primary',isShow:true,loading:false,text:'暂存',httpUrl:this.$api.cadreBase_savetemp,methods:'postFormData',func:this.zancun},
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.cadreBase_insert,methods:'postFormData',func:'ok'},
                 {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
               ]
             },
@@ -73,7 +73,7 @@
         ],
         pageNameFlg:'manangeArch',
         tableConfig:{
-          httpUrl:'/cad/cadreBase/pagelist',
+          httpUrl:this.$api.cadreBase_pagelist,
           tableBaseConfig:{
             tableType:'table',
             height:500,
@@ -104,49 +104,49 @@
                 {tTitle:'已归档',state:2,type:'primary'},
                 {tTitle:'审核未通过',state:3,type:'danger'},
                 {tTitle:'申请修改',state:4,type:'primary'}]},
-            {label:'操作',fixed:'right',width:'200',optBtns:[
-                {type:'primary',isShow:false,
-                  dealBtnStatus:{key:'state',status:[7]},text:'修改',optType:'edit',fixParams:{cadreId:null},methods:'postFormData',
-                  modalOption:{
-                    modalType:'editPop',
-                    isShowModal:false,
-                    btnLoading:true,
-                    modalTitle:"修改",
-                    btns:[
-                      {type:'primary',isShow:true,text:'暂存',loading:false,httpUrl:'/cad/cadreBase/savetemp',methods:'postFormData',func:this.zancun},
-                      {type:'primary',isShow:true,text:'保存',loading:false,httpUrl:'/cad/cadreBase/insert',methods:'postFormData',func:'ok'},
-                      {type:'default',isShow:true,text:'取消',loading:false,func:'cancel'}
-                    ],
-                    btnCenter:false,
-                    modalWidth:'50%',
-                    okText:'保存',
-                    cancelText:'取消'
-                  },
-                  form:{
-                    custForm:cadresFormComponents,
-                  }
-                },
-                {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[2]},text:'查看',optType:'edit',fixParams:{cadreId:null},
-                  modalOption:{
-                    modalType:'editPop',
-                    isShowModal:false,
-                    modalTitle:"查看",
-                    btnCenter:true,
-                    modalWidth:'50%',
-                    btns:[
-                      {type:'primary',isShow:true,text:'打印',loading:false,func:this.doPrint},
-                      {type:'default',isShow:true,text:'关闭',loading:false,func:'cancel'},
-                    ],
-                  },
-                  form:{
-                    custForm:detail,
-                  }
-                },
-                {type:'danger',isShow:false,dealBtnStatus:{key:'state',status:[7,3]},text:'删除',optType:'confirm',methods:'post',httpUrl:'/cad/cadreBase/delete',fixParams:{cadreId:null},confirmText:'确定要删除这条数据？',confirmTitle:'删除',
-                },
-                // {type:'danger',isShow:false,text:'查看', dealBtnStatus:{key:'state',status:[2]},icon:'fa fa-delete',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
-              ]
-            }
+                {label:'操作',fixed:'right',width:'200',optBtns:[
+                    {type:'primary',isShow:false,
+                      dealBtnStatus:{key:'state',status:[7]},text:'修改',optType:'edit',fixParams:{cadreId:null},methods:'postFormData',
+                      modalOption:{
+                        modalType:'editPop',
+                        isShowModal:false,
+                        btnLoading:true,
+                        modalTitle:"修改",
+                        btns:[
+                          {type:'primary',isShow:true,text:'暂存',loading:false,httpUrl:this.$api.cadreBase_savetemp,methods:'postFormData',func:this.zancun},
+                          {type:'primary',isShow:true,text:'保存',loading:false,httpUrl:this.$api.cadreBase_insert,methods:'postFormData',func:'ok'},
+                          {type:'default',isShow:true,text:'取消',loading:false,func:'cancel'}
+                        ],
+                        btnCenter:false,
+                        modalWidth:'50%',
+                        okText:'保存',
+                        cancelText:'取消'
+                      },
+                      form:{
+                        custForm:cadresFormComponents,
+                      }
+                    },
+                    {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[2]},text:'查看',optType:'edit',fixParams:{cadreId:null},
+                      modalOption:{
+                        modalType:'editPop',
+                        isShowModal:false,
+                        modalTitle:"查看",
+                        btnCenter:true,
+                        modalWidth:'50%',
+                        btns:[
+                          {type:'primary',isShow:true,text:'打印',loading:false,func:this.doPrint},
+                          {type:'default',isShow:true,text:'关闭',loading:false,func:'cancel'},
+                        ],
+                      },
+                      form:{
+                        custForm:detail,
+                      }
+                    },
+                    {type:'danger',isShow:false,dealBtnStatus:{key:'state',status:[7,3]},text:'删除',optType:'confirm',methods:'post',httpUrl:this.$api.cadreBase_delete,fixParams:{cadreId:null},confirmText:'确定要删除这条数据？',confirmTitle:'删除',
+                    },
+                    // {type:'danger',isShow:false,text:'查看', dealBtnStatus:{key:'state',status:[2]},icon:'fa fa-delete',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
+                  ]
+                }
           ]
         }
       }
