@@ -28,10 +28,11 @@
 <script>
 
   import cadresFormComponents from './cadresFormComponents'
+  import updateCadreApp from './updateCadreApp'
   import detail from './detail'
   import {vimDownFile} from '@/utils/tools'
   export default {
-    name: "ManageArchive",
+    name: "manageArchive",
     data(){
       return{
         // form:{
@@ -142,6 +143,21 @@
                         custForm:detail,
                       }
                     },
+                    {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[2]},text:'申请修改',optType:'edit',fixParams:{cadreId:null},
+                        modalOption:{
+                            modalType:'editPop',
+                            isShowModal:false,
+                            modalTitle:"申请修改",
+                            btnCenter:true,
+                            modalWidth:'50%',
+                            btns:[
+                                {type:'default',isShow:true,text:'关闭',loading:false,func:'cancel'},
+                            ],
+                        },
+                        form:{
+                            custForm:updateCadreApp,
+                        }
+                    },
                     {type:'danger',isShow:false,dealBtnStatus:{key:'state',status:[7,3]},text:'删除',optType:'confirm',methods:'post',httpUrl:this.$api.cadreBase_delete,fixParams:{cadreId:null},confirmText:'确定要删除这条数据？',confirmTitle:'删除',
                     },
                     // {type:'danger',isShow:false,text:'查看', dealBtnStatus:{key:'state',status:[2]},icon:'fa fa-delete',httpUrl:'/cadreBase/delete',fixParams:{cadreId:null},optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
@@ -227,7 +243,8 @@
     },
     components:{
       detail,
-      cadresFormComponents
+      cadresFormComponents,
+        updateCadreApp
     }
   }
 </script>

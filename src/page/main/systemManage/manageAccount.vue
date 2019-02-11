@@ -27,8 +27,9 @@
 </template>
 
 <script>
+  import {checkMobile} from '@/utils/tools'
   export default {
-    name: "ManageAccount",
+    name: "manageAccount",
     data(){
       return{
         pageNameFlg:'manageAcc',
@@ -60,11 +61,11 @@
               formItem:[
                 {type:'input',initValue:null,inputType:'text',key:'accountName',label:'帐号',classStr:'el-col-10',rules:[ { required: true, message: '请输入帐号',placeholder:'请输入帐号', trigger: 'blur' }]},
                 {type:'input',initValue:null,inputType:'password',key:'accountPassward',label:'密码',classStr:'el-col-10',rules:[ { required: true, message: '请输入密码',placeholder:'请输入密码', trigger: 'blur' }]},
-                {type:'input',initValue:null,key:'accountPhone',label:'手机号',classStr:'el-col-10',rules:[ { required: true, message: '请输入手机号', trigger: 'blur' }],placeholder:'请输入手机号'},
-                {type:'input',initValue:null,inputType:'text',key:'accountEmail',label:'邮箱',classStr:'el-col-10',rules:[ { required: true, message: '请输入邮箱', trigger: 'blur' }]},
+                {type:'input',initValue:null,inputType:'text',key:'accountPhone',label:'手机号',classStr:'el-col-10',rules:[ { validator:checkMobile, trigger: 'blur' }],placeholder:'请输入手机号'},
+                {type:'input',initValue:null,inputType:'text',key:'accountEmail',label:'邮箱',classStr:'el-col-10',rules:[{required: true, message: '请输入邮箱', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],placeholder:'请输入邮箱'},
                 {type:'input',initValue:null,inputType:'text',key:'nickName',label:'别称',classStr:'el-col-10',rules:[ { required: true, message: '请输入别称', trigger: 'blur' }]},
                 {type:'input',initValue:null,key:'remark',label:'备注',classStr:'el-col-10',placeholder:'请输入备注'},
-                {type:'input',initValue:null,key:'sorgName',label:'所在组织名称',classStr:'el-col-10',rules:[ { required: true, message: '请输入所在组织名称', trigger: 'blur' }],placeholder:'请输入所在组织名称'},
+                {type:'input',initValue:null,key:'sorgName',label:'所在组织名称',classStr:'el-col-10',rules:[{ required: true, message: '请输入所在组织名称', trigger: 'blur' }],placeholder:'请输入所在组织名称'},
                 {type:'input',initValue:null,inputType:'text',key:'sorgNo',label:'所在组织编号',rules:[ { required: true, message: '请输入所在组织编号', trigger: 'blur' }],classStr:'el-col-10'}
               ],
             }
@@ -87,7 +88,7 @@
               labelWidth:'80px',
               classStr:'dynamic-modal-form-no-inline',
               formItem:[
-                {type:'input',initValue:null,inputType:'password',key:'oldpassWord',label:'旧密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入旧密码', trigger: 'blur' }],placeholder:'请输入旧密码'},
+                {type:'input',initValue:null,inputType:'password',key:'oldpassWord',label:'旧密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入旧密码', trigger: 'blur' },{}],placeholder:'请输入旧密码'},
                 {type:'input',initValue:null,inputType:'password',key:'newpassWord',label:'新密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入新密码', trigger: 'blur' }],placeholder:'请输入新密码'},
                 {type:'input',initValue:null,inputType:'password',key:'confirmpassWord',label:'确认密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入确认密码', trigger: 'blur' }],placeholder:'请输入确认密码'},
               ],

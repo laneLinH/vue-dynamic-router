@@ -2,13 +2,15 @@ import dynamicTable from './dynamicTable'
 import dynamicModal from './dynamicModal'
 import dynamicForm from './dynamicForm'
 import dynamicButton from './dynamicButton'
+// import dynamicTreeTable from './dynamicTreeTable'
 import dynamicVx from './dynamicVx/dynamicVx'
 import {$dealTableDate,$typeOf,$deepClone,$formatDate ,contactObj,print} from './dynamicVx/tools'
 const components = [
     dynamicTable,
     dynamicModal,
     dynamicForm,
-    dynamicButton
+    dynamicButton,
+    // dynamicTreeTable
 ]
 const install = function (Vue) {
     if (install.installed) return
@@ -30,6 +32,7 @@ export default {
     dynamicModal,
     dynamicForm,
     dynamicButton,
+    // dynamicTreeTable,
     dynamicVx
 }
 
@@ -39,5 +42,6 @@ export {
     dynamicModal,
     dynamicForm,
     dynamicButton,
+    // dynamicTreeTable,
     dynamicVx
 }

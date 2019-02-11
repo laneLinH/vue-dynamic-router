@@ -33,7 +33,8 @@
                   <template slot-scope="scope">
                     <p :style="`margin-left: ${scope.row._level * 20}px;margin-top:0;margin-bottom:0`">
                       <i  @click="toggleFoldingStatus(scope.row)" class="_toggleFold" :class="toggleFoldingClass(scope.row)"></i>
-                      <a>{{scope.row[item.prop]}}</a>
+                      <span>{{scope.row[item.prop]}}</span>
+
                     </p>
                   </template>
                 </el-table-column>
@@ -168,7 +169,6 @@
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-
                 this.scopefixparams=this.$deepCopy(btnObj.fixParams)
                 if(this.rowData && this.rowData.length===1){
                   for(let k in this.scopefixparams){
@@ -203,6 +203,8 @@
                 }).catch(() => {
 
                 })
+            }else if(btnObj.optType==='cust'){
+                btnObj.func(btnObj,rowData)
             }
           })
         },

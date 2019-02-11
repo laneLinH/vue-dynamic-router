@@ -61,7 +61,7 @@
                     this.configRoute()
                     this.$router.addRoutes(this.menu.routes)
                   }
-                  this.$router.push('/manageCadres/ApplicationArchive')
+                  this.$router.push('/manageCadres/applicationArchive')
                 }else{
                   this.$message({
                     message: res.msg,

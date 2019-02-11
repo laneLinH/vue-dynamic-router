@@ -1,7 +1,8 @@
 const api={
     cadreAudit_audithisthory:'/cad/cadreAudit/audithistory',//根据干部id获取审核历史
-    cadreBase_agree:'/cad/cadreBase/agree',//通过归档申请
-    cadreBase_agreeedit:'/cad/cadreBase/agreedit',//同意修改申请
+    cadreBase_audit:'/cad/cadreBase/audit',//审核归档申请
+    cadreBase_auditedit:'/cad/cadreBase/auditedit',//审核修改申请
+   // cadreBase_agreeedit:'/cad/cadreBase/agreedit',//同意修改申请
     cadreBase_batchupdate:'/cad/cadreBase/batchupdate',//批量修改干部信息
     cadreBase_curentinfo:'/cad/cadreBase/curentinfo',//根据干部id拉取干部信息
     cadreBase_delete:'/cad/cadreBase/delete',//根据干部id逻辑删除干部记录
@@ -14,6 +15,7 @@ const api={
     cadreBase_rejectedit:'/cad/cadreBase/rejectedit',
     cadreBase_savetemp:'/cad/cadreBase/savetemp',
     cadreBase_update:'/cad/cadreBase/update',
+    cadreBase_applyedit:'/cad/cadreBase/applyedit',//提交修改申请
     sysAccount_cadrelogin:'/cad/sysAccount/cadrelogin',
     sysAccount_changepwd:'/cad/sysAccount/changepwd',
     sysAccount_create:'/cad/sysAccount/create',
@@ -22,8 +24,7 @@ const api={
     sysAccount_delete:'',
     sysOrganization_copinfos:'/cad/sysOrganization/copinfos',
     sysOrganization_delcop:'/cad/sysOrganization/delcop',
-    sysOrganization_insertcop:'/cad/sysOrganization/insertcop',
-    sysOrganization_insertdep:'/cad/sysOrganization/insertdep',
+    sysOrganization_insertorg:'/cad/sysOrganization/insertorg',
     sysOrganization_orginfos:'/cad/sysOrganization/orginfos',
     sysOrganization_deldep:'/cad/sysOrganization/deldep',
     sysUploadFileInfo_downloadtemplet:'/cad/sysUploadFileInfo/downloadtemplet',

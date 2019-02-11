@@ -82,8 +82,6 @@
             </tr>
           </table>
         </div>
-
-
         <div class="cus-print">
           <table  class="cus-table" width="100%" style="margin-top: -1px;">
             <tr>
@@ -148,7 +146,25 @@
           </table>
         </div>
     </el-row>
-    <!--<el-button @click="doPrint"  type="primary"  class="print-btn">打印</el-button>-->
+    <el-form  class="auditAppForm" label-width="80">
+      <el-form-item class="el-col-24" v-if="historyData.length>0">
+        <el-form-item  label="操作历史："></el-form-item>
+        <el-table :data="historyData" border>
+          <el-table-column prop="auditUnit"  label="操作单位">
+          </el-table-column>
+          <el-table-column prop="auditPersion" width="100" label="操作人">
+          </el-table-column>
+          <el-table-column prop="auditResultDesc" width="100" label="操作结果">
+          </el-table-column>
+          <el-table-column prop="auditTypeDesc" width="100" label="操作类型">
+          </el-table-column>
+          <el-table-column prop="auditDate"   label="操作时间">
+          </el-table-column>
+          <el-table-column prop="auditDesc"   label="备注">
+          </el-table-column>
+        </el-table>
+      </el-form-item>
+    </el-form>
   </el-row>
 
 </template>
@@ -163,6 +179,7 @@
       }
     },
     data:()=>({
+        historyData:[],
       formData:{},
       auditInfo:[],
       familysTableRow:0,
@@ -171,12 +188,7 @@
     computed: {
       ...mapState(['dynamicVx']),
       rowData(){
-        for(let k of this.dynamicVx.optData){
-          if(k.name===this.pageNameFlg){
-            return k.data['rowData']||null
-          }
-        }
-        return null
+          return this.dynamicVx.singleRowData
       }
     },
     filters:{
@@ -190,6 +202,32 @@
 
     },
     methods:{
+        getAudithistory(){
+            this.$http.get(this.$api.cadreAudit_audithisthory,{cadreId:this.rowData.cadreId}).then((res)=>{
+                if(res.success){
+                    this.historyData=res.data
+                    for(let im of this.historyData){
+                        this.$set(im,'auditResultDesc',im.auditResult?'通过':'驳回')
+                        let desc='';
+                        switch (im.auditType) {
+                            case 1:
+                                desc='提交';
+                                break;
+                            case 2:
+                                desc='归档';
+                                break;
+                            case 3:
+                                desc='申请修改';
+                                break;
+                            default :
+                                desc='';
+                                break;
+                        }
+                        this.$set(im,'auditTypeDesc',desc)
+                    }
+                }
+            })
+        },
       age(val){
         if(!val){
           return ''
@@ -205,7 +243,7 @@
         return this.$formatDate(parseInt(string),'YYYYMM')
       },
       getcadreByorgNo(){
-        this.$http.get(this.$api.cadreBase_curentinfo,{cadreId:this.rowData[0].cadreId}).then((res)=>{
+        this.$http.get(this.$api.cadreBase_curentinfo,{cadreId:this.rowData.cadreId}).then((res)=>{
           if(res.success){
             this.formData=res.data
             if(this.formData.fileAddress){
@@ -228,15 +266,6 @@
               k.startTime=this.formatDate(k.startTime)
               k.endTime=this.formatDate(k.endTime)
             }
-          }
-        },error=>{
-
-        })
-      },
-      getAudithistory(){
-        this.$http.get(this.$api.cadreAudit_audithisthory,{cadreId:this.rowData[0].cadreId}).then((res)=>{
-          if(res.success){
-            this.auditInfo=res.data
           }
         },error=>{
 

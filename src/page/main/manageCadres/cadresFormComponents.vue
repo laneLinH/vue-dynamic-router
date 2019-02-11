@@ -443,7 +443,7 @@
           }
         }),
      mounted(){
-        this.resetForm()
+      this.resetForm()
       this.addResume()
       this.addFamily()
       this.getOrgTree()
@@ -451,7 +451,6 @@
         this.formData.cadreId=this.rowData[0].cadreId
         setTimeout(()=>{
           this.getcadreByorgNo()
-          // this.getPhoto()
         })
       }
       },
@@ -464,7 +463,7 @@
         },
         'partyInfo.partyTypes'(val){
            this.validPartyType(val)
-        }
+        },
       },
       computed:{
         ...mapState(['dynamicVx']),
@@ -483,18 +482,40 @@
               if(res.success){
                 let data=res.data
                 this.isEdit=true
-                if(data){
                   for(let k in this.formData){
                     if(data.hasOwnProperty(k)){
-                      if(k==='joinWorkDate'||k==='cadreBirthday'||k==='joinPartyDate'){
-                        this.formData[k]=parseInt(data[k])||null
-                      }else{
-                        this.formData[k]=data[k]||null
-                      }
+                        if(k==='familys'||k==='resumes'){
+                            if(k==='resumes'){
+                                this.formData.resumes=[]
+                                if(!data[k]){
+                                    this.addResume()
+                                }else{
+                                    for(let m of data[k]){
+                                        this.formData.resumes.push({resumesDate:[parseInt(m.startTime||0)||null,parseInt(m.endTime||0)||null],resumeDescribe:m.resumeDescribe})
+                                    }
+                                }
+                            }
+                            if(k==='familys'){
+                                this.formData.familys=[]
+                                if(!data[k]){
+                                    this.addFamily()
+                                }else{
+                                    for(let m of data[k]){
+                                        this.formData.familys.push({familyName:m.familyName,relation:m.relation,familyBirthday:parseInt(m.familyBirthday||0)||null,politicalStatus:m.politicalStatus,departmentJob:m.departmentJob})
+                                    }
+                                }
+                            }
+                            console.log( this.formData[k])
+                        }else{
+                            if(k==='joinPartyDate'||k==='joinWorkDate'||k==='cadreBirthday'){
+                                this.formData[k]=parseInt(data[k]||0)||null
+                            }else{
+                                this.formData[k]=data[k]||null
+                            }
+                        }
+
                     }
                   }
-                }
-
                 this.treeValue=this.formData.orgNo
                 this.getOrgType( this.orgTreeData,this.formData.orgNo)
                 if(data.fileAddress){
@@ -513,13 +534,6 @@
               }
             },error=>{})
           },
-          // getPhoto(){
-          //   this.$http.post('/sysUploadFileInfo/findphoto',{cadreId:this.formData.cadreId}).then((res)=>{
-          //     if(res.success){
-          //         console.log(res)
-          //     }
-          //   },error=>{})
-          // },
         getOrgType(obj,orgCode){
           if(this.$typeOf(obj)==='object'){
             if(obj.orgCode===orgCode){
@@ -619,7 +633,7 @@
         },
         addResume(){
             if(this.formData.resumes.length<20){
-              this.formData.resumes.push({resumesDate:[],resumeDescribe:''})
+              this.formData.resumes.push({resumesDate:[],resumeDescribe:null})
             }
         },
         removeResume(index){
@@ -627,7 +641,7 @@
         },
         addFamily(){
             if(this.formData.familys.length<10){
-              this.formData.familys.push({familyName:'',relation:'',familyBirthday:'',politicalStatus:'',departmentJob:''})
+              this.formData.familys.push({familyName:null,relation:null,familyBirthday:null,politicalStatus:null,departmentJob:null})
             }
         },
         removeFamily(id){
@@ -684,7 +698,7 @@
           }
         },
         custFormevent(suc){
-          // this.formateResumesDate()
+          this.formateResumesDate()
           this.formatDate(this.formData)
           let submtData=this.$deepCopy(this.formData)
           let forms=new FormData()

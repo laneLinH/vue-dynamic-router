@@ -31,13 +31,13 @@
         name: "dynamicModal",
          props: {
            modalOption: {
-             default: {},
+             default: ()=>{},
            },
            form: {
-               default: {}
+               default: ()=>{}
            },
            pageNameFlg:{
-             default:''
+             default:null
            }
       },
       data:()=>({
@@ -65,7 +65,10 @@
       methods:{
         showModal(btnObj){
           this.btnObj=btnObj
-          console.log('showModal--',btnObj.fixParams)
+          // this.modalOption=btnObj.modalOption
+          // this.form=btnObj.form
+          //   console.log(this.btnObj)
+          // console.log('showModal--',btnObj.fixParams)
           this.fixParams=btnObj.fixParams
           this.isShowModal=true
         },

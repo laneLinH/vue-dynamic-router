@@ -214,6 +214,7 @@
               this.formData[key] = new Date(this.formData[key]).getTime()||null
             }
           }
+
           this.$refs.dyform.validate((valid) => {
            if(valid){
              suc(this.getFormData())

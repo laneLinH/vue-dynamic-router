@@ -7,7 +7,7 @@
 </template>
 <script>
   import {mapActions,mapState} from 'vuex'
-  import sliderItem from './SliderItem'
+  import sliderItem from './sliderItem'
   export default {
     components:{
       sliderItem

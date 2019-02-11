@@ -28,18 +28,16 @@ const dynamicVx={
           }
         }
       }
+      for(let tms of state.optData){
+         if(data.pageNameFlg===tms.name){
+             state.singleRowData=tms.data['rowData'][0]||null
+             return;
+         }
+      }
     },
     setisReloadTable(state,data){
       state.isReloadTable=data
     },
-    getRowData(state,pageNameFlg){
-      for(let k of state.optData){
-        if(k.name===pageNameFlg){
-          state.singleRowData=k.data['rowData']||null
-          return false
-        }
-      }
-    }
   },
   actions:{
     setOptData ({ state, commit }, data) {

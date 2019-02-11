@@ -83,7 +83,7 @@
           </el-form-item>
           <el-form-item class="el-col-24" >
             <el-form-item label="简历："></el-form-item>
-            <el-table :data="formData.resumes">
+            <el-table :data="formData.resumes" border>
               <el-table-column prop="startTime" width="100" label="开始时间">
               </el-table-column>
               <el-table-column prop="endTime" width="100" label="结束时间">
@@ -94,7 +94,7 @@
           </el-form-item>
           <el-form-item class="el-col-24">
             <el-form-item  label="家庭主要成员及重要社会关系："></el-form-item>
-            <el-table :data="formData.familys">
+            <el-table :data="formData.familys" border>
               <el-table-column prop="familyName" width="100" label="称谓">
               </el-table-column>
               <el-table-column prop="relation" width="100" label="姓名">
@@ -107,6 +107,23 @@
               </el-table-column>
             </el-table>
           </el-form-item>
+          <el-form-item class="el-col-24" v-if="historyData.length>0">
+              <el-form-item  label="操作历史："></el-form-item>
+              <el-table :data="historyData" border>
+                  <el-table-column prop="auditUnit"  label="操作单位">
+                  </el-table-column>
+                  <el-table-column prop="auditPersion" width="100" label="操作人">
+                  </el-table-column>
+                  <el-table-column prop="auditResultDesc" width="100" label="操作结果">
+                  </el-table-column>
+                  <el-table-column prop="auditTypeDesc" width="100" label="操作类型">
+                  </el-table-column>
+                  <el-table-column prop="auditDate"   label="操作时间">
+                  </el-table-column>
+                  <el-table-column prop="auditDesc"   label="备注">
+                  </el-table-column>
+              </el-table>
+          </el-form-item>
           </el-row>
 
           <el-row :gutter="10" :span="20" >
@@ -115,8 +132,7 @@
               </dynamicForm>
             </el-col>
             <el-col :offset="10" :span="6">
-              <el-button type="primary" @click="audit('pass')">通过</el-button>
-              <el-button type="danger" @click="audit('reject')">驳回</el-button>
+              <el-button type="primary" @click="audit()">提交审核</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -133,30 +149,25 @@
          }
        },
       data:()=>({
+        historyData:[],
         formData:{},
-        auditFormData:{
-          auditResult:null,
-          auditDesc:null
-        },
         fixParams:{
-          cadreId:null,
-          auditResult:null
+          cadreId:null
         },
         auditForm:{
           labelWidth:'150px',
           httpUrl:'',
           formItem:[
-            // {type:'radio',initValue:1,maxlength:1,classStr:'el-col-24',key:'auditResult',label:'审核意见',options:[{value:1,label:'通过'},{value:2,label:'驳回'}]},
+            {type:'radio',initValue:1,classStr:'el-col-24',key:'auditResult',label:'审核意见',options:[{value:1,label:'通过'},{value:2,label:'驳回'}],rules:[{ required: true, message: '请选择审核意见', trigger: 'blur'}]},
             {type:'input',initValue:null,inputType:'textarea',classStr:'el-col-24',key:'auditDesc',label:'审核评语',placeholder:'请输入审核评语',rules:[{ required: true, message: '请输入审核评语', trigger: 'blur'}]},
           ]
-        }
+        },
       }),
       computed: {
-        ...mapState(['singleRowData']),
-        rowData(){
-          this.getRowData(this.pageNameFlg)
-          return this.singleRowData
-        }
+        ...mapState(['dynamicVx']),
+          rowData(){
+              return this.dynamicVx.singleRowData
+          }
       },
       filters:{
         dealDate(string){
@@ -165,19 +176,45 @@
       },
       mounted(){
           this.getcadreByorgNo()
+          this.getAudithistory()
       },
       methods:{
-        ...mapActions(['getRowData']),
-        audit(str){
-          if(str==='pass'){
-            this.auditForm.httpUrl=this.$api.cadreBase_agreeedit
-            this.fixParams.auditResult=1
-          }else{
-            this.auditForm.httpUrl=this.$api.cadreBase_reject
-            this.fixParams.auditResult=2
-          }
+        getAudithistory(){
+            this.$http.get(this.$api.cadreAudit_audithisthory,{cadreId:this.rowData.cadreId}).then((res)=>{
+                if(res.success){
+                  this.historyData=res.data
+                  for(let im of this.historyData){
+                      this.$set(im,'auditResultDesc',im.auditResult?'通过':'驳回')
+                      let desc='';
+                      switch (im.auditType) {
+                          case 1:
+                              desc='提交';
+                              break;
+                          case 2:
+                              desc='归档';
+                              break;
+                          case 3:
+                              desc='申请修改';
+                              break;
+                          default :
+                              desc='';
+                              break;
+                      }
+                      this.$set(im,'auditTypeDesc',desc)
+                  }
+                }
+            })
+        },
+        audit(){
+         let httpUrl=''
+         if(this.rowData.state===1){
+             httpUrl=this.$api.cadreBase_audit
+         }
+         if(this.rowData.state===4){
+             httpUrl=this.$api.cadreBase_auditedit
+         }
           this.$refs.auditForm.validateForm((params)=>{
-            this.$http.post(this.auditForm.httpUrl,params).then((res)=>{
+            this.$http.post(httpUrl,params).then((res)=>{
               if(res.success){
                 this.$message({
                   message: res.msg,
@@ -209,7 +246,7 @@
           return this.$formatDate(parseInt(string),'YYYYMM')
         },
         getcadreByorgNo(){
-          this.$http.get(this.$api.cadreBase_curentinfo,{params:{cadreId:this.rowData[0].cadreId}}).then((res)=>{
+          this.$http.get(this.$api.cadreBase_curentinfo,{cadreId:this.rowData.cadreId}).then((res)=>{
             if(res.success){
               this.formData=res.data
               if(this.formData.fileAddress){

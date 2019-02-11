@@ -1,7 +1,7 @@
-import sidebar from './sidebar/Index'
-import headerTop from './HeaderTop'
-import mainContainer from './MainContainer'
-import tagNav from './TagNav'
+import sidebar from './sidebar/index'
+import headerTop from './headerTop'
+import mainContainer from './mainContainer'
+import tagNav from './tagNav'
 
 export {
   sidebar,

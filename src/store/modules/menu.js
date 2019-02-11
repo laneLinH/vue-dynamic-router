@@ -25,23 +25,16 @@ const menus={
             name: '干部管理',
             path:'manageCadres',
             children: [
-              {name: '归档申请', path: 'ApplicationArchive'},
-              {name: '档案管理', path: 'ManageArchive'}
+              {name: '归档申请', path: 'applicationArchive'},
+              {name: '档案管理', path: 'manageArchive'}
             ]
           },
           {
             name: '系统管理',
             path:'systemManage',
             children: [
-              {name: '账户管理', path: 'ManageAccount'},
-              {name: '组织管理', path: 'ManageOrganization'}
-            ]
-          },
-          {
-            name: 'testpage',
-            path:'test',
-            children: [
-              {name: 'test', path: 'test'},
+              {name: '账户管理', path: 'manageAccount'},
+              {name: '组织管理', path: 'manageOrganization'}
             ]
           }
         ]

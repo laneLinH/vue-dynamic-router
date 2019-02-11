@@ -66,34 +66,6 @@ export const $deepClone=(data)=>{
 export const $formatDate=(string,formatstr)=>{
   return moment(string).format(formatstr)
 }
-
-
-// 身份证
-export function checkIdNum(rule, value, callback) {
-  const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-  if (!value) {
-    return callback(new Error('证件号码不能为空'))
-  } else if (!reg.test(value)) {
-    return callback(new Error('证件号码不正确'))
-  } else {
-    callback()
-  }
-}
-
-// 整数
-export function checkInterNum(rule, value, callback) {
-  const reg = /^[0-9]*[1-9][0-9]*$/
-  if (!value) {
-    return callback(new Error('请填写整数'))
-  } else if (!reg.test(value)) {
-    return callback(new Error('请输入整数'))
-  } else {
-    callback()
-  }
-}
-
-
-
 export function getImgToBase64(url,callback){
   var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
@@ -164,5 +136,63 @@ export function vimDownFile(url,fromData){
   }
   form.submit()
   form.remove()
+}
+
+
+export function checkQQ(rule, value, callback){
+    if (value === '') {
+        callback(new Error('输入QQ号'))
+    } else if (/^[1-9][0-9]{4,10}$/.test(value)) {
+        callback()
+    } else {
+        callback(new Error('输入正确的QQ号'))
+    }
+}
+
+// 类似金钱,首位不为0,最多2位小数
+export function checkNumPot2(rule, value, callback) {
+    const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
+    if (!value) {
+        return callback(new Error('请填写数字'))
+    } else if (!reg.test(value)) {
+        return callback(new Error('请填写数字,最多2位小数'))
+    } else {
+        callback()
+    }
+}
+
+// 身份证
+export function checkIdNum(rule, value, callback) {
+    const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    if (!value) {
+        return callback(new Error('证件号码不能为空'))
+    } else if (!reg.test(value)) {
+        return callback(new Error('证件号码不正确'))
+    } else {
+        callback()
+    }
+}
+
+// 整数
+export function checkInterNum(rule, value, callback) {
+    const reg = /^[0-9]*[1-9][0-9]*$/
+    if (!value) {
+        return callback(new Error('请填写整数'))
+    } else if (!reg.test(value)) {
+        return callback(new Error('请输入整数'))
+    } else {
+        callback()
+    }
+}
+//手机号码
+export function checkMobile(rule, value, callback) {
+    const reg = new RegExp(/^1[34578]\d{9}$/)
+    if (!value) {
+        return callback(new Error('请输入手机号码'))
+    } else if (!reg.test(value)) {
+        return callback(new Error('请输入正确的手机号码'))
+    } else {
+        callback()
+    }
 }
 

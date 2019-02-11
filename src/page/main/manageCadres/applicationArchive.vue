@@ -25,7 +25,7 @@
       import  auditApp from '@/page/main/manageCadres/auditApp'
       import {mapActions,mapState} from 'vuex'
       export default {
-        name: "ApplicationArchive",
+        name: "applicationArchive",
         data(){
             return{
               searchForm:{
@@ -88,7 +88,7 @@
                   //             custForm:cadresFormComponents,
                   //           }
                   // },
-                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'审核',optType:'edit',httpUrl:this.$api.cadreBase_curentinfo,fixParams:{cadreId:null},
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1,4]},text:'审核',optType:'edit',httpUrl:this.$api.cadreBase_curentinfo,fixParams:{cadreId:null},
                     modalOption:{
                       modalType:'editPop',
                       isShowModal:false,
@@ -114,7 +114,6 @@
         computed:{
           ...mapState(['singleRowData']),
           rowData(){
-            this.getRowData(this.pageNameFlg)
             return  this.singleRowData
           }
         },
@@ -131,7 +130,6 @@
           // }
         },
         methods:{
-          ...mapActions(['getRowData']),
           // selectChage(selv,item){
           //   console.log(item)
           //   console.log(selv)
