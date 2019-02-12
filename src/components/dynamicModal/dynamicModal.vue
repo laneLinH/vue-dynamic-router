@@ -75,38 +75,39 @@
         cancel(){
           this.isShowModal=false
         },
-        custFormevent(){
-          //  this.$refs.cusForm.custFormevent((params)=>{
-          //      this.custbtnLoading=true
-          //      this.$http[this.modalOption.custUrlmethods](this.modalOption.custUrl,params).then((res)=>{
-          //        this.custbtnLoading=false
-          //        if(res.success){
-          //          this.$message({
-          //            message: res.msg,
-          //            type: 'success',
-          //            duration: 5 * 1000
-          //          })
-          //          this.isShowModal=false
-          //          this.$dynamicBus.$emit('reloadTable',{pageNameFlg:this.pageNameFlg})
-          //        }else{
-          //          this.$message({
-          //            message: res.msg,
-          //            type: 'error',
-          //            duration: 5 * 1000
-          //          })
-          //        }
-          //      })
-          // })
-        },
+        // custFormevent(){
+        //   //  this.$refs.cusForm.custFormevent((params)=>{
+        //   //      this.custbtnLoading=true
+        //   //      this.$http[this.modalOption.custUrlmethods](this.modalOption.custUrl,params).then((res)=>{
+        //   //        this.custbtnLoading=false
+        //   //        if(res.success){
+        //   //          this.$message({
+        //   //            message: res.msg,
+        //   //            type: 'success',
+        //   //            duration: 5 * 1000
+        //   //          })
+        //   //          this.isShowModal=false
+        //   //          this.$dynamicBus.$emit('reloadTable',{pageNameFlg:this.pageNameFlg})
+        //   //        }else{
+        //   //          this.$message({
+        //   //            message: res.msg,
+        //   //            type: 'error',
+        //   //            duration: 5 * 1000
+        //   //          })
+        //   //        }
+        //   //      })
+        //   // })
+        // },
         btnClick(item){
           if(item.func==='ok'){
             this.ok(item)
           }else if(item.func==='cancel'){
             this.cancel()
           }else{
-           this.isShowModal=item.func(item,this.$refs.cusForm)
+           this.isShowModal=item.func(item,this.$refs.cusForm||this.$refs.modalForm,this)
           }
         },
+
         ok(item){
           let form= this.$refs.modalForm
           if(this.form.custForm) {

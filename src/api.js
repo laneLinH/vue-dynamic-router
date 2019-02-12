@@ -21,7 +21,10 @@ const api={
     sysAccount_create:'/cad/sysAccount/create',
     sysAccount_logout:'/cad/sysAccount/logout',
     sysAccount_pagelist:'/cad/sysAccount/pagelist',
-    sysAccount_delete:'',
+    sysAccount_delete:'/cad/sysAccount/delete',//根据账户ID删除账户
+    sysAccount_frozen:'/cad/sysAccount/frozen',//冻结账户
+    sysAccount_reactive:'/cad/sysAccount/reactive',//激活账户
+    sysAccount_batchdel:'/cad/sysAccount/batchdel',//批量删除账户
     sysOrganization_copinfos:'/cad/sysOrganization/copinfos',
     sysOrganization_delcop:'/cad/sysOrganization/delcop',
     sysOrganization_insertorg:'/cad/sysOrganization/insertorg',

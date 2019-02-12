@@ -139,12 +139,12 @@
           // },
           reset(){
             this.$refs.appArchForm.resetForm()
-            this.$refs.appArchTable.loadTableData()
+            this.$refs.appArchTable.refresh()
           },
           reload(){
             let _th=this
             setTimeout(()=> {
-              _th.$refs.appArchTable.loadTableData()
+              _th.$refs.appArchTable.refresh()
             })
           },
           queryForm(){

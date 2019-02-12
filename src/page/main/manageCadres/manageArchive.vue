@@ -214,7 +214,7 @@
       },
       reset(){
         this.$refs.appArchForm.resetForm()
-        this.$refs.manageArchTable.loadTableData()
+        this.$refs.manageArchTable.refresh()
       },
 
       queryForm(){
@@ -225,7 +225,7 @@
       reload(){
         let _th=this
         setTimeout(()=> {
-          _th.$refs.manageArchTable.loadTableData()
+          _th.$refs.manageArchTable.refresh()
         })
 
       },

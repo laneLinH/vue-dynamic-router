@@ -34,7 +34,7 @@
               <td class="text-label" width="10%"  height="0">入党时间</td>
               <td><span v-if="formData.joinPartyDate">{{formatDate(formData.joinPartyDate)}}</span><span v-if="formData.partyType">;{{formData.partyType}}</span></td>
               <td class="text-label" width="10%">参加工作时间</td>
-              <td >{{formData.joinWorkDate}}</td>
+              <td >{{formatDate(formData.joinWorkDate)}}</td>
               <td class="text-label" width="10%">健康状况</td>
               <td >{{formData.healthCondition}}</td>
             </tr>
@@ -261,10 +261,11 @@
               }
               this.familysLnth=this.formData.familys.length+1
             }
-
-            for(let k of this.formData.resumes){
-              k.startTime=this.formatDate(k.startTime)
-              k.endTime=this.formatDate(k.endTime)
+            if(this.formData.resumes) {
+                for (let k of this.formData.resumes) {
+                    k.startTime = this.formatDate(k.startTime)
+                    k.endTime = this.formatDate(k.endTime)
+                }
             }
           }
         },error=>{

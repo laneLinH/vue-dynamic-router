@@ -75,7 +75,7 @@
             background
             @size-change="sizeChange"
             @current-change="handleCurrentChange"
-            :current-page="queryPage.page"
+            :current-page="queryPage.pageNo"
             :page-sizes="paginationConfig.pageSizes"
             :page-size="queryPage.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
@@ -219,8 +219,10 @@
                     }
                   }
                 }
+               return false
+            }else{
+                  return true
             }
-          return false
         },
         showSelfModal(item){
           this.$nextTick(()=>{
@@ -229,6 +231,10 @@
         },
         getQueryData(){
           return this.queryData
+        },
+        refresh(){
+            this.queryPage.pageNo=1
+            this.loadTableData()
         },
         loadTableData(formData){
           this.queryData=formData||{}

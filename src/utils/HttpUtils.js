@@ -1,5 +1,6 @@
 import axios from 'axios'
 import querystring from 'querystring'
+import qs from 'qs'
 import store from '@/store'
 import {Message} from 'element-ui'
 /* eslint-disable */
@@ -106,6 +107,21 @@ const http ={
       })
     })
   },
+    postNoJson(url, data) {
+        return new Promise((resolve, reject) => {
+            let postdata = qs.stringify(data,{ indices: false })
+            let config = {
+                // headers: {'Content-Type': 'application/json'}
+            }
+            axios.post(url, postdata,config).then((response) => {
+                resolve(response.data)
+            }).catch((response) => {
+                console.log(response)
+                resolve(response)
+                timeoutMsg()
+            })
+        })
+    },
   delete (url, id) {
     return new Promise((resolve, reject) => {
       axios.post(url + id).then((response) => {
@@ -117,6 +133,12 @@ const http ={
     })
   },
   handleError (res) {
+    if(!res){
+      Message({
+          message: '未知错误',
+          type: 'error'
+      })
+    }
     if (res.code != null) {
 
     }

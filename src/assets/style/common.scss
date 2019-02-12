@@ -72,6 +72,12 @@ body{
   padding: 15px;
   background: white;
 }
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
 @import "cuselement";
 @include textDr
 

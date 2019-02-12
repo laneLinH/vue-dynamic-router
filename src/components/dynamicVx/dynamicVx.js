@@ -28,11 +28,14 @@ const dynamicVx={
           }
         }
       }
+
       for(let tms of state.optData){
-         if(data.pageNameFlg===tms.name){
-             state.singleRowData=tms.data['rowData'][0]||null
-             return;
-         }
+          if(tms.data['rowData']){
+              if(data.pageNameFlg===tms.name){
+                  state.singleRowData=tms.data['rowData'][0]||null
+                  return;
+              }
+          }
       }
     },
     setisReloadTable(state,data){

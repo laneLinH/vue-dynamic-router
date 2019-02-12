@@ -4,8 +4,9 @@
       干部系统管理
     </el-row>
     <el-row class="el-col-14 head-nav"></el-row>
-    <el-row class="userinfo">
-      <el-tooltip  content="退出" placement="bottom">
+    <el-row class="el-col-4 userinfo">
+      <span>欢迎您,{{accountName}}</span>
+      <el-tooltip  class="right" content="退出" placement="bottom">
         <span class="login-out" @click="loginOut">退出</span>
       </el-tooltip>
     </el-row>
@@ -16,6 +17,11 @@
   import {mapActions} from 'vuex'
     export default {
         name: "HeaderTop",
+        computed:{
+          accountName(){
+              return sessionStorage.getItem('accountName')
+          }
+        },
       methods:{
         ...mapActions(['loginOut'])
       }
@@ -23,7 +29,6 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  /*@import "../../assets/style/variables";*/
   .logo{
     width: 230px;
     line-height: 60px;

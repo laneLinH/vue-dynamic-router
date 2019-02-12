@@ -8,7 +8,6 @@
            :inline="form.inline"
            :disabled="form.disabled"
            :hide-required-asterisk="form.hideRequiredAsterisk">
-
     <el-form-item  v-for="(item,id) in form.formItem"
                   :key="id"
                   :label="item.label"
@@ -36,6 +35,19 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-cascader
+              v-model="formData[item.key]"
+              v-else-if="item.type==='selectCascader'"
+              :show-all-levels="item.showAllLevels"
+              :filterable="item.filterable"
+              :disabled="item.disabled"
+              :props="item.props"
+              @change="selectChange($event,item)"
+              :change-on-select="item.changeOnSelect"
+              :placeholder="item.placeholder"
+              :expand-trigger="item.expandTrigger"
+              :options="item.options">
+      </el-cascader>
       <el-date-picker
         v-else-if="item.type==='date'"
         v-model="formData[item.key]"
@@ -165,11 +177,11 @@
         //   }
         //   getdata(this.getFormData())
         // },
-        submitData(){
+        submitData(item){
           this.validateForm((params)=>{
-            this.btnLoading=true
-            this.$http[this.btnObj.methods](this.btnObj.httpUrl,params).then((res)=>{
-              this.btnLoading=false
+            item.loading=true
+            this.$http[item.methods](item.httpUrl,params).then((res)=>{
+                item.loading=false
               if(res.success){
                 this.$message({
                   message: res.msg,
@@ -214,7 +226,6 @@
               this.formData[key] = new Date(this.formData[key]).getTime()||null
             }
           }
-
           this.$refs.dyform.validate((valid) => {
            if(valid){
              suc(this.getFormData())

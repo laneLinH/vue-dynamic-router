@@ -94,7 +94,10 @@
                                     }
                                 },
                                 {type:'danger',isShow:false,
-                                    dealBtnStatus:{key:'ishasChilren',status:[0]},text:'删除',icon:'fa fa-delete',confirmText:'确定要删除这条数据？',confirmTitle:'删除',optType:'confirm',httpUrl:this.$api.sysOrganization_delcop,fixParams:{orgNo:'orgCode'},methods:'post',
+                                    dealBtnStatus:{key:'ishasChilren',status:[1]},text:'删除',icon:'fa fa-delete',confirmText:'确定要删除这条数据？',confirmTitle:'删除',optType:'confirm',httpUrl:this.$api.sysOrganization_delcop,fixParams:{orgNo:'orgCode'},methods:'post',
+                                },
+                                {type:'danger',isShow:false,
+                                    dealBtnStatus:{key:'ishasChilren',status:[2]},text:'删除',icon:'fa fa-delete',confirmText:'确定要删除这条数据？',confirmTitle:'删除',optType:'confirm',httpUrl:this.$api.sysOrganization_deldep,fixParams:{orgNo:'orgCode'},methods:'post',
                                 },
                             ]
                         }
@@ -141,12 +144,17 @@
           }
           for(let im of tableData){
             if(im.children && im.children.length>0){
-              this.$set(im,'ishasChilren',1)
+                this.$set(im,'ishasChilren',0)
             }else{
-              this.$set(im,'ishasChilren',0)
+                if(im.orgType===1){
+                    this.$set(im,'ishasChilren',1)
+                }else if(im.orgType===2){
+                    this.$set(im,'ishasChilren',2)
+                }
             }
             // this.getCadreByorgNo(im.orgCode)
           }
+          console.log(tableData)
           this.$refs.manageOrgtable.loadTable(tableData)
         },
         // tableSelection(val){

@@ -75,17 +75,20 @@
                       for(let ks of this.rowData){
                         fixVl.push(ks[newk])
                       }
-                      fixVl.length>1? this.scopefixparams[k]=fixVl.join(','):this.scopefixparams[k]=fixVl
+                        this.scopefixparams[k]=fixVl
+                      // fixVl.length>1? this.scopefixparams[k]=fixVl.join(','):this.scopefixparams[k]=fixVl
                     }else{
                       let fixVl=[]
                       for(let ks of this.rowData){
                         fixVl.push(ks[k])
                       }
-                      fixVl.length>1? this.scopefixparams[k]=fixVl.join(','):this.scopefixparams[k]=fixVl
+                        this.scopefixparams[k]=fixVl
+                      // fixVl.length>1? this.scopefixparams[k]=fixVl.join(','):this.scopefixparams[k]=fixVl
                     }
                   }
                 }
                 this.formData=Object.assign(this.formData,this.scopefixparams)
+
                 this.$http[item.methods](item.httpUrl, this.formData).then((res)=>{
                       if(res.code===200){
                         this.$message({

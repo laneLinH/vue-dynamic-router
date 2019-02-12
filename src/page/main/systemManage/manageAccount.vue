@@ -20,8 +20,7 @@
                   :paginationConfig="tableConfig.paginationConfig"
                   :httpUrl="tableConfig.httpUrl"
                   :pageNameFlg="pageNameFlg"
-                  @dealTableData="dealTableData"
-                  @tableSelection="tableSelection">
+                  @dealTableData="dealTableData">
     </dynamicTable>
   </el-row>
 </template>
@@ -49,7 +48,7 @@
               btnCenter:false,
               modalWidth:'50%',
               btns:[
-                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.sysAccount_create,methods:'post',func:'ok'},
+                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.sysAccount_create,methods:'post',func:this.createAccount},
                 {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
               ],
             },
@@ -61,12 +60,12 @@
               formItem:[
                 {type:'input',initValue:null,inputType:'text',key:'accountName',label:'帐号',classStr:'el-col-10',rules:[ { required: true, message: '请输入帐号',placeholder:'请输入帐号', trigger: 'blur' }]},
                 {type:'input',initValue:null,inputType:'password',key:'accountPassward',label:'密码',classStr:'el-col-10',rules:[ { required: true, message: '请输入密码',placeholder:'请输入密码', trigger: 'blur' }]},
-                {type:'input',initValue:null,inputType:'text',key:'accountPhone',label:'手机号',classStr:'el-col-10',rules:[ { validator:checkMobile, trigger: 'blur' }],placeholder:'请输入手机号'},
+                {type:'input',initValue:null,inputType:'text',key:'accountPhone',label:'手机号',classStr:'el-col-10',rules:[{ required: true, message: '请输入手机号码',trigger: 'blur' },{ validator:checkMobile, trigger: 'blur' }],placeholder:'请输入手机号'},
                 {type:'input',initValue:null,inputType:'text',key:'accountEmail',label:'邮箱',classStr:'el-col-10',rules:[{required: true, message: '请输入邮箱', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],placeholder:'请输入邮箱'},
                 {type:'input',initValue:null,inputType:'text',key:'nickName',label:'别称',classStr:'el-col-10',rules:[ { required: true, message: '请输入别称', trigger: 'blur' }]},
                 {type:'input',initValue:null,key:'remark',label:'备注',classStr:'el-col-10',placeholder:'请输入备注'},
-                {type:'input',initValue:null,key:'sorgName',label:'所在组织名称',classStr:'el-col-10',rules:[{ required: true, message: '请输入所在组织名称', trigger: 'blur' }],placeholder:'请输入所在组织名称'},
-                {type:'input',initValue:null,inputType:'text',key:'sorgNo',label:'所在组织编号',rules:[ { required: true, message: '请输入所在组织编号', trigger: 'blur' }],classStr:'el-col-10'}
+                {type:'input',initValue:null,inputType:'hidden',key:'sorgNo',hidden:true},
+                {type:'input',initValue:null,inputType:'hidden',key:'sorgName',hidden:true}
               ],
             }
           },
@@ -94,7 +93,7 @@
               ],
             }
           },
-          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除这条数据？',confirmTitle:'删除',fixParams:{accountId:null}}
+          {type:'primary',isShow:'true',text:'删除帐号',optType:'confirm',httpUrl:this.$api.sysAccount_batchdel,methods:'postNoJson',confirmText:'确定要删除？',confirmTitle:'删除',fixParams:{idList:'accountId'}}
         ],
         tableConfig:{
           httpUrl:this.$api.sysAccount_pagelist,
@@ -113,29 +112,37 @@
             total:0
           },
           tableColumn: [
-            // {prop:'accountId',label:'帐号id',},
             {prop:'',label:'序号',tableColumnType:'selection',fixed:'left'},
             {prop:'accountName',label:'帐号名称',fixed:''},
             {prop:'accountPhone',label:'手机'},
             {prop:'accountEmail',label:'邮箱'},
-            // {prop:'accountPassward',label:'帐号密码'},
             {prop:'nickName',label:'别称'},
             {prop:'createDate',label:'创建时间'},
             {prop:'updateDate',label:'更新时间'},
             {prop:'remark',label:'备注'},
             {prop:'sorgNo',label:'组织编号'},
-            {prop:'valid',label:'帐号状态',ftLabel:[
-                {tTitle:'可用',state:1,type:'primary'},
-                {tTitle:'禁用',state:0,type:'primary'}]
+            {prop:'state',label:'帐号状态',ftLabel:[
+                {tTitle:'启用',state:1,type:'primary'},
+                {tTitle:'冻结',state:0,type:'primary'},
+                {tTitle:'冻结',state:null,type:'primary'}]
             },
-            // {label:'操作',fixed:'right',width:'300',optBtns:[
-            //     {type:'primary',isShow:'true',text:'编辑',optType:'edit',httpUrl:'',},
-            //     {type:'danger',isShow:'true',text:'删除',icon:'fa fa-delete',httpUrl:'/system/account/list',optType:'confirm',confirmText:'确定要删除这条数据？',confirmTitle:'删除'}
-            //   ]
-            // }
-          ]
+              {
+                label:'操作',fixed:'right',width:'200',optBtns:
+                [
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[0]},text:'启用',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_reactive,methods:'post',confirmText:'确定要启用此帐号？',confirmTitle:'启用'
+                  },
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'禁用',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_frozen,methods:'post',confirmText:'确定要禁用此帐号？',confirmTitle:'禁用'
+                  },
+                    {type:'danger',isShow:true,text:'删除',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除此帐号？',confirmTitle:'删除'
+                    },
+                ]
+              }
+            ]
         },
-        rowData:[]
+        rowData:[],
+        orgdata:[],
+        sorgNo:null,
+        sorgName:null
       }
     },
     mounted(){
@@ -144,11 +151,45 @@
           this.reload()
         }
       })
+        this.getorg()
     },
     methods:{
+      dealorgData(obj,orgCode){
+         if(this.$typeOf(obj) ==='object'){
+             if(obj.orgCode===orgCode){
+                 this.sorgName=obj.orgName
+             }
+             if(!obj.children) {
+                 return;
+             }
+             for(let im of obj.children){
+                 this.dealorgData(im,orgCode)
+             }
+         }
+      },
+      getorg(){
+          this.$http.get(this.$api.sysOrganization_copinfos).then((res) => {
+            if(res.success){
+                this.orgdata=res.data
+                this.toolBtns[0].form.formItem.push(
+                    {type:'selectCascader',key:'orgs',props:{value:'orgCode',label:'orgName',children:'children'},changefuc:this.orgchange,options:[this.orgdata],changeOnSelect:true, label:'所在组织名称',classStr:'el-col-10',rules:[{ required: true, message: '请选择组织', trigger: ['blur','change'] }],placeholder:'请选择组织'},
+                )
+            }
+          })
+      },
+      orgchange(val,item){
+        this.sorgNo=val[val.length-1]
+        this.dealorgData(this.orgdata,this.sorgNo)
+      },
+      createAccount(item,dom){
+          delete dom.formData.orgs;
+          this.$set(dom.formData,'sorgNo',this.sorgNo)
+          this.$set(dom.formData,'sorgName',this.sorgName)
+          dom.submitData(item)
+      },
       reset(){
         this.$refs.manageAccForm.resetForm()
-        this.$refs.manageAccTable.loadTableData()
+        this.$refs.manageAccTable.refresh()
       },
       queryForm(){
         this.$refs.manageAccForm.queryForm((formData)=>{
@@ -158,15 +199,11 @@
       reload(){
         let _th=this
         setTimeout(()=> {
-          _th.$refs.manageAccTable.loadTableData()
+          _th.$refs.manageAccTable.refresh()
         })
       },
       dealTableData(tableData){
-        // this.getAccount(queryData)
         this.$refs.manageAccTable.loadTable(tableData)
-      },
-      tableSelection(val){
-        this.rowData=val
       }
     }
   }
