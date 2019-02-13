@@ -207,7 +207,7 @@
                 if(res.success){
                     this.historyData=res.data
                     for(let im of this.historyData){
-                        this.$set(im,'auditResultDesc',im.auditResult?'通过':'驳回')
+                        this.$set(im,'auditResultDesc',im.auditResult?'成功':'失败')
                         let desc='';
                         switch (im.auditType) {
                             case 1:

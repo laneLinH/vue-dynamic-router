@@ -110,9 +110,7 @@
                   });
                 })
 
-              }).catch(() => {
-
-              })
+              }).catch(() => {})
             } else {
               this.$message.error('请选择要操作的数据!')
             }

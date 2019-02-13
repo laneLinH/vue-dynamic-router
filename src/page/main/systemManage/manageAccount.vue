@@ -99,11 +99,12 @@
           httpUrl:this.$api.sysAccount_pagelist,
           tableBaseConfig:{
             tableColumnType:'selection',
-            maxHeight:600,
+            maxHeight:900,
             isStripe:true,
             showHeader:true,
             rowStyle:null,
-            tooltipEffect:'light'
+            tooltipEffect:'light',
+            isShowPagination:true
           },
           paginationConfig:{
             pageNo:1,
@@ -118,9 +119,8 @@
             {prop:'accountEmail',label:'邮箱'},
             {prop:'nickName',label:'别称'},
             {prop:'createDate',label:'创建时间'},
-            {prop:'updateDate',label:'更新时间'},
             {prop:'remark',label:'备注'},
-            {prop:'sorgNo',label:'组织编号'},
+            {prop:'sorgName',label:'所属组织'},
             {prop:'state',label:'帐号状态',ftLabel:[
                 {tTitle:'启用',state:1,type:'primary'},
                 {tTitle:'冻结',state:0,type:'primary'},
@@ -129,11 +129,11 @@
               {
                 label:'操作',fixed:'right',width:'200',optBtns:
                 [
-                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[0]},text:'启用',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_reactive,methods:'post',confirmText:'确定要启用此帐号？',confirmTitle:'启用'
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[0]},text:'启用',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_reactive,methods:'post',confirmText:'确定要启用此帐号？',confirmTitle:'提示'
                   },
-                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'禁用',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_frozen,methods:'post',confirmText:'确定要禁用此帐号？',confirmTitle:'禁用'
+                  {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'冻结',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_frozen,methods:'post',confirmText:'确定要冻结此帐号？',confirmTitle:'提示'
                   },
-                    {type:'danger',isShow:true,text:'删除',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除此帐号？',confirmTitle:'删除'
+                    {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[0]},optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除此帐号？',confirmTitle:'删除'
                     },
                 ]
               }
@@ -203,6 +203,7 @@
         })
       },
       dealTableData(tableData){
+          tableData=tableData.data
         this.$refs.manageAccTable.loadTable(tableData)
       }
     }

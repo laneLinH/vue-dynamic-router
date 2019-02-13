@@ -16,7 +16,7 @@
       <el-form-item label="所属组织部门"
               prop="orgType"
               :rules="[{validator:orgCheckValid, trigger: 'change'}]">
-            <treeSelect :value="treeValue"  noChildrenText="暂无数据" noResultsText="暂无数据" noOptionsText="暂无数据" placeholder="请选择组织" @select="chooseTree" :options="orgTreeData" >
+            <treeSelect :value="treeValue" :disable-branch-nodes="true"  noChildrenText="暂无数据" noResultsText="暂无数据" noOptionsText="暂无数据" placeholder="请选择组织" @select="chooseTree" :options="orgTreeData" >
             </treeSelect>
           <el-input type="hidden" style="display: none" v-model="formData.orgType" ></el-input>
       </el-form-item>
@@ -491,7 +491,7 @@
                                     this.addResume()
                                 }else{
                                     for(let m of data[k]){
-                                        this.formData.resumes.push({resumesDate:[parseInt(m.startTime||0)||null,parseInt(m.endTime||0)||null],resumeDescribe:m.resumeDescribe})
+                                        this.formData.resumes.push({resumesDate:[parseInt(m.startTime||0),parseInt(m.endTime||0)],resumeDescribe:m.resumeDescribe})
                                     }
                                 }
                             }
@@ -607,7 +607,11 @@
             this.$set(obj,'label',obj.orgName)
             if(obj.hasOwnProperty('children')){
               if(!obj.children){
-                obj.children=[]
+                  if(obj.orgType===2){
+                      delete obj.children
+                  }else{
+                      obj.children=[]
+                  }
               }else{
                 this.dealTreeData(obj.children,parentId+'_'+id,id)
               }

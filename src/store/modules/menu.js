@@ -24,33 +24,47 @@ const menus={
           {
             name: '干部管理',
             path:'manageCadres',
+            permission:[1,2],
             children: [
-              {name: '归档申请', path: 'applicationArchive'},
-              {name: '档案管理', path: 'manageArchive'}
+              {name: '档案管理', path: 'manageArchive',permission:[1,2]},
+              {name: '归档申请', path: 'applicationArchive',permission:[1]}
             ]
           },
           {
             name: '系统管理',
             path:'systemManage',
+            permission:[1],
             children: [
-              {name: '账户管理', path: 'manageAccount'},
-              {name: '组织管理', path: 'manageOrganization'}
+              {name: '账户管理', path: 'manageAccount', permission:[1]},
+              {name: '组织管理', path: 'manageOrganization', permission:[1]}
             ]
           }
         ]
-        let dealMenuList=(list)=>{
+        let role=sessionStorage.getItem('role')
+        let tempary=[]
+        let dealMenuList=(list,id)=>{
           if(list.hasOwnProperty('children')){
-            list.children.forEach((m,n)=>{
-              m['pathUrl']='/'+list.path+'/'+m.path
-            })
+              let child=[]
+                list.children.forEach((v)=>{
+                    if(v.permission.includes(parseInt(role))) {
+                        v['pathUrl'] = '/' + list.path + '/' + v.path
+                        child.push(v)
+                    }
+                })
+              if(child.length){
+                  tempary[id].children=child
+              }
           }else{
             list.forEach((m,n)=>{
-              dealMenuList(m)
+                if(m.permission.includes(parseInt(role))) {
+                    tempary.push(m)
+                }
+              dealMenuList(m,n)
             })
           }
         }
         dealMenuList(menuList)
-        commit('setMenus',menuList)
+        commit('setMenus',tempary)
       },
       configRoute({state,commit}){
         let accountRoutes=[]
@@ -58,27 +72,26 @@ const menus={
               if(list.hasOwnProperty('children')){
                 let childroutes=[]
                 list.children.forEach((m,n)=>{
-                  let route={
-                    path:m.path,
-                    name:m.name,
-                    meta:{title:m.name},
-                    component:() => import('@/page/main'+m.pathUrl),
-                    children:[]
-                  }
-                  childroutes.push(route)
+                    let route={
+                        path:m.path,
+                        name:m.name,
+                        meta:{title:m.name,permission:m.permission},
+                        component:() => import('@/page/main'+m.pathUrl),
+                        children:[]
+                    }
+                    childroutes.push(route)
                 })
                 accountRoutes[id].children=childroutes
               }else{
                 list.forEach((m,n)=>{
-                  let route={
-                    path:'/'+m.path,
-                    name:m.name,
-                    meta:{title:m.name},
-                    component:comp.defualts,
-                    hidden:true,
-                    children:[]
+                  let route = {
+                      path: '/' + m.path,
+                      name: m.name,
+                      meta: {title: m.name, permission: m.permission || null},
+                      component: comp.defualts,
+                      hidden: true,
+                      children: []
                   }
-
                   accountRoutes.push(route)
                   dealRouter(m,n)
                 })
@@ -103,6 +116,7 @@ const menus={
           //   ]
           // },
           )
+          // console.log(accountRoutes)
         commit('setRoutes',accountRoutes)
       }
   }

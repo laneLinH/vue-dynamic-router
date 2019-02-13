@@ -41,6 +41,7 @@
         ...mapState(['menu'])
       },
       mounted(){
+        sessionStorage.clear()
         let _th=this
         document.onkeydown=function(event) {
           var et = event || window.event || arguments.callee.caller.arguments[0];
@@ -61,7 +62,7 @@
                     this.configRoute()
                     this.$router.addRoutes(this.menu.routes)
                   }
-                  this.$router.push('/manageCadres/applicationArchive')
+                  this.$router.push('/manageCadres/manageArchive')
                 }else{
                   this.$message({
                     message: res.msg,

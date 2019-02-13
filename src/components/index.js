@@ -20,6 +20,7 @@ const install = function (Vue) {
     Vue.prototype.$deepCopy = $deepClone
     Vue.prototype.$formatDate = $formatDate
     Vue.prototype.$dealTableDate = $dealTableDate
+    Vue.prototype.$contactObj = contactObj
     Vue.prototype.$print=print
 }
 if (typeof window !== 'undefined' && window.Vue) {

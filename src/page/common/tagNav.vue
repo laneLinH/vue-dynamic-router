@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(item,id) in tarNavList" :key="id" :class="{active:item.path===localRoute}">
         <router-link :to="item.path">{{item.name}}</router-link>
-        <a @click="closeTags(id)"><i class="fa fa-close" ></i></a>
+        <a class="tag-close" @click="closeTags(id)"><i class="fa fa-close" ></i></a>
       </li>
     </ul>
     <div class="tags-close-box">
@@ -73,7 +73,6 @@
 </script>
 
 <style lang="scss" scoped>
-  /*@import "../../assets/style/variables";*/
   .tag-nav{
     position: absolute;
     width: calc(100% - 230px);
@@ -89,6 +88,7 @@
         margin-right: 5px;
         margin: 5px;
         padding: 5px;
+        font-size: $smFontSize;
         border-radius: 5px;
         background: $tagDefBkColor;
         transition: all .3s ease-in;
@@ -104,6 +104,9 @@
 
       }
     }
+  }
+  .tag-close{
+    margin-left: 5px;
   }
   .tags-close-box {
     position: absolute;

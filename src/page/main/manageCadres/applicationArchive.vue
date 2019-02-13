@@ -44,10 +44,10 @@
                 httpUrl:this.$api.cadreBase_pageauditlist,
                 tableBaseConfig:{
                   tableType:'table',
-                  height:500,
-                  maxHeight:500,
+                    maxHeight:900,
                   isStripe:true,
                   showHeader:true,
+                    isShowPagination:true,
                   tooltipEffect:'light'
                 },
                 paginationConfig:{
@@ -95,7 +95,7 @@
                       btnLoading:true,
                       modalTitle:"审核",
                       btns:[
-                        {type:'default',isShow:true,text:'关闭',icon:'fa fa-delete'}
+                        {type:'default',isShow:true,text:'关闭',icon:'fa fa-delete',func:'cancel'}
                       ],
                       btnCenter:true,
                       modalWidth:'50%',
@@ -153,6 +153,7 @@
             })
           },
           dealTableData(tableData){
+            tableData=tableData.data
             let date=['cadreBirthday']
             for(let im of tableData){
               im=this.$dealTableDate(date,im,'YYYYMM')

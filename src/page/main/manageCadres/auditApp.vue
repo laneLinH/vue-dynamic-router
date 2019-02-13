@@ -37,7 +37,7 @@
               </el-form-item>
           </template>
           <el-form-item class="el-col-12" label="参加工作时间：">
-            <span>{{formData.joinWorkDate}}</span>
+            <span>{{formatDate(formData.joinWorkDate)}}</span>
           </el-form-item>
           <el-form-item class="el-col-12" label="健康状况：">
             <span>{{formData.healthCondition}}</span>
@@ -184,7 +184,7 @@
                 if(res.success){
                   this.historyData=res.data
                   for(let im of this.historyData){
-                      this.$set(im,'auditResultDesc',im.auditResult?'通过':'驳回')
+                      this.$set(im,'auditResultDesc',im.auditResult?'成功':'失败')
                       let desc='';
                       switch (im.auditType) {
                           case 1:

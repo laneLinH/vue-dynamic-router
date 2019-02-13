@@ -5,6 +5,7 @@
             ref="dynamicTable"
             :data="tableData"
             v-loading="loading"
+            :border="tableBaseConfig.isBorder"
             :show-header="tableBaseConfig.showHeader"
             :row-style="dealTableRowStyle"
             :fit="tableBaseConfig.fit"
@@ -34,7 +35,6 @@
                     <p :style="`margin-left: ${scope.row._level * 20}px;margin-top:0;margin-bottom:0`">
                       <i  @click="toggleFoldingStatus(scope.row)" class="_toggleFold" :class="toggleFoldingClass(scope.row)"></i>
                       <span>{{scope.row[item.prop]}}</span>
-
                     </p>
                   </template>
                 </el-table-column>
@@ -70,7 +70,7 @@
             </template>
           </el-table>
       </el-row>
-      <el-row style="text-align: right;margin: 20px 0;" v-if="tableBaseConfig.tableType!=='treeTable'">
+      <el-row style="text-align: right;margin: 20px 0;" v-if="tableBaseConfig.isShowPagination">
           <el-pagination
             background
             @size-change="sizeChange"
@@ -95,42 +95,49 @@
         tableBaseConfig:{
         },
         paginationConfig:{
-          default:{
-            pageNo:1,
-            pageSize:10,
-            pageSizes:[10,30,50,70,100],
-            total:0
+          default:()=>{
+              return {
+                  pageNo:1,
+                  pageSize:10,
+                  pageSizes:[10,30,50,70,100],
+                  total:0
+              }
           }
         },
         tableColumn:{
-          default: []
+          default:()=>[]
         },
         httpUrl:{
           default:''
         },
         pageNameFlg:{
           default:''
+        },
+        fixParams:{
+            default:()=>{}
         }
       },
-      data:()=>({
-        loading:false,
-        queryPage:{
-          pageNo:1,
-          pageSize:10,
-          total:0,
-        },
-        tableData:[],
-        treeData:[],
-        foldList:[],
-        queryData:{},
-        modalOptions:[],
-        selection:null,
-        modalOption:{},
-        form:{},
-        btnhttpUrl:null,
-        scopefixparams:{},
-        formData:{}
-      }),
+      data(){
+          return {
+              loading:false,
+              queryPage:{
+                  pageNo:1,
+                  pageSize:10,
+                  total:0,
+              },
+              tableData:[],
+              treeData:[],
+              foldList:[],
+              queryData:{},
+              modalOptions:[],
+              selection:null,
+              modalOption:{},
+              form:{},
+              btnhttpUrl:null,
+              scopefixparams:{},
+              formData:{}
+          }
+      },
       computed: {
         ...mapState(['dynamicVx']),
         foldAllList () {
@@ -151,7 +158,7 @@
           pageSize:this.paginationConfig.pageSize,
           total:this.paginationConfig.total,
         }
-        this.loadTableData()
+        this.loadTableData(this.fixParams)
       },
       methods:{
         ...mapActions(['setOptData']),
@@ -239,34 +246,26 @@
         loadTableData(formData){
           this.queryData=formData||{}
           this.loading=true
-          if(this.tableBaseConfig.tableType==='treeTable'){
-            this.$http.get(this.httpUrl,this.queryData).then((res)=>{
-              this.loading=false
-              if (!res.success) {
-                this.$http.handleError(res)
-              } else {
-                this.$emit('dealTableData', res.data)
-              }
-            },er=>{
-              this.loading=false
-            })
-          }else {
-            this.$set(this.queryData,'pageNo',this.queryPage.pageNo)
-            this.$set(this.queryData,'pageSize',this.queryPage.pageSize)
-            this.$http.get(this.httpUrl,this.queryData).then((res)=>{
-              this.loading=false
-              if (!res.success) {
-                this.$http.handleError(res)
-              } else {
-                this.queryPage.total = Number(res.data.total)
-                this.$emit('dealTableData',res.data.data)
-              }
-            },er=>{
-              this.loading=false
-            })
+          if(this.tableBaseConfig.tableType!=='treeTable'){
+              this.$set(this.queryData,'pageNo',this.queryPage.pageNo)
+              this.$set(this.queryData,'pageSize',this.queryPage.pageSize)
           }
+            this.$http.get(this.httpUrl,this.queryData).then((res)=>{
+                this.loading=false
+                if (!res.success) {
+                    this.$http.handleError(res)
+                } else {
+                    if(this.tableBaseConfig.tableType!=='treeTable'){
+                        this.queryPage.total = Number(res.data.total)
+                    }
+                    this.$emit('dealTableData',res.data)
+                }
+            },er=>{
+                this.loading=false
+            })
         },
         loadTable(tableData){
+
             this.tableData=tableData
         },
         formatTreeTableData(parent,children,index=0,_family=[],_flg='f'){

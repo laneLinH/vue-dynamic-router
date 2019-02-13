@@ -10,7 +10,6 @@
                       @dealTableData="dealTableData"
                      >
         </dynamicTable>
-        <!--<dynamic-treeTable :data=""></dynamic-treeTable>-->
       </el-row>
 </template>
 
@@ -29,7 +28,7 @@
                     httpUrl:this.$api.sysOrganization_orginfos,
                     tableBaseConfig:{
                         tableType:'treeTable',
-                        maxHeight:500,
+                        maxHeight:900,
                         isStripe:true,
                         showHeader:true,
                         tooltipEffect:'light'
@@ -52,7 +51,6 @@
                                 {tTitle:'可以',state:1,type:'text'},
                                 {tTitle:'不可以',state:0,type:'text'}]},
                         {prop:'createDate',label:'创建时间'},
-                        {prop:'updateDate',label:'更新时间'},
                         {label:'操作',fixed:'right',width:'300',optBtns:[
                                 {type:'primary',isShow:false,
                                     dealBtnStatus:{key:'orgType',status:[1]},text:'添加组织',optType:'new',fixParams:{parentId:'orgCode',},methods:'post',
@@ -121,13 +119,6 @@
         },
         checkCadre(item){
             this.$refs.manageOrgtable.showSelfModal(item)
-          // this.getCadreByorgNo(rowData[0].orgCode).then((res)=>{
-          //     if(res && res.success){
-          //         console.log(res)
-          //         console.log(item)
-          //
-          //     }
-          //  })
         },
         getCadreByorgNo(orgNo){
             return new Promise((resolve, reject)=> {
@@ -152,14 +143,9 @@
                     this.$set(im,'ishasChilren',2)
                 }
             }
-            // this.getCadreByorgNo(im.orgCode)
           }
-          console.log(tableData)
           this.$refs.manageOrgtable.loadTable(tableData)
-        },
-        // tableSelection(val){
-        //   this.rowData=val
-        // }
+        }
       },
 
     }

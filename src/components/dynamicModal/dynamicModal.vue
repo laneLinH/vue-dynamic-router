@@ -8,7 +8,7 @@
       appendToBody>
       <dynamicForm v-if="!form.custForm"  ref="modalForm" :fixParams="fixParams" :pageNameFlg="pageNameFlg" :form="form"></dynamicForm>
 
-      <component v-if="form.custForm"  ref="cusForm" :is="form.custForm" :pageNameFlg="pageNameFlg" :optType="optType" @closeModal="cancel"></component>
+      <component v-if="form.custForm" v-for=""  ref="cusForm" :is="form.custForm" :pageNameFlg="pageNameFlg" :optType="optType" @closeModal="cancel"></component>
       <div slot="footer" class="dialog-footer">
         <el-button v-for="(item,btnind) in  scopeModopt.btns" :key="btnind"
                    @click="btnClick(item)"
@@ -18,10 +18,6 @@
                    :loading="item.loading"
                    :disabled="item.disabled"
                    size="mini">{{item.text}}</el-button>
-
-        <!--<el-button type="primary" @click="custFormevent" :loading="custbtnLoading" v-if="modalOption.custText">{{modalOption.custText}}</el-button>-->
-        <!--<el-button type="primary" v-if="modalOption.okText" @click="ok" :loading="btnLoading">{{modalOption.okText}}</el-button>-->
-        <!--<el-button @click="cancel"  v-if="modalOption.cancelText">{{modalOption.cancelText}}</el-button>-->
       </div>
     </el-dialog>
 </template>
@@ -67,7 +63,7 @@
           this.btnObj=btnObj
           // this.modalOption=btnObj.modalOption
           // this.form=btnObj.form
-          //   console.log(this.btnObj)
+          // console.log(this.btnObj)
           // console.log('showModal--',btnObj.fixParams)
           this.fixParams=btnObj.fixParams
           this.isShowModal=true
@@ -107,7 +103,6 @@
            this.isShowModal=item.func(item,this.$refs.cusForm||this.$refs.modalForm,this)
           }
         },
-
         ok(item){
           let form= this.$refs.modalForm
           if(this.form.custForm) {
