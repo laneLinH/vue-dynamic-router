@@ -4,17 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from '@/router'
 import store from './store'
-import 'normalize.css/normalize.css'
+// import 'normalize.css/normalize.css'
 import ElementUI from 'element-ui'
 import http from '@/utils/HttpUtils'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 import api from './api'
 import * as filters from './filters'
-// import '../packages/dynamicPackge.umd'
-// import '../packages/dynamicPackge.css'
-// Vue.use(dynamicPackge.default.install)
-import {install} from '@/components'
-Vue.use(install);
+import '../packages/dynamicPackge.umd'
+import '../packages/dynamicPackge.css'
+Vue.use(dynamicPackge.default.install)
+// import {install} from '@/components'
+// Vue.use(install);
 
 Vue.use(ElementUI);
 Vue.use(http)

@@ -93,7 +93,7 @@
         background: $tagDefBkColor;
         transition: all .3s ease-in;
         a{
-          /*color: white;*/
+          color: $tagFontColor;
         }
       }
       li.active{
