@@ -1,7 +1,7 @@
 <template>
   <el-header :span="24">
     <el-row class="el-col-4 logo">
-      干部系统管理
+      干部管理系统
     </el-row>
     <el-row class="el-col-14 head-nav"></el-row>
     <el-row class="el-col-4 userinfo">

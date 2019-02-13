@@ -2,7 +2,7 @@ import axios from 'axios'
 import querystring from 'querystring'
 import qs from 'qs'
 import store from '@/store'
-import {Message} from 'element-ui'
+import {Message,Confirm} from 'element-ui'
 /* eslint-disable */
 const timeoutMsg = () => {
   Message({
@@ -20,29 +20,19 @@ const responseMsg = (res) => {
 
 function handleSession(res) {
   if(res.headers.errorcode && res.headers.errorcode === "4021") {
-    // MessageBox.confirm('登录信息过期，可以取消继续留在该页面，或者重新登录', '确定登出', {
-    //   confirmButtonText: '重新登录',
-    //   cancelButtonText: '取消',
-    //   type: 'warning'
-    // }).then(() => {
-    //   store.dispatch('FedLogOut').then(() => {
-    //     location.reload() // 为了重新实例化vue-router对象 避免bug
-    //   })
-    // })
-
-    // this.$Modal.info({
-    //   title: 'test',
-    //   content: '<p>Content of dialog</p><p>Content of dialog</p>'
-    // })
-    // debugger
-    // Message.warning('登录信息过期,请重新登录')
-    // this.$router.push('logPage')
-    // debugger
-    // return Promise.reject('error')
-
-    store.dispatch('loginOut').then(res => {
-      location.reload()
+      Confirm('登录信息过期，可以取消继续留在该页面，或者重新登录', '确定登出', {
+      confirmButtonText: '重新登录',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      store.dispatch('loginOut').then(() => {
+        location.reload()
+      })
     })
+
+    // store.dispatch('loginOut').then(res => {
+    //   location.reload()
+    // })
   }else if(res.headers.errorcode && res.headers.errorcode === "4031") {
     Message({
       message: '权限异常',

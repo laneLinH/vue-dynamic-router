@@ -31,6 +31,7 @@
                         maxHeight:900,
                         isStripe:true,
                         showHeader:true,
+                        isBorder:true,
                         tooltipEffect:'light'
                     },
                     paginationConfig:{
@@ -53,7 +54,7 @@
                         {prop:'createDate',label:'创建时间'},
                         {label:'操作',fixed:'right',width:'300',optBtns:[
                                 {type:'primary',isShow:false,
-                                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加组织',optType:'new',fixParams:{parentId:'orgCode',},methods:'post',
+                                    dealBtnStatus:{key:'orgType',status:[1]},text:'添加',optType:'new',fixParams:{parentId:'orgCode',},methods:'post',
                                     modalOption:{
                                         modalType:'editPop',
                                         isShowModal:false,

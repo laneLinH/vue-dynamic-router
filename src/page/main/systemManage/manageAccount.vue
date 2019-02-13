@@ -6,7 +6,7 @@
       :form="searchForm">
       <el-form-item>
         <el-button type="primary" size="mini"@click="queryForm">查询</el-button>
-        <el-button type="primary" size="mini" @click="reset">重置</el-button>
+        <el-button type="default" size="mini" @click="reset">重置</el-button>
       </el-form-item>
     </dynamic-form>
     <dynamicButton
@@ -14,6 +14,7 @@
       :btns="toolBtns">
     </dynamicButton>
     <dynamicTable ref="manageAccTable"
+                  class="table-outer-border"
                   :tableBaseConfig="tableConfig.tableBaseConfig"
                   :tableColumnType="tableConfig.tableColumnType"
                   :tableColumn="tableConfig.tableColumn"

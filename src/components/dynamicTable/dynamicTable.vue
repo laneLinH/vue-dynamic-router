@@ -47,7 +47,6 @@
                 :fixed="item.fixed">
                 <template slot-scope="scope">
                   <div v-if="item.optBtns">
-                      <!--<dynamicButton :btns="item.optBtns"  :tablerowData="[scope.row]" toolType="action" ></dynamicButton>-->
                       <el-button v-for="(btns,index) in item.optBtns"
                                  :key="index"
                                  @click="btnClick(btns,[scope.row])"

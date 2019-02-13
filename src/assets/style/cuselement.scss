@@ -40,11 +40,22 @@
 .menu-wrapper{
   .el-menu-item{
     background: #f7f7f7;
+    transition: all linear 0.3s;
   }
   .el-menu-item.is-active{
-    background: #1890ff;
+    background: #ecf5ff;
+    &:after{
+      content: '';
+      display: table;
+      width: 5px;
+      position: absolute;
+      right: 0;
+      height: 100%;
+      top: 0;
+      background: #5cb1fd;
+    }
       a{
-        color: white;
+        //color: white;
       }
   }
 }
@@ -140,6 +151,10 @@
   width: 178px;
   height: 178px;
   display: block;
+}
+.el-table .el-table__header th{
+  color: #5d5e5f;
+  background: #ecf5ff;
 }
 
 @include setColorForButton($btnStrs,$btnFtColor)

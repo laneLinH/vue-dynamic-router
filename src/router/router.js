@@ -9,7 +9,8 @@ const routes=[
       title:'登录'
     }
   },
-  { path: '*',
+  {
+    path: '*',
     redirect:'/login'
   }
 ]

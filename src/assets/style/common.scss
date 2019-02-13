@@ -78,6 +78,9 @@ body{
 .right{
   float: right;
 }
+.table-outer-border{
+  border: 1px solid #ebeef5;
+}
 @import "cuselement";
 @include textDr
 

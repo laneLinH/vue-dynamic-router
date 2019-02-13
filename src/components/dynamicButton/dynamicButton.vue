@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tool-btn">
       <el-button v-for="(item,index) in btns"
                  :key="index"
                  @click="btnClick(item)"
@@ -128,6 +128,8 @@
   }
 </script>
 
-<style scoped>
-
+<style  rel="stylesheet/scss"  lang="scss" scoped>
+    .tool-btn{
+        margin: 20px 0;
+    }
 </style>
