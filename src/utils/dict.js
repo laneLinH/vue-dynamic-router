@@ -61,6 +61,19 @@ export const  cadreNationOptions=[
     {label:'加入中国籍的外国人',value:'加入中国籍的外国人'},
   ]
 
+export const OPRATE_HISTORY={
+    1:'提交',
+    2:'归档',
+    3:'申请修改',
+    4:'文档维护'
+}
+export const APP_STATE={
+    1:'待审核',
+    2:'已归档',
+    3:'审核未通过',
+    4:'申请修改',
+    7:'待提交'
+}
 
 
 export const ORGTYPE_1=1

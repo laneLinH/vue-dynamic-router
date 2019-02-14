@@ -185,21 +185,7 @@
                   this.historyData=res.data
                   for(let im of this.historyData){
                       this.$set(im,'auditResultDesc',im.auditResult?'成功':'失败')
-                      let desc='';
-                      switch (im.auditType) {
-                          case 1:
-                              desc='提交';
-                              break;
-                          case 2:
-                              desc='归档';
-                              break;
-                          case 3:
-                              desc='申请修改';
-                              break;
-                          default :
-                              desc='';
-                              break;
-                      }
+                      let  desc=this.$OPRATE_HISTORY[im.auditType]||''
                       this.$set(im,'auditTypeDesc',desc)
                   }
                 }

@@ -6,20 +6,24 @@ const logins={
     accountName:sessionStorage.getItem('accountName'),
     orgname:sessionStorage.getItem('orgname'),
     role:sessionStorage.getItem('role'),
+    lastime:sessionStorage.getItem('lastime'),
   },
   mutations:{
     setAccount(state,data){
       state.accountName=data.accountName
       state.orgname=data.orgname
       state.role=data.role
+      state.lastime=data.lastime
       sessionStorage.setItem('accountName',data.accountName)
       sessionStorage.setItem('orgname',data.orgname)
       sessionStorage.setItem('role',data.role)
+      sessionStorage.setItem('lastime',data.lastime)
     },
     clearAccount(state,data){
       state.accountName=null
       state.orgname=null
       state.role=null
+        state.lastime=null
       sessionStorage.clear()
       location.reload()
     }
@@ -28,8 +32,8 @@ const logins={
     loginIn ({ state, commit }, data) {
          return new Promise((resolve, reject)=>{
            service.http.post(api.sysAccount_cadrelogin,data).then((res)=>{
-                 if(res.code===200){
-                   commit('setAccount',{accountName:data.accountName,orgname:res.data.orgname,role:res.data.role})
+                 if(res.success){
+                   commit('setAccount',res.data)
                    resolve(res)
                  }else{
                    service.http.handleError(res.msg)

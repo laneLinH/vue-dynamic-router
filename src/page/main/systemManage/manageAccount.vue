@@ -65,32 +65,9 @@
                 {type:'input',initValue:null,inputType:'text',key:'accountEmail',label:'邮箱',classStr:'el-col-10',rules:[{required: true, message: '请输入邮箱', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],placeholder:'请输入邮箱'},
                 {type:'input',initValue:null,inputType:'text',key:'nickName',label:'别称',classStr:'el-col-10',rules:[ { required: true, message: '请输入别称', trigger: 'blur' }]},
                 {type:'input',initValue:null,key:'remark',label:'备注',classStr:'el-col-10',placeholder:'请输入备注'},
+                {type:'selectCascader',key:'orgs',props:{value:'orgCode',label:'orgName',children:'children'},changefuc:this.orgchange,options:[],changeOnSelect:true, label:'所在组织名称',classStr:'el-col-10',rules:[{ required: true, message: '请选择组织', trigger: ['blur','change'] }],placeholder:'请选择组织'},
                 {type:'input',initValue:null,inputType:'hidden',key:'sorgNo',hidden:true},
                 {type:'input',initValue:null,inputType:'hidden',key:'sorgName',hidden:true}
-              ],
-            }
-          },
-          {type:'primary',isShow:'true',text:'修改密码',optType:'edit',
-            modalOption:{
-              modalType:'editPop',
-              isShowModal:false,
-              modalTitle:"修改密码",
-              btnCenter:false,
-              modalWidth:'400px',
-              btns:[
-                {type:'primary',isShow:true,loading:false,text:'保存',httpUrl:this.$api.sysAccount_changepwd,methods:'post',func:'ok'},
-                {type:'default',isShow:true,loading:false,text:'取消',func:'cancel'}
-              ],
-            },
-            form:{
-              inline:false,
-              labelPosition:'right',
-              labelWidth:'80px',
-              classStr:'dynamic-modal-form-no-inline',
-              formItem:[
-                {type:'input',initValue:null,inputType:'password',key:'oldpassWord',label:'旧密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入旧密码', trigger: 'blur' },{}],placeholder:'请输入旧密码'},
-                {type:'input',initValue:null,inputType:'password',key:'newpassWord',label:'新密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入新密码', trigger: 'blur' }],placeholder:'请输入新密码'},
-                {type:'input',initValue:null,inputType:'password',key:'confirmpassWord',label:'确认密码',classStr:'el-col-24',rules:[ { required: true, message: '请输入确认密码', trigger: 'blur' }],placeholder:'请输入确认密码'},
               ],
             }
           },
@@ -125,7 +102,8 @@
             {prop:'state',label:'帐号状态',ftLabel:[
                 {tTitle:'启用',state:1,type:'primary'},
                 {tTitle:'冻结',state:0,type:'primary'},
-                {tTitle:'冻结',state:null,type:'primary'}]
+                {tTitle:'冻结',state:null,type:'primary'}
+            ]
             },
               {
                 label:'操作',fixed:'right',width:'200',optBtns:
@@ -134,8 +112,8 @@
                   },
                   {type:'primary',isShow:false,dealBtnStatus:{key:'state',status:[1]},text:'冻结',optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_frozen,methods:'post',confirmText:'确定要冻结此帐号？',confirmTitle:'提示'
                   },
-                    {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[0]},optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除此帐号？',confirmTitle:'删除'
-                    },
+                  {type:'danger',isShow:false,text:'删除',dealBtnStatus:{key:'state',status:[0]},optType:'confirm',fixParams:{accountId:null},httpUrl:this.$api.sysAccount_delete,methods:'post',confirmText:'确定要删除此帐号？',confirmTitle:'删除'
+                  },
                 ]
               }
             ]
@@ -172,9 +150,7 @@
           this.$http.get(this.$api.sysOrganization_copinfos).then((res) => {
             if(res.success){
                 this.orgdata=res.data
-                this.toolBtns[0].form.formItem.push(
-                    {type:'selectCascader',key:'orgs',props:{value:'orgCode',label:'orgName',children:'children'},changefuc:this.orgchange,options:[this.orgdata],changeOnSelect:true, label:'所在组织名称',classStr:'el-col-10',rules:[{ required: true, message: '请选择组织', trigger: ['blur','change'] }],placeholder:'请选择组织'},
-                )
+                this.toolBtns[0].form.formItem[6].options=this.orgdata
             }
           })
       },

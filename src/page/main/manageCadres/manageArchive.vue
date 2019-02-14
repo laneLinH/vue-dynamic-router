@@ -32,6 +32,7 @@
   import updateCadreApp from './updateCadreApp'
   import detail from './detail'
   import {vimDownFile} from '@/utils/tools'
+  import {mapGetters} from 'vuex'
   export default {
     name: "manageArchive",
     data(){
@@ -52,6 +53,8 @@
           formItem:[
             {type:'input',initValue:null,inputType:'text',key:'cadreName',label:'',placeholder:'请输入干部姓名'},
             {type:'input',initValue:null,inputType:'text',key:'fulltimeEducation',label:'',placeholder:'请输入干部学历'},
+            {type:'selectCascader',key:'orgs',props:{value:'orgCode',label:'orgName',children:'children'},options:[],changeOnSelect:true,placeholder:'请选择组织'},
+            {type:'input',initValue:null,inputType:'hidden',key:'sorgNo',hidden:true}
           ]
         },
         toolbtns:[
@@ -131,7 +134,7 @@
                     isShowModal:false,
                     modalTitle:"查看",
                     btnCenter:true,
-                    modalWidth:'50%',
+                    modalWidth:'900px',
                     btns:[
                       {type:'primary',isShow:true,text:'打印',loading:false,func:this.doPrint},
                       {type:'default',isShow:true,text:'关闭',loading:false,func:'cancel'},
@@ -147,7 +150,7 @@
                         isShowModal:false,
                         modalTitle:"申请修改",
                         btnCenter:true,
-                        modalWidth:'50%',
+                        modalWidth:'900px',
                         btns:[
                             {type:'default',isShow:true,text:'关闭',loading:false,func:'cancel'},
                         ],
@@ -161,7 +164,8 @@
                  ]
                 }
           ]
-        }
+        },
+        orgdata:[]
       }
     },
     mounted(){
@@ -170,14 +174,33 @@
           this.reload()
         }
       })
+      this.getorg()
+        if(parseInt(this.role)===1){
+            this.tableConfig.tableColumn[9].optBtns[0].dealBtnStatus.status=[7,3,2]
+            this.tableConfig.tableColumn[9].optBtns[0].modalOption.btns=[
+                {type:'primary',isShow:true,text:'提交',loading:false,httpUrl:this.$api.cadreBase_rootupdate,methods:'postFormData',func:this.zancun},
+                {type:'default',isShow:true,text:'取消',loading:false,func:'cancel'}
+            ]
+            this.tableConfig.tableColumn[9].optBtns[2].dealBtnStatus.status=[]
+        }
     },
     computed:{
+      ...mapGetters(['role']),
       queryFormData(){
         return this.$refs.manageArchTable.getQueryData()
       },
     },
     methods:{
       vimDownFile,
+      getorg(){
+          this.$http.get(this.$api.sysOrganization_orginfos).then((res) => {
+              if(res.success){
+                  this.orgdata=res.data
+                  this.searchForm.formItem[2].options=[this.orgdata]
+
+              }
+          })
+      },
       zancun(item,dom){
         dom.custFormevent((params)=>{
           item.loading=true
@@ -216,7 +239,12 @@
 
       queryForm(){
         this.$refs.appArchForm.queryForm((formData)=>{
-          this.$refs.manageArchTable.loadTableData(formData)
+            let tmp=this.$deepCopy(formData)
+          if(tmp.orgs&&tmp.orgs.length>0){
+              this.$set(tmp,'orgNo',tmp.orgs[tmp.orgs.length-1])
+          }
+          delete tmp.orgs
+          this.$refs.manageArchTable.loadTableData(tmp)
         })
       },
       reload(){

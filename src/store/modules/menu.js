@@ -27,7 +27,7 @@ const menus={
             permission:[1,2],
             children: [
               {name: '档案管理', path: 'manageArchive',permission:[1,2]},
-              {name: '归档申请', path: 'applicationArchive',permission:[1]}
+              {name: '审核', path: 'applicationArchive',permission:[1]}
             ]
           },
           {

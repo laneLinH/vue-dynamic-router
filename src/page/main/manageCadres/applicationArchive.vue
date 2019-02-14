@@ -34,6 +34,8 @@
                  formItem:[
                    {type:'input',initValue:null,inputType:'text',key:'cadreName',label:'',placeholder:'请输入干部姓名'},
                    {type:'input',initValue:null,inputType:'text',key:'fulltimeEducation',label:'',placeholder:'请输入干部学历'},
+                   {type:'selectCascader',key:'orgs',props:{value:'orgCode',label:'orgName',children:'children'},options:[],changeOnSelect:true,placeholder:'请选择组织'},
+                   {type:'input',initValue:null,inputType:'hidden',key:'sorgNo',hidden:true}
                    // {type:'select',hidden:false,initValue:null,key:'select1',label:'',placeholder:'请选择xxx',changeVal:null,options:[{label:'选项1',id:1,value:'1'},{label:'选项2',id:2,value:'2'},
                    //     {label:'选项3',id:3,value:'3'}],changefuc:this.selectChage},
                    // {type:'select',hidden:true,initValue:null,key:'select2',label:'',placeholder:'请选择xxx',options:[{label:'1-2',id:1,value:'1'},{label:'1-3',id:2,value:'2'},
@@ -109,7 +111,8 @@
                     ]
                   }
                 ]
-              }
+              },
+                orgdata:[]
             }
         },
         computed:{
@@ -124,6 +127,7 @@
               this.reload()
             }
           })
+            this.getorg()
         },
         watch:{
           // 'searchForm.formItem[2].changeVal'(val){
@@ -138,6 +142,14 @@
           //   this.searchForm.formItem[3].options=[{label:'1222',id:1,value:'1'},{label:'133',id:2,value:'2'},
           //     {label:'1444',id:3,value:'3'}]
           // },
+            getorg(){
+                this.$http.get(this.$api.sysOrganization_orginfos).then((res) => {
+                    if(res.success){
+                        this.orgdata=res.data
+                        this.searchForm.formItem[2].options=[this.orgdata]
+                    }
+                })
+            },
           reset(){
             this.$refs.appArchForm.resetForm()
             this.$refs.appArchTable.refresh()
@@ -150,7 +162,12 @@
           },
           queryForm(){
             this.$refs.appArchForm.queryForm((formData)=>{
-              this.$refs.appArchTable.loadTableData(formData)
+                let tmp=this.$deepCopy(formData)
+                if(tmp.orgs&&tmp.orgs.length>0){
+                    this.$set(tmp,'orgNo',tmp.orgs[tmp.orgs.length-1])
+                }
+                delete tmp.orgs
+              this.$refs.appArchTable.loadTableData(tmp)
             })
           },
           dealTableData(tableData){

@@ -2,8 +2,8 @@ import axios from 'axios'
 import querystring from 'querystring'
 import qs from 'qs'
 import store from '@/store'
-import {Message,Confirm} from 'element-ui'
-/* eslint-disable */
+import {Message,MessageBox} from 'element-ui'
+
 const timeoutMsg = () => {
   Message({
     message: '请求超时，请检查网络',
@@ -20,7 +20,7 @@ const responseMsg = (res) => {
 
 function handleSession(res) {
   if(res.headers.errorcode && res.headers.errorcode === "4021") {
-      Confirm('登录信息过期，可以取消继续留在该页面，或者重新登录', '确定登出', {
+      MessageBox.confirm('登录信息过期，可以取消继续留在该页面，或者重新登录', '确定登出', {
       confirmButtonText: '重新登录',
       cancelButtonText: '取消',
       type: 'warning'
@@ -56,7 +56,7 @@ const http ={
   },
   post (url, data) {
     return new Promise((resolve, reject) => {
-      let postdata = querystring.stringify(data)
+      let postdata = qs.stringify(data)
       axios.post(url, postdata).then((response) => {
         handleSession(response)
         resolve(response.data)

@@ -16,6 +16,7 @@ const api={
     cadreBase_savetemp:'/cad/cadreBase/savetemp',
     cadreBase_update:'/cad/cadreBase/update',
     cadreBase_applyedit:'/cad/cadreBase/applyedit',//提交修改申请
+    cadreBase_rootupdate:'/cad/cadreBase/rootupdate',
     sysAccount_cadrelogin:'/cad/sysAccount/cadrelogin',
     sysAccount_changepwd:'/cad/sysAccount/changepwd',
     sysAccount_create:'/cad/sysAccount/create',
