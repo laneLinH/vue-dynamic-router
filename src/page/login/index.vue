@@ -1,42 +1,54 @@
 <template>
     <div class="login-warp">
-        <el-form class="login-form" ref="loginForm"  :model="loginForm" :rules="loginRule" >
+        <div class="logo">
+            <img src="/img/logo.png"/>
+        </div>
+        <div class="login-left"></div>
+        <div class="login-right">
+
+            <el-form class="login-form" ref="loginForm"  :model="loginForm" :rules="loginRule" >
+                <h5 class="login-title">用户登录</h5>
             <el-form-item  prop="accountName">
-                  <el-input type="text" v-model="loginForm.accountName">
-                    <template slot="prepend"><i class="fa fa-user-o"></i></template>
-                  </el-input>
+            <el-input type="text" v-model="loginForm.accountName" placeholder="用户名">
+            </el-input>
             </el-form-item>
             <el-form-item  prop="accountPassward">
-              <el-input type="password"  v-model="loginForm.accountPassward">
-                <template slot="prepend"><i class="fa fa-key"></i></template>
-              </el-input>
+            <el-input class="input" type="password"  v-model="loginForm.accountPassward" placeholder="密码">
+            </el-input>
             </el-form-item>
+            <span class="pw-tip">
+                <el-checkbox v-model="rememberpw">记住密码</el-checkbox>   <i>忘记密码？</i>
+            </span>
             <el-form-item class="text-center">
-              <el-button type="primary" @click="onSubmit('loginForm')" size="medium">登录</el-button>
+            <el-button type="primary" @click="onSubmit('loginForm')" size="medium">登录</el-button>
             </el-form-item>
-        </el-form>
+            </el-form>
+        </div>
     </div>
 </template>
 
 <script>
   import {mapActions,mapState} from 'vuex'
+  import qs from 'qs'
     export default {
       name:'login',
-      data:()=>({
-        loginForm:{
-          accountName:null,
-          accountPassward:null
+      data(){
+          return {
+              rememberpw:false,
+              loginForm: {
+                  accountName: this.getCookie('accountName'),
+                  accountPassward: this.getCookie('accountPassward')&&qs.parse(this.getCookie('accountPassward')),
+              },
+              loginRule:{
+                  accountName: [
+                      { required: true, message: '请输入用户名', trigger: 'blur' },
+                  ],
+                  accountPassward: [
+                      { required: true, message: '请输入密码', trigger: 'blur' },
+                  ]
+              }
+          }
         },
-        loginRule:{
-          accountName: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-          ],
-          accountPassward: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-          ]
-        }
-
-      }),
       computed:{
         ...mapState(['menu'])
       },
@@ -52,9 +64,36 @@
       },
       methods:{
         ...mapActions(['loginIn','getMenuList','configRoute']),
+          getCookie(name) {
+            debugger
+              var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+              arr = document.cookie.match(reg)
+             return arr? arr[2]: null;
+          },
+          setCookie (name, value, expiredays) {
+              var exdate = new Date();
+              exdate.setDate(exdate.getDate() + expiredays);
+              document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+          },
+          delCookie (name) {
+              var exp = new Date();
+              exp.setTime(exp.getTime() - 1);
+              var cval = getCookie(name);
+              if (cval != null)
+                  document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+        },
         onSubmit(loginForm){
           this.$refs[loginForm].validate((valid,callback) => {
             if (valid) {
+                if(this.rememberpw){
+                    this.setCookie('accountName',this.accountName)
+                    this.setCookie('accountPassward',qs.stringify(this.accountPassward))
+                    this.setCookie('rememberpw',this.rememberpw)
+                }else{
+                    this.delCookie('accountName')
+                    this.delCookie('accountPassward')
+                    this.delCookie('rememberpw')
+                }
               this.loginIn(this.loginForm).then((res)=>{
                 if(res.success){
                   if(this.menu.routes){
@@ -84,26 +123,58 @@
         width: 100%;
         height: 100%;
         position: relative;
-        background: url("/img/login_bg.png") no-repeat;
+        display: flex;
+    }
+    .login-right{
+       width: 420/1920*100%;
+        position: relative;
+        background: url("/img/login-right.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
         .login-form{
-          display: inline-block;
-          background: rgba(0, 0, 0, 0.52);
-          border-radius: 5px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%,-50%);
-          padding: 20px;
-          box-shadow: 0 0 5px 1px #000000;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 60%;
+            transform: translate(-50%,-52%);
+            z-index: 1;
         }
-      .login-title{
-        font-size: 18px;
-        font-weight: 600;
-        text-align: center;
-        color: #4dbeff;
-      }
+        .pw-tip{
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            color: white;
+           font-size: 12px;
+            label{
+                color: white;
+            }
+            i{
+                font-style:normal;
+            }
+        }
+        .login-title{
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-align: center;
+            color: #fafafa;
+        }
+    }
+    .login-left{
+        width: 1500/1920*100%;
+        background: url(/img/login-left.png) no-repeat;
+        background-size: 100% 100%;
     }
   .text-center{
     text-align: center;
   }
+    .logo{
+        user-select: none;
+        width: 200px;
+        position: absolute;
+        left: 35px;
+        top:35px;
+        img{
+            max-width: 100%;
+        }
+    }
 </style>

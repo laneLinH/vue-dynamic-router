@@ -62,31 +62,54 @@
 .login-form{
   .el-input__inner{
     height: 35px;
-    background-color: rgba(0, 0, 0, 0.2784313725490196);
-    border: 1px solid rgba(153, 153, 153, 0.55);
-    color: #ffffff;
+    background-color: #b8c0d8;
+    color: $loginColor;
+    border: 1px solid #b8c0d8
   }
   .el-input__inner:focus{
-    border: 1px solid #409eff
+    border: 1px solid #b8c0d8
   }
-  .el-input-group__prepend {
-    background-color: rgba(153, 153, 153, 0.55);
-    color: #ffffff;
-    border: 1px solid rgba(153, 153, 153, 0.55);
+  .el-input__inner::-webkit-input-placeholder {
+    color:$loginColor;
+  }
+  .el-input__inner:-moz-placeholder {
+    color: $loginColor;
+  }
+  .el-input__inner:-ms-input-placeholder {
+    color: $loginColor;
   }
   .el-button--primary{
-    background-color: rgba(0, 117, 239, 0.73);
-    color: #ffffff;
+    width: 100%;
+    background: url("/img/loginbtn.png") no-repeat center;
+    color: $loginColor;
     border: 1px solid rgba(0, 117, 239, 0.73);
     transition: all linear 0.3s;
   }
   .el-button--primary:focus, .el-button--primary:hover{
-    background-color:  rgba(2, 91, 183, 0.73);
-    color: #ffffff;
-    border: 1px solid  rgba(2, 91, 183, 0.73);
+    background: url("/img/loginbtn.png") no-repeat center;
+    color: $loginColor;
   }
   .el-form-item__error{
-    left: 54px;
+    left:0;
+  }
+  .pw-tip{
+    .el-checkbox__input.is-checked+.el-checkbox__label{
+      color: $loginColor;
+    }
+    .el-checkbox__inner{
+      width: 12px;
+      height: 12px;
+      vertical-align: middle;
+      &:after{
+        top:0;
+        left:3px;
+      }
+    }
+    .el-checkbox__label{
+      font-size: $smFontSize;
+      color: $loginColor;
+      vertical-align: middle;
+    }
   }
 }
 

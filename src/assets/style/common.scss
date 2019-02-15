@@ -1,4 +1,28 @@
 
+@font-face {
+  font-family: 'PingFang Bold';
+  src:url("/font/PingFang Bold.ttf");
+}
+@font-face {
+  font-family: 'PingFang ExtraLight';
+  src:url("/font/PingFang ExtraLight.ttf");
+}
+@font-face {
+  font-family: 'PingFang Heavy';
+  src:url("/font/PingFang Heavy.ttf");
+}
+@font-face {
+  font-family: 'PingFang Light';
+  src:url("/font/PingFang Light.ttf");
+}
+@font-face {
+  font-family: 'PingFang Medium';
+  src:url("/font/PingFang Medium.ttf");
+}
+@font-face {
+  font-family: 'PingFang Regular';
+  src:url("/font/PingFang Regular.ttf");
+}
 *,*::before,*::after{
   box-sizing: border-box;
   padding: 0;
@@ -24,8 +48,7 @@ html,body{
   overflow: hidden;
 }
 body{
-  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "PingFang Regular";
   font-size: $baseFontSize;
   line-height: $baseFontLt;
   color: $mainFontColor;
