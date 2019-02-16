@@ -29,15 +29,14 @@
 
 <script>
   import {mapActions,mapState} from 'vuex'
-  import qs from 'qs'
     export default {
       name:'login',
       data(){
           return {
               rememberpw:false,
               loginForm: {
-                  accountName: this.getCookie('accountName'),
-                  accountPassward: this.getCookie('accountPassward')&&qs.parse(this.getCookie('accountPassward')),
+                  accountName: null,
+                  accountPassward: null,
               },
               loginRule:{
                   accountName: [
@@ -61,11 +60,14 @@
             _th.onSubmit('loginForm')
           }
         }
+        this.loginForm.accountName=this.getCookie('accountName')||null
+        this.loginForm.accountPassward=this.getCookie('accountPassward')||null
+         this.rememberpw= this.getCookie('rememberpw')==='true'
+
       },
       methods:{
         ...mapActions(['loginIn','getMenuList','configRoute']),
           getCookie(name) {
-            debugger
               var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
               arr = document.cookie.match(reg)
              return arr? arr[2]: null;
@@ -78,7 +80,7 @@
           delCookie (name) {
               var exp = new Date();
               exp.setTime(exp.getTime() - 1);
-              var cval = getCookie(name);
+              var cval = this.getCookie(name);
               if (cval != null)
                   document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
         },
@@ -86,14 +88,15 @@
           this.$refs[loginForm].validate((valid,callback) => {
             if (valid) {
                 if(this.rememberpw){
-                    this.setCookie('accountName',this.accountName)
-                    this.setCookie('accountPassward',qs.stringify(this.accountPassward))
+                    this.setCookie('accountName',this.loginForm.accountName)
+                    this.setCookie('accountPassward',this.loginForm.accountPassward)
                     this.setCookie('rememberpw',this.rememberpw)
                 }else{
                     this.delCookie('accountName')
                     this.delCookie('accountPassward')
                     this.delCookie('rememberpw')
                 }
+
               this.loginIn(this.loginForm).then((res)=>{
                 if(res.success){
                   if(this.menu.routes){
@@ -135,7 +138,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 60%;
+            width: 65%;
             transform: translate(-50%,-52%);
             z-index: 1;
         }

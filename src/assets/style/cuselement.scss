@@ -81,12 +81,14 @@
   .el-button--primary{
     width: 100%;
     background: url("/img/loginbtn.png") no-repeat center;
+    background-size: cover;
     color: $loginColor;
     border: 1px solid rgba(0, 117, 239, 0.73);
     transition: all linear 0.3s;
   }
   .el-button--primary:focus, .el-button--primary:hover{
     background: url("/img/loginbtn.png") no-repeat center;
+    background-size: cover;
     color: $loginColor;
   }
   .el-form-item__error{
