@@ -41,7 +41,7 @@
           ]
         },
         toolBtns:[
-          {type:'primary',isShow:'true',text:'创建帐号',icon:'fa fa-plus',optType:'new',
+          {type:'primary',isShow:true,text:'创建帐号',icon:'fa fa-plus',optType:'new',
             modalOption: {
               modalType:'newPop',
               isShowModal:false,
@@ -150,7 +150,7 @@
           this.$http.get(this.$api.sysOrganization_copinfos).then((res) => {
             if(res.success){
                 this.orgdata=res.data
-                this.toolBtns[0].form.formItem[6].options=this.orgdata
+                this.toolBtns[0].form.formItem[6].options=[this.orgdata]
             }
           })
       },
@@ -158,11 +158,12 @@
         this.sorgNo=val[val.length-1]
         this.dealorgData(this.orgdata,this.sorgNo)
       },
-      createAccount(item,dom){
-          delete dom.formData.orgs;
-          this.$set(dom.formData,'sorgNo',this.sorgNo)
-          this.$set(dom.formData,'sorgName',this.sorgName)
-          dom.submitData(item)
+      createAccount(item,formdom,modaldom){
+          this.$set(formdom.formData,'sorgNo',this.sorgNo)
+          this.$set(formdom.formData,'sorgName',this.sorgName)
+          // delete formdom.formData.orgs;
+          formdom.submitData(item,modaldom)
+          return true
       },
       reset(){
         this.$refs.manageAccForm.resetForm()

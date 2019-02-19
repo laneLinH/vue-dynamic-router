@@ -33,7 +33,6 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  /*@import "../../../assets/style/variables";*/
   .left-nav{
     padding: 0;
     margin: 0;

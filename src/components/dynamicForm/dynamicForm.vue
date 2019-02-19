@@ -177,7 +177,7 @@
         //   }
         //   getdata(this.getFormData())
         // },
-        submitData(item){
+        submitData(item,modaldom){
           this.validateForm((params)=>{
             item.loading=true
             this.$http[item.methods](item.httpUrl,params).then((res)=>{
@@ -189,6 +189,9 @@
                   duration: 5 * 1000
                 })
                 this.$dynamicBus.$emit('reloadTable',{pageNameFlg:this.pageNameFlg})
+                  this.$nextTick(()=>{
+                      modaldom.cancel()
+                  })
               }else{
                 this.$message({
                   message: res.msg,

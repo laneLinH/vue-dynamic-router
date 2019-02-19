@@ -14,7 +14,7 @@
                    @click="btnClick(item)"
                    :type="item.type"
                    :icon="item.icon"
-                   v-if="item.isShow"
+                   v-if="dealBtn(item)"
                    :loading="item.loading"
                    :disabled="item.disabled"
                    size="mini">{{item.text}}</el-button>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import {mapActions,mapState} from 'vuex'
     export default {
         name: "dynamicModal",
          props: {
@@ -45,9 +46,18 @@
         scopeModopt:{}
       }),
       computed:{
+          ...mapState(['dynamicVx']),
         optType(){
           return this.btnObj.optType
-        }
+        },
+          rowData(){
+              for(let k of this.dynamicVx.optData){
+                  if(k.name===this.pageNameFlg){
+                      return k.data['rowData']||null
+                  }
+              }
+              return null
+          }
       },
       watch:{
         isShowModal(val){
@@ -71,6 +81,22 @@
         cancel(){
           this.isShowModal=false
         },
+          dealBtn(btns){
+              if(btns.dealBtnStatus){
+                  let data=this.rowData[0]
+                  let st=btns.dealBtnStatus
+                  for(let ks in data){
+                      if(st.key===ks){
+                          if(data[ks] || data[ks]===0){
+                              return  st.status.includes(parseInt(data[ks]))
+                          }
+                      }
+                  }
+                  return false
+              }else{
+                  return true
+              }
+          },
         // custFormevent(){
         //   //  this.$refs.cusForm.custFormevent((params)=>{
         //   //      this.custbtnLoading=true

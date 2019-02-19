@@ -178,7 +178,8 @@
         if(parseInt(this.role)===1){
             this.tableConfig.tableColumn[9].optBtns[0].dealBtnStatus.status=[7,3,2]
             this.tableConfig.tableColumn[9].optBtns[0].modalOption.btns=[
-                {type:'primary',isShow:true,text:'提交',loading:false,httpUrl:this.$api.cadreBase_rootupdate,methods:'postFormData',func:this.zancun},
+                {type:'primary',dealBtnStatus:{key:'state',status:[2]},isShow:false,text:'提交',loading:false,httpUrl:this.$api.cadreBase_rootupdate,methods:'postFormData',func:this.zancun},
+                {type:'primary',dealBtnStatus:{key:'state',status:[7,3]},isShow:false,text:'提交',loading:false,httpUrl:this.$api.cadreBase_insert,methods:'postFormData',func:'ok'},
                 {type:'default',isShow:true,text:'取消',loading:false,func:'cancel'}
             ]
             this.tableConfig.tableColumn[9].optBtns[2].dealBtnStatus.status=[]

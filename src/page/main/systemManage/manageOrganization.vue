@@ -41,9 +41,9 @@
                         total:0
                     },
                     tableColumn: [
-                        {prop:'',label:'序号',tableColumnType:'index',fixed:'left'},
+                        // {prop:'',label:'序号',tableColumnType:'index',fixed:'left'},
                         {prop:'orgName',label:'组织名称',isTree:true,fixed:'left'},
-                        {prop:'orgId',label:'组织id'},
+                        // {prop:'orgId',label:'组织id'},
                         {prop:'orgCode',label:'组织代码'},
                         {prop:'orgType',label:'组织类型',ftLabel:[
                                 {tTitle:'公司',state:1,type:'primary'},
@@ -83,7 +83,7 @@
                                         isShowModal:false,
                                         modalTitle:"干部列表",
                                         btnCenter:true,
-                                        modalWidth:'50%',
+                                        modalWidth:'900px',
                                         btns:[
                                             {type:'default',isShow:true,loading:false,text:'关闭',func:'cancel'}
                                         ],

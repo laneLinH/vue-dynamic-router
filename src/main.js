@@ -14,8 +14,8 @@ import * as filters from './filters'
 import '../packages/dynamicPackge.umd'
 import '../packages/dynamicPackge.css'
 Vue.use(dynamicPackge.default.install)
-// import {install} from '@/components'
-// Vue.use(install);
+ // import {install} from '@/components'
+ // Vue.use(install);
 
 Vue.use(ElementUI);
 Vue.use(http)
