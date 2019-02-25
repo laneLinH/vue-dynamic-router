@@ -25,14 +25,11 @@
             <el-form-item class="el-col-12" label="出生地：">
                 <span>{{formData.birthPlace}}</span>
             </el-form-item>
-            <el-form-item class="el-col-12" label="入党时间："  v-if="formData.joinPartyDate!=='null'&&formData.joinPartyDate&&formData.partyType!=='null'&&formData.partyType">
-                {{formData.joinPartyDate}};{{formData.partyType}}
-            </el-form-item>
-            <template v-else>
-                <el-form-item class="el-col-12" label="入党时间：" v-if="formData.joinPartyDate!=='null'&&formData.joinPartyDate">
+            <template >
+                <el-form-item class="el-col-12" label="入党时间：" v-if="formData.partyType==='中共党员'">
                     <span>{{formData.joinPartyDate}}</span>
                 </el-form-item>
-                <el-form-item class="el-col-12" label="党派：" v-if="formData.partyType!=='null'&&formData.partyType">
+                <el-form-item class="el-col-12" label="政治面貌：" v-else>
                     <span>{{formData.partyType}}</span>
                 </el-form-item>
             </template>
@@ -40,7 +37,8 @@
                 <span>{{formatDate(formData.joinWorkDate)}}</span>
             </el-form-item>
             <el-form-item class="el-col-12" label="健康状况：">
-                <span>{{formData.healthCondition}}</span>
+                <span v-if="formData.healthCondition==='其它'">{{formData.healthInstruction}}</span>
+                <span v-else>{{formData.healthCondition}}</span>
             </el-form-item>
             <el-form-item class="el-col-12" label="专业技术职务：">
                 <span>{{formData.highestProfessional}}</span>
